@@ -3,6 +3,8 @@ package com.badlogicgames.superjumper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 
 public class World {
@@ -211,6 +213,7 @@ public class World {
 			if (bob.position.y > platform.position.y) {
 				if (OverlapTester.overlapRectangles(bob.bounds, platform.bounds)) {
 					bob.hitPlatform();
+					Gdx.input.vibrate(new long[] { 1, 90, 40, 90}, -1); 
 					platform.pulverize();
 					score -= 50;
 						listener.jump();
