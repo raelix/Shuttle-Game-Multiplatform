@@ -87,7 +87,7 @@ public class WorldRenderer {
 				keyFrame = Assets.brakingPlatform.getKeyFrame(platform.stateTime, Animation.ANIMATION_NONLOOPING);
 			}
 
-			batch.draw(keyFrame, platform.position.x - 1, platform.position.y - 0.25f, 2, 0.5f);
+			batch.draw(keyFrame, platform.position.x - 2, platform.position.y - 1.5f, 4, 3f);
 		}
 	}
 

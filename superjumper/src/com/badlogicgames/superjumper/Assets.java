@@ -14,6 +14,10 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public class Assets {
 	public static Texture shuttle;
 	public static Texture shuttle1;
+	public static Texture nuvole;
+	public static Texture nuvole1;
+	public static Texture nuvole2;
+	public static Texture nuvole3;
 	public static Texture Pause;
 	public static Texture background;
 	public static Texture background1;
@@ -65,6 +69,10 @@ public class Assets {
 	}
 
 	public static void load () {
+		nuvole = loadTexture("data/nuvole.png");
+		nuvole1 = loadTexture("data/nuvole1.png");
+		nuvole2 = loadTexture("data/nuvole2.png");
+		nuvole3 = loadTexture("data/nuvole3.png");
 		background = loadTexture("data/recut.png");
 		background1 = loadTexture("data/sfondo1.png");
 		Pause = loadTexture("data/pause.png");
@@ -112,9 +120,9 @@ public class Assets {
 		bobFall = new Animation(0.2f, new TextureRegion(items, 64, 128, 32, 32), new TextureRegion(items, 96, 128, 32, 32));
 		bobHit = new TextureRegion(items, 128, 128, 32, 32);
 		squirrelFly = new Animation(0.2f, new TextureRegion(items, 0, 160, 32, 32), new TextureRegion(items, 32, 160, 32, 32));
-		platform = new TextureRegion(items, 64, 160, 64, 16);
-		brakingPlatform = new Animation(0.2f, new TextureRegion(items, 64, 160, 64, 16), new TextureRegion(items, 64, 176, 64, 16),
-			new TextureRegion(items, 64, 192, 64, 16), new TextureRegion(items, 64, 208, 64, 16));
+		platform = new TextureRegion(nuvole, 0, 0, 250, 250);
+		brakingPlatform = new Animation(0.2f, new TextureRegion(nuvole, 0, 0, 250, 250), new TextureRegion(nuvole1, 0, 0, 250, 250),
+			new TextureRegion(nuvole2, -1, -3, 250, 250), new TextureRegion(nuvole3, 0, 0, 250, 250));
 		font = new BitmapFont(Gdx.files.internal("data/font.fnt"), Gdx.files.internal("data/font.png"), false);
 		font.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		music = Gdx.audio.newMusic(Gdx.files.internal("data/music.mp3"));

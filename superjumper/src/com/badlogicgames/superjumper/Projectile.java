@@ -3,8 +3,8 @@ package com.badlogicgames.superjumper;
 import com.badlogic.gdx.math.Vector2;
 
 public class Projectile extends DynamicGameObject {
-	public static final float BOB_WIDTH = 0.5f;
-	public static final float BOB_HEIGHT = 0.8f;
+	public static final float BOB_WIDTH = 0.3f;
+	public static final float BOB_HEIGHT = 0.6f;
 	public final float MAXVELOCITY = 10f;
 	public Vector2 gravity = new Vector2(0,15);
 	float stateTime;
