@@ -23,7 +23,7 @@ public class WorldRenderer {
 	}
 
 	public void render () {
-		if (world.bob.position.y > cam.position.y) cam.position.y = world.bob.position.y;
+		if (world.bob.position.y+5 > cam.position.y) cam.position.y = world.bob.position.y+5;
 		cam.update();
 		batch.setProjectionMatrix(cam.combined);
 		renderBackground();
@@ -75,7 +75,7 @@ public class WorldRenderer {
 
 		float side = world.bob.velocity.x < 0 ? -1 : 1;
 		
-			batch.draw(keyFrame, world.bob.position.x , world.bob.position.y , 1.5f, 2f);
+			batch.draw(keyFrame, world.bob.position.x - 0.5f, world.bob.position.y - 0.5f, 1.5f, 2f);
 		}
 
 	private void renderPlatforms () {
@@ -122,8 +122,7 @@ public class WorldRenderer {
 		for (int i = 0; i < len; i++) {
 			Projectile projectile = world.projectiles.get(i);
 			TextureRegion keyFrame = Assets.projAnim.getKeyFrame(projectile.stateTime, Animation.ANIMATION_LOOPING);	
-			
-				batch.draw(keyFrame, world.bob.position.x +projectile.position.x + 0.6f , world.bob.position.y+projectile.position.y+1.7f, 0.3f, 0.5f);
+			batch.draw(keyFrame, projectile.position.x-0.25f  , projectile.position.y-0.4f, 0.5f, 0.8f);
 				}
 	}
 	

@@ -1,51 +1,51 @@
-
 package com.badlogicgames.superjumper;
 
-public class Projectile extends DynamicGameObject {
-	public static final float PROJECTILE_WIDTH = 0.5f;
-	public static final float PROJECTILE_HEIGHT = 0.8f;
-	public static final int PROJECTILE_SCORE = 10;
-	public static final float PROJECTILE_VELOCITY = 6;
-	private static  float x;
-	private static float y;
-	private boolean visible;
+import com.badlogic.gdx.math.Vector2;
 
+public class Projectile extends DynamicGameObject {
+	public static final float BOB_WIDTH = 0.5f;
+	public static final float BOB_HEIGHT = 0.8f;
+	public final float MAXVELOCITY = 10f;
+	public Vector2 gravity = new Vector2(0,15);
 	float stateTime;
 
-	public Projectile (float startx, float starty) {
-		super(x, y, PROJECTILE_WIDTH, PROJECTILE_HEIGHT);
-		x=startx;
-		y=starty;
-		stateTime = 0;
-		velocity.y=PROJECTILE_VELOCITY;
+
+	public Projectile (float x, float y) {
+		super(x, y, BOB_WIDTH, BOB_HEIGHT);
+	stateTime = 0;
 	}
 
+	public void setGravity(float x, float y){
+		this.gravity.x = x;
+		this.gravity.y = y;
+	}
+
+	public void setVelocity(float x, float y){
+		this.velocity.x = x;
+		this.velocity.y = y;
+	}
 	public void update (float deltaTime) {
+		velocity.add(gravity.x * deltaTime, gravity.y * deltaTime);
+		position.add(velocity.x * deltaTime, velocity.y * deltaTime);
+		bounds.x = position.x - bounds.width / 2;
+		bounds.y = position.y - bounds.height / 2;
 		stateTime += deltaTime;
-		position.add(0,velocity.y * deltaTime);
-		bounds.x = position.x;
-		bounds.y = position.y ;
-		stateTime += deltaTime;
-	}
-	
-	public float getX() {
-		return velocity.x;
 	}
 
-	public float getY() {
-		return velocity.y;
+	public void hitSquirrel () {
+		velocity.set(0, 0);
+		stateTime = 0;
 	}
 
-
-	public boolean isVisible() {
-		return visible;
+	public void hitPlatform () {
+		//velocity.y = BOB_JUMP_VELOCITY;
+		//state = BOB_STATE_JUMP;
+		stateTime = 0;
 	}
 
-
-	public void setVisible(boolean visible) {
-		this.visible = visible;
+	public void hitSpring () {
+		//velocity.y = BOB_JUMP_VELOCITY * 1.5f;
+		//state = BOB_STATE_JUMP;
+		stateTime = 0;
 	}
-	
-	
 }
-
