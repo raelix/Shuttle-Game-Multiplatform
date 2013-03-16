@@ -122,7 +122,7 @@ public class WorldRenderer {
 		for (int i = 0; i < len; i++) {
 			Projectile projectile = world.projectiles.get(i);
 			TextureRegion keyFrame = Assets.projAnim.getKeyFrame(projectile.stateTime, Animation.ANIMATION_LOOPING);	
-			batch.draw(keyFrame, projectile.position.x-0.25f  , projectile.position.y-0.4f, 0.5f, 0.8f);
+			batch.draw(keyFrame, projectile.position.x+0.1f  , projectile.position.y+1.3f, 0.3f,0.6f);
 				}
 	}
 	

@@ -51,7 +51,7 @@ public class World {
         this.listener = listener;
         this.rand = new Random();
         this.generateLevel();
-        this.setGravity(0, 1);
+        this.setGravity(0, 3);
         this.heightSoFar = 0;
         this.score = 0;
         this.state = WORLD_STATE_RUNNING;
@@ -198,9 +198,10 @@ public class World {
     }
 
     private void checkRemovePlatform() {
-        if (bob.position.y > platforms.get(0).position.y+5  ) platforms.remove(0);
-    }
-    
+   	 if (!platforms.isEmpty()) { 
+   	 if (bob.position.y > platforms.get(0).position.y+5  ) platforms.remove(0);
+   	 										}
+    												}
     private void checkCollisions () {
         checkPlatformCollisions();
         checkDoubleJump();
@@ -275,6 +276,8 @@ public class World {
                 if (platform.state != Platform.PLATFORM_STATE_PULVERIZING && OverlapTester.overlapRectangles(bob.bounds, platform.bounds)) {
                     bob.hitPlatform();
                     Gdx.input.vibrate(new long[] { 1, 90, 40, 90}, -1); 
+                    bob.velocity.y=4;
+                    bob.setGravityBob(0, 3);
                     platform.pulverize();
                     score -= 50;
                     LifeLess();
