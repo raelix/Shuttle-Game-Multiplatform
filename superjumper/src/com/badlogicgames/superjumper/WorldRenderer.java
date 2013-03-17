@@ -73,9 +73,9 @@ public class WorldRenderer {
 			keyFrame = Assets.bobHit;
 		}
 
-		float side = world.bob.velocity.x < 0 ? -1 : 1;
+	/*	float side = world.bob.velocity.x < 0 ? -1 : 1;*/
 		
-			batch.draw(keyFrame, world.bob.position.x - 0.5f, world.bob.position.y - 0.5f, 1.5f, 2f);
+			batch.draw(keyFrame, world.bob.position.x -0.5f, world.bob.position.y -2, 1.5f, 2f);
 		}
 
 	private void renderPlatforms () {
