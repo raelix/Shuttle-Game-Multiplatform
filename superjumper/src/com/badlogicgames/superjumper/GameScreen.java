@@ -117,10 +117,7 @@ public class GameScreen implements Screen {
 	private void updateRunning (float deltaTime) {
 		if (Gdx.input.justTouched()) {
 			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
-			Gdx.input.vibrate(new long[] { 1, 20, 10, 20}, -1); 
-			Projectile projectile = new Projectile(world.bob.position.x,world.bob.position.y);
-			projectile.setVelocity(0,15);
-			world.projectiles.add(projectile);
+		world.ShotProjectile();
 			if (OverlapTester.pointInRectangle(pauseBounds, touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);
 				state = GAME_PAUSED;

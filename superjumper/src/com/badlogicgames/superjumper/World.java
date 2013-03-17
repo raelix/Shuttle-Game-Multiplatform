@@ -36,6 +36,7 @@ public class World {
     public float heightSoFar;
     public int score;
     public int state;
+    public int shot=3;
     
 
     private Vector2 gravity = new Vector2(0,15);
@@ -56,6 +57,8 @@ public class World {
         this.score = 0;
         this.state = WORLD_STATE_RUNNING;
         Life life = new Life(0,0);
+        lifes.add(life);
+        lifes.add(life);
         lifes.add(life);
         lifes.add(life);
         lifes.add(life);
@@ -116,7 +119,18 @@ public class World {
         
         else state = WORLD_STATE_GAME_OVER;
     }
-
+    
+    
+    public void ShotProjectile()
+    {
+   	 if(shot>0){
+   		 Gdx.input.vibrate(new long[] { 1, 20, 10, 20}, -1); 
+			Projectile projectile = new Projectile(bob.position.x,bob.position.y);
+			projectile.setVelocity(0,15);
+			projectiles.add(projectile);
+    shot=shot-1;}
+    
+    }
     public Vector2 getGravity(){
         return gravity;
     }
