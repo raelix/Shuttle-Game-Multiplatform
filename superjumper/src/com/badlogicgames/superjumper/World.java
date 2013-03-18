@@ -120,6 +120,14 @@ public class World {
         else state = WORLD_STATE_GAME_OVER;
     }
     
+    public void LifeMore(){
+   	 float len = lifes.size();
+   	 Life life = new Life(0,0);
+   	 if(len<=4)lifes.add(life);
+   	 
+   	 
+    }
+    
     
     public void ShotProjectile()
     {
@@ -206,7 +214,7 @@ public class World {
     private void checkRemoveProjectile(){
         int i = 0;
         if (!projectiles.isEmpty()) {
-        if ( projectiles.get(i).position.y > bob.position.y+12 ) 
+        if ( projectiles.get(i).position.y > bob.position.y+10 ) 
             projectiles.remove(i);
         }
     }
@@ -293,8 +301,8 @@ public class World {
                     bob.velocity.y=4;
                     bob.setGravityBob(0, 3);
                     platform.pulverize();
-                    score -= 50;
-                    LifeLess();
+                    score -= 100;
+                   /* LifeLess();*/
                     listener.jump();
                     len = platforms.size();
                     break;
@@ -316,9 +324,10 @@ public class World {
         for (int i = 0; i < len; i++) {
             Squirrel squirrel = squirrels.get(i);
             if (OverlapTester.overlapRectangles(squirrel.bounds, bob.bounds)) {
-                bob.hitSquirrel();
-                bob.setGravityBob(0, -5);
+                Gdx.input.vibrate(new long[] { 1, 100, 60, 100}, -1); 
+                LifeLess();
                 listener.hit(); 
+                len = squirrels.size();
                 break;
             }
         }
@@ -330,9 +339,9 @@ public class World {
             int p=0;
             Coin coin = coins.get(i);
             if (OverlapTester.overlapRectangles(bob.bounds, coin.bounds)) {
-                
-                coins.remove(coin);
-              //  LifeLess();
+               coins.remove(coin);
+               LifeMore();
+               shot=shot+3;
                 len = coins.size();
                 listener.coin();
                 score += Coin.COIN_SCORE;
@@ -354,7 +363,8 @@ public class World {
     }
 
     private void checkCastleCollisions () {
-        if (OverlapTester.overlapRectangles(castle.bounds, bob.bounds)) {
+        /*if (OverlapTester.overlapRectangles(castle.bounds, bob.bounds))*/ 
+   	 if(bob.position.y>castle.position.y){
             state = WORLD_STATE_NEXT_LEVEL;
         }
     }

@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public class Assets {
 	public static Texture shuttle;
 	public static Texture shuttle1;
+	public static Texture portaproj;
 	public static Texture nuvole;
 	public static Texture nuvole1;
 	public static Texture nuvole2;
@@ -21,6 +22,10 @@ public class Assets {
 	public static Texture Pause;
 	public static Texture background;
 	public static Texture background1;
+	public static Texture background2;
+	public static Texture background3;
+	public static Texture background4;
+	public static Texture backgroundmain;
 	public static Texture projectile;
 	public static Texture projectile1;
 	public static Texture items;
@@ -32,6 +37,10 @@ public class Assets {
 	public static TextureRegion backgroundRegion;
 	public static TextureRegion backgroundRegion1;
 	public static TextureRegion backgroundRegion2;
+	public static TextureRegion backgroundRegion3;
+	public static TextureRegion backgroundRegion4;
+	public static TextureRegion backgroundRegion5;
+	public static TextureRegion backgroundRegionmain;
 	public static TextureRegion mainMenu;
 	public static TextureRegion pauseMenu;
 	public static TextureRegion ready;
@@ -75,6 +84,10 @@ public class Assets {
 		nuvole3 = loadTexture("data/nuvole3.png");
 		background = loadTexture("data/recut.png");
 		background1 = loadTexture("data/sfondo1.png");
+		background2 = loadTexture("data/sfondo2.png");
+		background3 = loadTexture("data/sfondo3.png");
+		background4 = loadTexture("data/sfondo4.png");
+		backgroundmain = loadTexture("data/backgroundmain.png");
 		Pause = loadTexture("data/pause.png");
 		shuttle = loadTexture("data/itemali.png");
 		shuttle1 = loadTexture("data/itemali1.png");
@@ -85,6 +98,7 @@ public class Assets {
 		life1= loadTexture("data/life1.png");
 		projectile= loadTexture("data/projectile.png");
 		projectile1= loadTexture("data/projectile1.png");
+		portaproj= loadTexture("data/portaproj.png");
 		pixmap = new Pixmap(2048, 2048, Pixmap.Format.RGBA8888);
 		tmptext = new Texture(pixmap);
 		DrawSmiley();
@@ -98,9 +112,13 @@ public class Assets {
 		backgroundRegion = new TextureRegion(tmptext, 0, 0, 720, 1280);
 		backgroundRegion1 = new TextureRegion(background, 2, 850, 720, 980);
 		backgroundRegion2 = new TextureRegion(background1, 2, 730, 720, 980);
+		backgroundRegion3 = new TextureRegion(background2, 2, 730, 720, 980);
+		backgroundRegion4 = new TextureRegion(background3, 2, 765, 720, 1015);
+		backgroundRegion5 = new TextureRegion(background4, 4, 730, 720, 980);
+		backgroundRegionmain = new TextureRegion(backgroundmain, 0,0, 680, 1024);
 		items = loadTexture("data/items.png");
 		items.setFilter(TextureFilter.Linear, TextureFilter.Nearest);
-		mainMenu = new TextureRegion(mainmenu, 170, 420, 320, 320);
+		mainMenu = new TextureRegion(mainmenu, 0, 0, 346, 512);
 		pauseMenu = new TextureRegion(items, 224, 128, 192, 96);
 		ready = new TextureRegion(items, 320, 224, 192, 32);
 		gameOver = new TextureRegion(items, 352, 256, 160, 96);

@@ -40,8 +40,22 @@ public class WorldRenderer {
 		batch.begin();
 		//batch.draw(Assets.backgroundRegion, 0, 0);
 		batch.draw(Assets.backgroundRegion1, 0, 0, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
-		batch.draw(Assets.backgroundRegion2, 0, 15, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
-		
+		batch.draw(Assets.backgroundRegion2, 0.2f, 15, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
+		batch.draw(Assets.backgroundRegion3, 0, 30, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
+		batch.draw(Assets.backgroundRegion4, 0, 45, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
+		batch.draw(Assets.backgroundRegion5, 0, 60, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
+		batch.draw(Assets.backgroundRegion2, 0.2f, 75, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
+		batch.draw(Assets.backgroundRegion3, 0, 90, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
+		batch.draw(Assets.backgroundRegion4, 0, 105, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
+		batch.draw(Assets.backgroundRegion5, 0, 120, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
+		batch.draw(Assets.backgroundRegion2, 0.2f, 135, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
+		batch.draw(Assets.backgroundRegion3, 0, 150, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
+		batch.draw(Assets.backgroundRegion4, 0, 165, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
+		batch.draw(Assets.backgroundRegion5, 0, 180, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
+		batch.draw(Assets.backgroundRegion2, 0.2f, 195, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
+		batch.draw(Assets.backgroundRegion3, 0, 210, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
+		batch.draw(Assets.backgroundRegion4, 0, 225, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
+		batch.draw(Assets.backgroundRegion5, 0, 240, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
 		//batch.draw(Assets.backgroundRegion, 0, 0, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
 		batch.end();
 	}
@@ -75,7 +89,7 @@ public class WorldRenderer {
 
 	/*	float side = world.bob.velocity.x < 0 ? -1 : 1;*/
 		
-			batch.draw(keyFrame, world.bob.position.x -0.5f, world.bob.position.y -2, 1.5f, 2f);
+		batch.draw(keyFrame, world.bob.position.x -0.65f, world.bob.position.y -1f, 1.3f, 2f);
 		}
 
 	private void renderPlatforms () {
@@ -87,7 +101,7 @@ public class WorldRenderer {
 				keyFrame = Assets.brakingPlatform.getKeyFrame(platform.stateTime, Animation.ANIMATION_NONLOOPING);
 			}
 
-			batch.draw(keyFrame, platform.position.x - 2, platform.position.y - 1.5f, 4, 3f);
+			batch.draw(keyFrame, platform.position.x - 1, platform.position.y - 0.25f, 2, 0.5f);
 		}
 	}
 
@@ -122,7 +136,7 @@ public class WorldRenderer {
 		for (int i = 0; i < len; i++) {
 			Projectile projectile = world.projectiles.get(i);
 			TextureRegion keyFrame = Assets.projAnim.getKeyFrame(projectile.stateTime, Animation.ANIMATION_LOOPING);	
-			batch.draw(keyFrame, projectile.position.x+0.1f  , projectile.position.y+1.3f, 0.3f,0.6f);
+			batch.draw(keyFrame, projectile.position.x  , projectile.position.y, 0.3f,0.6f);
 				}
 	}
 	
