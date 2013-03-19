@@ -41,17 +41,17 @@ public class WorldRenderer {
 		//batch.draw(Assets.backgroundRegion, 0, 0);
 		batch.draw(Assets.backgroundRegion1, 0, 0, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
 		batch.draw(Assets.backgroundRegion2, 0.2f, 15, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
-		batch.draw(Assets.backgroundRegion3, 0, 30, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
-		batch.draw(Assets.backgroundRegion4, 0, 45, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
-		batch.draw(Assets.backgroundRegion5, 0, 60, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
+		batch.draw(Assets.backgroundRegion3, 0, 30, FRUSTUM_WIDTH+5, FRUSTUM_HEIGHT);
+		batch.draw(Assets.backgroundRegion4, 0, 45, FRUSTUM_WIDTH+5, FRUSTUM_HEIGHT);
+		batch.draw(Assets.backgroundRegion5, 0, 60, FRUSTUM_WIDTH+5, FRUSTUM_HEIGHT);
 		batch.draw(Assets.backgroundRegion2, 0.2f, 75, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
 		batch.draw(Assets.backgroundRegion3, 0, 90, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
 		batch.draw(Assets.backgroundRegion4, 0, 105, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
 		batch.draw(Assets.backgroundRegion5, 0, 120, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
 		batch.draw(Assets.backgroundRegion2, 0.2f, 135, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
-		batch.draw(Assets.backgroundRegion3, 0, 150, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
-		batch.draw(Assets.backgroundRegion4, 0, 165, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
-		batch.draw(Assets.backgroundRegion5, 0, 180, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
+		batch.draw(Assets.backgroundRegion3, 0, 150, FRUSTUM_WIDTH+5, FRUSTUM_HEIGHT);
+		batch.draw(Assets.backgroundRegion4, 0, 165, FRUSTUM_WIDTH+5, FRUSTUM_HEIGHT);
+		batch.draw(Assets.backgroundRegion5, 0, 180, FRUSTUM_WIDTH+5, FRUSTUM_HEIGHT);
 		batch.draw(Assets.backgroundRegion2, 0.2f, 195, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
 		batch.draw(Assets.backgroundRegion3, 0, 210, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
 		batch.draw(Assets.backgroundRegion4, 0, 225, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
@@ -116,7 +116,7 @@ public class WorldRenderer {
 		for (int i = 0; i < len; i++) {
 			Coin coin = world.coins.get(i);
 			TextureRegion keyFrame = Assets.coinAnim.getKeyFrame(coin.stateTime, Animation.ANIMATION_LOOPING);
-			batch.draw(keyFrame, coin.position.x - 0.5f, coin.position.y - 0.5f, 1, 1);
+			batch.draw(keyFrame, coin.position.x - 0.75f, coin.position.y - 0.75f, 1.5f, 1.5f);
 		}
 	}
 

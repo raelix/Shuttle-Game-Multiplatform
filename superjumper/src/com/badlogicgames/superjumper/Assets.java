@@ -19,6 +19,9 @@ public class Assets {
 	public static Texture nuvole1;
 	public static Texture nuvole2;
 	public static Texture nuvole3;
+	public static Texture coin1;
+	public static Texture coin2;
+	public static Texture coin3;
 	public static Texture Pause;
 	public static Texture background;
 	public static Texture background1;
@@ -82,6 +85,9 @@ public class Assets {
 		nuvole1 = loadTexture("data/nuvole1.png");
 		nuvole2 = loadTexture("data/nuvole2.png");
 		nuvole3 = loadTexture("data/nuvole3.png");
+		coin1 = loadTexture("data/coin1.png");
+		coin2 = loadTexture("data/coin2.png");
+		coin3 = loadTexture("data/coin3.png");
 		background = loadTexture("data/recut.png");
 		background1 = loadTexture("data/sfondo1.png");
 		background2 = loadTexture("data/sfondo2.png");
@@ -111,10 +117,10 @@ public class Assets {
 		life1.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		backgroundRegion = new TextureRegion(tmptext, 0, 0, 720, 1280);
 		backgroundRegion1 = new TextureRegion(background, 2, 850, 720, 980);
-		backgroundRegion2 = new TextureRegion(background1, 2, 730, 720, 980);
-		backgroundRegion3 = new TextureRegion(background2, 2, 730, 720, 980);
-		backgroundRegion4 = new TextureRegion(background3, 2, 765, 720, 1015);
-		backgroundRegion5 = new TextureRegion(background4, 4, 730, 720, 980);
+		backgroundRegion2 = new TextureRegion(background1, 2, 4, 600, 1024);
+		backgroundRegion3 = new TextureRegion(background2, 2, 4, 600, 1024);
+		backgroundRegion4 = new TextureRegion(background3, 2, 4, 600, 1024);
+		backgroundRegion5 = new TextureRegion(background4, 2, 4, 600, 1024);
 		backgroundRegionmain = new TextureRegion(backgroundmain, 0,0, 680, 1024);
 		items = loadTexture("data/items.png");
 		items.setFilter(TextureFilter.Linear, TextureFilter.Nearest);
@@ -130,8 +136,8 @@ public class Assets {
 		pause = new TextureRegion(Pause, 0, 0, 120, 128);
 		spring = new TextureRegion(items, 128, 0, 32, 32);
 		castle = new TextureRegion(items, 128, 64, 64, 64);
-		coinAnim = new Animation(0.2f, new TextureRegion(items, 128, 32, 32, 32), new TextureRegion(items, 160, 32, 32, 32),
-			new TextureRegion(items, 192, 32, 32, 32), new TextureRegion(items, 160, 32, 32, 32));
+		coinAnim = new Animation(0.2f, new TextureRegion(coin1, 0, 0, 128, 128), new TextureRegion(coin2, 0, 0, 128, 128),
+			new TextureRegion(coin3, 0, 0, 128, 128), new TextureRegion(coin1, 0, 0, 128, 128));
 		lifeAnim = new Animation(0.5f, new TextureRegion(life, 0, 0, 120, 128), new TextureRegion(life1, 0, 0, 120, 128));
 		projAnim = new Animation(0.2f, new TextureRegion(projectile, 0, 0, 128, 128), new TextureRegion(projectile1, 1, 0, 120, 128));
 		bobJump = new Animation(0.2f, new TextureRegion(shuttle, 0, 0, 420, 980), new TextureRegion(shuttle1, 0, 0, 420, 980));

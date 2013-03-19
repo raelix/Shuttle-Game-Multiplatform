@@ -37,6 +37,9 @@ public class World {
     public int score;
     public int state;
     public int shot=3;
+    public int turbo=1;
+
+    
     
 
     private Vector2 gravity = new Vector2(0,15);
@@ -143,6 +146,15 @@ public class World {
         return gravity;
     }
 
+    public void Turbo(){
+   	 if(turbo>=1){
+   	 bob.velocity.y=16;
+       turbo-=1;
+       
+       }
+    }
+    
+    
     public void update (float deltaTime, float accelX) {
     
         updateBob(deltaTime, accelX);
@@ -286,6 +298,7 @@ public class World {
     private void checkVelocity () {
         if (bob.velocity.y > bob.MAXVELOCITY){
             bob.setGravityBob(0, 0);
+            
         }
     }
 
@@ -341,6 +354,9 @@ public class World {
             if (OverlapTester.overlapRectangles(bob.bounds, coin.bounds)) {
                coins.remove(coin);
                LifeMore();
+
+               Turbo();
+               turbo=turbo+1;
                shot=shot+3;
                 len = coins.size();
                 listener.coin();
