@@ -36,7 +36,7 @@ public class World {
     public float heightSoFar;
     public int score;
     public int state;
-    public int shot=3;
+    public int shot=5;
     public int turbo=1;
 
     
@@ -78,7 +78,7 @@ public class World {
             int type = rand.nextFloat() > 0.8f ? Platform.PLATFORM_TYPE_MOVING : Platform.PLATFORM_TYPE_STATIC;
             //float x = rand.nextFloat() * (WORLD_WIDTH - Platform.PLATFORM_WIDTH) + Platform.PLATFORM_WIDTH / 2;
             float random = rand.nextFloat();
-            float x = rand.nextFloat() > 0.5f ? random *3 : WORLD_WIDTH - random *3;
+            float x = rand.nextFloat() > 0.5f ? random *3 : WORLD_WIDTH/ - random *3;
             Platform platform = new Platform(type, x, y);
             platforms.add(platform);
             if (rand.nextFloat() > 0.9f && type != Platform.PLATFORM_TYPE_MOVING) {
@@ -148,7 +148,7 @@ public class World {
 
     public void Turbo(){
    	 if(turbo>=1){
-   	 bob.velocity.y=16;
+   	 bob.velocity.y=10;
        turbo-=1;
        
        }
@@ -167,6 +167,7 @@ public class World {
         if (bob.state != Bob.BOB_STATE_HIT) checkCollisions();
         checkRemovePlatform();
         checkRemoveProjectile();
+        checkRemoveCoin();
         checkGameOver();
         
     }
@@ -198,14 +199,19 @@ public class World {
         }
     }
 
-    private void updateCoins (float deltaTime) {
+    private void updateCoins (float deltaTime) 
+    													{
         int len = coins.size();
         for (int i = 0; i < len; i++) {
             Coin coin = coins.get(i);
             coin.update(deltaTime);
+            if (coin.state == Coin.COIN_STATE_PULVERIZING && coin.stateTime > Coin.COIN_PULVERIZE_TIME) {
+              coins.remove(coin);
+               len = coins.size();
+
+          }
         }
-    }
-    
+    	}
     private void updateProjectiles (float deltaTime) {
         int len = projectiles.size();
         for (int i = 0; i < len; i++) {
@@ -226,7 +232,7 @@ public class World {
     private void checkRemoveProjectile(){
         int i = 0;
         if (!projectiles.isEmpty()) {
-        if ( projectiles.get(i).position.y > bob.position.y+10 ) 
+        if ( projectiles.get(i).position.y > bob.position.y+14 ) 
             projectiles.remove(i);
         }
     }
@@ -236,6 +242,11 @@ public class World {
    	 if (bob.position.y > platforms.get(0).position.y+5  ) platforms.remove(0);
    	 										}
     												}
+    private void checkRemoveCoin() {
+   	 if (!coins.isEmpty()) { 
+   	 if (bob.position.y > coins.get(0).position.y+5  ) coins.remove(0);
+   	 										}
+    												}
     private void checkCollisions () {
         checkPlatformCollisions();
         checkDoubleJump();
@@ -243,7 +254,8 @@ public class World {
         checkItemCollisions();
         checkCastleCollisions();
         checkVelocity();
-        checkProjectileCollisions();
+      /*  checkProjectileCollisions();*/
+        checkProjectileWorldCollisions();
         
     }
     private void checkProjectileCollisions(){
@@ -282,6 +294,7 @@ public class World {
       			  Projectile projectile=projectiles.get(i);
       			  Platform platform=platforms.get(j);
       			  if (platform.state != Platform.PLATFORM_STATE_PULVERIZING && OverlapTester.overlapRectangles(platform.bounds, projectile.bounds)) {
+      				  Gdx.input.vibrate(new long[] { 1, 100, 60, 100}, -1); 
       				  projectiles.remove(i);
       				  i--;
       				  platform.pulverize();
@@ -294,6 +307,36 @@ public class World {
       	  	 }
         }
     }
+    
+    private void checkProjectileWorldCollisions(){
+       int i = 0, j = 0;
+       if (!projectiles.isEmpty() && !coins.isEmpty()){
+
+     	 for(i=0;i<projectiles.size();i++)
+     	  	{
+     		  for(j=0;j<coins.size();j++)
+     		  {
+     			  Projectile projectile=projectiles.get(i);
+     			  Coin coin=coins.get(j);
+     			  if (coin.state != Coin.COIN_STATE_PULVERIZING && OverlapTester.overlapRectangles(coin.bounds, projectile.bounds)) {
+     				Gdx.input.vibrate(new long[] { 1, 20, 40, 20}, -1); 
+     				coin.pulverize(); 
+     				coins.remove(j);
+     				projectiles.remove(i);
+     				
+     			
+     				
+     				  i--;
+     				 
+                   /*platforms.remove(j);*/
+                    
+                    break;
+                 }
+     			  
+     			}
+     	  	 }
+       }
+   }
     
     private void checkVelocity () {
         if (bob.velocity.y > bob.MAXVELOCITY){
@@ -310,12 +353,12 @@ public class World {
             if (bob.position.y > platform.position.y) {
                 if (platform.state != Platform.PLATFORM_STATE_PULVERIZING && OverlapTester.overlapRectangles(bob.bounds, platform.bounds)) {
                     bob.hitPlatform();
-                    Gdx.input.vibrate(new long[] { 1, 90, 40, 90}, -1); 
-                    bob.velocity.y=4;
-                    bob.setGravityBob(0, 3);
+                    Turbo();
+                    Gdx.input.vibrate(new long[] { 1, 20,10, 5}, -1); 
+                    turbo=turbo+1;
+                    shot=shot+5;
                     platform.pulverize();
-                    score -= 100;
-                   /* LifeLess();*/
+                    score += 100;
                     listener.jump();
                     len = platforms.size();
                     break;
@@ -338,8 +381,9 @@ public class World {
             Squirrel squirrel = squirrels.get(i);
             if (OverlapTester.overlapRectangles(squirrel.bounds, bob.bounds)) {
                 Gdx.input.vibrate(new long[] { 1, 100, 60, 100}, -1); 
-                LifeLess();
+                LifeMore();
                 listener.hit(); 
+                squirrels.remove(squirrel);
                 len = squirrels.size();
                 break;
             }
@@ -351,16 +395,17 @@ public class World {
         for (int i = 0; i < len; i++) {
             int p=0;
             Coin coin = coins.get(i);
-            if (OverlapTester.overlapRectangles(bob.bounds, coin.bounds)) {
-               coins.remove(coin);
-               LifeMore();
-
-               Turbo();
-               turbo=turbo+1;
-               shot=shot+3;
+            if (coin.state != Coin.COIN_STATE_PULVERIZING && OverlapTester.overlapRectangles(bob.bounds, coin.bounds)) {
+               
+               Gdx.input.vibrate(new long[] { 1, 90, 40, 90},-1); 
+               bob.velocity.y=2;
+               bob.setGravityBob(0, 3);
                 len = coins.size();
                 listener.coin();
-                score += Coin.COIN_SCORE;
+                coin.pulverize();
+                LifeLess();
+                score -= 300;
+                coins.remove(coin);
                 break;
             }
         }

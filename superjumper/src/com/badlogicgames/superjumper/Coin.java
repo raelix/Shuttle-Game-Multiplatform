@@ -17,12 +17,14 @@
 package com.badlogicgames.superjumper;
 
 public class Coin extends GameObject {
-	public static final float COIN_WIDTH = 0.5f;
-	public static final float COIN_HEIGHT = 0.8f;
-	public static final int COIN_SCORE = 10;
+	public static final float COIN_WIDTH = 1.5f;
+	public static final float COIN_HEIGHT = 1.5f;
+	public static final int COIN_SCORE = 100;
+	public static final int COIN_STATE_PULVERIZING = 1;
+	public static final float COIN_PULVERIZE_TIME = 0.09f * 4;
 
 	float stateTime;
-
+	int state;
 	public Coin (float x, float y) {
 		super(x, y, COIN_WIDTH, COIN_HEIGHT);
 		stateTime = 0;
@@ -31,4 +33,9 @@ public class Coin extends GameObject {
 	public void update (float deltaTime) {
 		stateTime += deltaTime;
 	}
+
+public void pulverize () {
+	state = COIN_STATE_PULVERIZING;
+	stateTime = 0;
+}
 }
