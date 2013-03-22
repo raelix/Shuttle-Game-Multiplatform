@@ -32,9 +32,6 @@ public class Assets {
 	public static Texture background2;
 	public static Texture background3;
 	public static Texture background4;
-	public static Texture background5;
-	public static Texture background6;
-	public static Texture background7;
 	public static Texture backgroundmain;
 	public static Texture projectile;
 	public static Texture projectile1;
@@ -50,9 +47,6 @@ public class Assets {
 	public static TextureRegion backgroundRegion3;
 	public static TextureRegion backgroundRegion4;
 	public static TextureRegion backgroundRegion5;
-	public static TextureRegion backgroundRegion6;
-	public static TextureRegion backgroundRegion7;
-	public static TextureRegion backgroundRegion8;
 	public static TextureRegion backgroundRegionmain;
 	public static TextureRegion mainMenu;
 	public static TextureRegion pauseMenu;
@@ -108,9 +102,6 @@ public class Assets {
 		background2 = loadTexture("data/sfondo2.png");
 		background3 = loadTexture("data/sfondo3.png");
 		background4 = loadTexture("data/sfondo4.png");
-		background5 = loadTexture("data/sfondo5.png");
-		background6 = loadTexture("data/sfondo6.png");
-		background7 = loadTexture("data/sfondo7.png");
 		backgroundmain = loadTexture("data/backgroundmain.png");
 		Pause = loadTexture("data/pause.png");
 		shuttle = loadTexture("data/itemali.png");
@@ -142,9 +133,6 @@ public class Assets {
 		backgroundRegion3 = new TextureRegion(background2, 2, 4, 600, 1024);
 		backgroundRegion4 = new TextureRegion(background3, 2, 4, 600, 1024);
 		backgroundRegion5 = new TextureRegion(background4, 2, 4, 600, 1024);
-		backgroundRegion6 = new TextureRegion(background5, 2, 4, 600, 1024);
-		backgroundRegion7 = new TextureRegion(background6, 2, 4, 600, 1024);
-		backgroundRegion8 = new TextureRegion(background7, 2, 4, 600, 1024);
 		backgroundRegionmain = new TextureRegion(backgroundmain, 0,0, 680, 1024);
 		items = loadTexture("data/items.png");
 		items.setFilter(TextureFilter.Linear, TextureFilter.Nearest);
