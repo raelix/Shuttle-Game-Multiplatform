@@ -29,7 +29,9 @@ public class MultiplayerScreen implements Screen {
 	Vector3 touchPoint;
 	String[] highScores;
 	float xOffset = 0;
-	static String str = "INIT";
+	static String str = "MULTIPLAYER LAN";
+	static String client = "PARTECIPA";
+	static String server = "OSPITA";
 
 	public MultiplayerScreen (Game game) {
 		this.game = game;
@@ -37,16 +39,19 @@ public class MultiplayerScreen implements Screen {
 		guiCam = new OrthographicCamera(320, 480);
 		guiCam.position.set(320 / 2, 480 / 2, 0);
 		backBounds = new Rectangle(0, 0, 64, 64);
-		ClientBounds = new Rectangle(200, 100, 33, 33);
-		ServerBounds = new Rectangle(280, 180, 33, 33);
+		//ClientBounds = new Rectangle(200, 100, 300, 36);
+		//ServerBounds = new Rectangle(280, 180, 300, 36);
+		ClientBounds = new Rectangle(100, 210, 300, 20);
+		ServerBounds = new Rectangle(100, 260, 300, 20);
 		touchPoint = new Vector3();
 		batcher = new SpriteBatch();
-		highScores = new String[5];
+		/*highScores = new String[5];
 		for (int i = 0; i < 5; i++) {
 			highScores[i] = i + 1 + ". " + Settings.highscores[i];
 			xOffset = Math.max(Assets.font.getBounds(highScores[i]).width, xOffset);
 		}
 		xOffset = 160 - xOffset / 2 + Assets.font.getSpaceWidth() / 2;
+	*/
 	}
 
 	public void update (float deltaTime) {
@@ -108,24 +113,26 @@ public class MultiplayerScreen implements Screen {
 		batcher.setProjectionMatrix(guiCam.combined);
 		batcher.disableBlending();
 		batcher.begin();
-		batcher.draw(Assets.backgroundRegion, 0, 0, 320, 480);
+		batcher.draw(Assets.backgroundRegionmain, 0, 0, 320, 480);
 		batcher.end();
 
 		batcher.enableBlending();
 		batcher.begin();
-		batcher.draw(Assets.highScoresRegion, 10, 360 - 16, 300, 33);
-		batcher.draw(Assets.life1, 200, 100, 33, 33);
-		batcher.draw(Assets.life, 280, 180, 33, 33);
-		Assets.font.draw(batcher, str, 16, 460);
+		//batcher.draw(Assets.highScoresRegion, 10, 360 - 16, 300, 33);
+		Assets.font.draw(batcher, client, 100,230);
+		Assets.font.draw(batcher, server, 120,280);
+	//	batcher.draw(Assets.life1, 200, 100, 33, 33);
+	//	batcher.draw(Assets.life, 280, 180, 33, 33);
+		Assets.font.draw(batcher, str, 30, 460);
 
 
-		float y = 230;
+		/*float y = 230;
 		for (int i = 4; i >= 0; i--) {
 			Assets.font.draw(batcher, highScores[i], xOffset, y);
 			y += Assets.font.getLineHeight();
 		}
 
-		batcher.draw(Assets.arrow, 0, 0, 64, 64);
+		batcher.draw(Assets.arrow, 0, 0, 64, 64);*/
 		batcher.end();
 	}
 
