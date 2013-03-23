@@ -19,8 +19,14 @@ package com.badlogicgames.superjumper;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 
-public class SuperJumperDesktop {
-	public static void main (String[] argv) {
-		new LwjglApplication(new SuperJumper(), "Super Jumper", 320, 480, false);
+public class Main {
+	public static void main(String[] args) {
+		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
+		cfg.title = "superjumper";
+		cfg.width = 720;
+		cfg.height = 1280;ù
+		//cfg.useGL20 = false;
+		
+		new LwjglApplication(new SuperJumper(), cfg);
 	}
 }

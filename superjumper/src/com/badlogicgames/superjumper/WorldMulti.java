@@ -3,8 +3,6 @@ package com.badlogicgames.superjumper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.LinkedBlockingQueue;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 
@@ -41,7 +39,7 @@ public class WorldMulti implements PROTOCOL_CONSTANTS {
 	public int shot=5;
 	public int turbo=1;
 	private Vector2 gravity = new Vector2(0,15);
-	protected FullDuplexBuffer buffer;
+	protected static FullDuplexBuffer buffer = new FullDuplexBuffer();
 
 	public WorldMulti (WorldListener listener) {
 		this.bob = new Bob(4, 2);
@@ -59,7 +57,6 @@ public class WorldMulti implements PROTOCOL_CONSTANTS {
 		this.heightSoFar = 0;
 		this.score = 0;
 		this.state = WORLD_STATE_RUNNING;
-		this.buffer = new FullDuplexBuffer();
 		Life life = new Life(0,0);
 		lifes.add(life);
 		lifes.add(life);
@@ -174,7 +171,7 @@ public class WorldMulti implements PROTOCOL_CONSTANTS {
 				break;
 			}
 		}
-		
+		//updateBobMulti(deltaTime,-accelX);
 		buffer.putPaccoOutNOBLOCK(new PaccoUpdateBobMulti(deltaTime, accelX));
 		updateBob(deltaTime, accelX);
 		updatePlatforms(deltaTime);
@@ -182,13 +179,13 @@ public class WorldMulti implements PROTOCOL_CONSTANTS {
 		updateCoins(deltaTime);
 		updateLifes(deltaTime);
 		updateProjectiles(deltaTime);
-		if (rand.nextFloat() > 0.5f) score += (int)bob.velocity.y;
+		score += (int)bob.velocity.y / 2;
 		if (bob.state != Bob.BOB_STATE_HIT) checkCollisions();
 		checkRemovePlatform();
 		checkRemoveProjectile();
 		checkRemoveCoin();
-		checkGameOver();
-		checkGameOverMulti();
+		//checkGameOver();
+		//checkGameOverMulti();
 
 	}
 
@@ -200,7 +197,7 @@ public class WorldMulti implements PROTOCOL_CONSTANTS {
 	}
 
 	private void updateBobMulti(float deltaTime, float accelX){
-		bobMulti.velocity.x = accelX / 10 * Bob.BOB_MOVE_VELOCITY;
+		bobMulti.velocity.x = -accelX / 10 * Bob.BOB_MOVE_VELOCITY;
 		bobMulti.update(deltaTime);
 	}
 
@@ -275,7 +272,6 @@ public class WorldMulti implements PROTOCOL_CONSTANTS {
 	private void checkCollisions () {
 		checkPlatformCollisions();
 		checkPlatformCollisionsMulti();
-		//checkDoubleJump();
 		checkSquirrelCollisions();
 		checkSquirrelCollisionsMulti();
 		checkItemCollisions();
@@ -284,7 +280,7 @@ public class WorldMulti implements PROTOCOL_CONSTANTS {
 		checkCastleCollisionsMulti();
 		checkVelocity();
 		checkVelocityMulti();
-		//checkProjectileCollisions();
+		checkProjectileCollisions();
 		checkProjectileWorldCollisions();
 
 	}
@@ -504,14 +500,6 @@ public class WorldMulti implements PROTOCOL_CONSTANTS {
 		}
 	}
 
-	private void checkDoubleJump() {
-		if(Bob.BOB_DOUBLE_JUMP){
-			Bob.BOB_DOUBLE_JUMP=false;
-			bob.hitPlatform();
-			listener.hit();
-		}
-	}
-
 	private void checkSquirrelCollisions () {
 		int len = squirrels.size();
 		for (int i = 0; i < len; i++) {
@@ -545,8 +533,6 @@ public class WorldMulti implements PROTOCOL_CONSTANTS {
 	private void checkItemCollisionsMulti () {
 		int len = coins.size();
 		for (int i = 0; i < len; i++) {
-			int p=0;
-
 			Coin coin = coins.get(i);
 			if (coin.state != Coin.COIN_STATE_PULVERIZING && OverlapTester.overlapRectangles(bobMulti.bounds, coin.bounds)) {
 
@@ -579,8 +565,6 @@ public class WorldMulti implements PROTOCOL_CONSTANTS {
 	private void checkItemCollisions () {
 		int len = coins.size();
 		for (int i = 0; i < len; i++) {
-			int p=0;
-
 			Coin coin = coins.get(i);
 			if (coin.state != Coin.COIN_STATE_PULVERIZING && OverlapTester.overlapRectangles(bob.bounds, coin.bounds)) {
 
@@ -628,17 +612,19 @@ public class WorldMulti implements PROTOCOL_CONSTANTS {
 		if (heightSoFar - 7.5f > bob.position.y) {
 			state = WORLD_STATE_GAME_OVER;
 		}
+		/*
 		int i = 0;
 		Life life = lifes.get(i);
-		if (i<0){ state = WORLD_STATE_GAME_OVER;}
+		if (i<0){ state = WORLD_STATE_GAME_OVER;}*/
 	}
 	private void checkGameOverMulti () {
 		if (heightSoFar - 7.5f > bobMulti.position.y) {
 			state = WORLD_STATE_GAME_OVER;
 		}
+		/*
 		int i = 0;
 		Life life = lifes.get(i);
-		if (i<0){ state = WORLD_STATE_GAME_OVER;}
+		if (i<0){ state = WORLD_STATE_GAME_OVER;}*/
 	}
 
 }
