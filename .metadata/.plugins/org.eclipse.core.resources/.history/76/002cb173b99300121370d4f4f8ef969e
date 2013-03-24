@@ -1,0 +1,7 @@
+package com.badlogicgames.superjumper;
+
+import TextInputListener;
+
+public class MyTextInputListener extends TextInputListener {
+
+}

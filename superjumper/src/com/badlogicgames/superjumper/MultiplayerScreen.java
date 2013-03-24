@@ -10,6 +10,7 @@ import java.util.concurrent.Semaphore;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.TextInputListener;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.GLCommon;
@@ -17,6 +18,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 
 public class MultiplayerScreen implements Screen {
 	Game game;
@@ -32,7 +35,8 @@ public class MultiplayerScreen implements Screen {
 	static String str = "MULTIPLAYER LAN";
 	static String client = "PARTECIPA";
 	static String server = "OSPITA";
-
+	String message="";
+	
 	public MultiplayerScreen (Game game) {
 		this.game = game;
 
@@ -69,7 +73,25 @@ public class MultiplayerScreen implements Screen {
 				str = "CONNECTING";
 				if (WorldMulti.buffer.selfTest()) Gdx.app.debug("PHTEST", "BUFFER OK");
 				else Gdx.app.debug("PHTEST", "BUFFER KO");
-				ConnectThread thr = new ConnectThread("192.168.0.4",9999,WorldMulti.buffer,sem);
+				TextInputListener listener = null;
+				String ciao=null;
+				if(message=="")
+				if (Gdx.input.justTouched()) {
+					Gdx.input.getTextInput(new TextInputListener() {
+						@Override
+						public void input (String text) {
+							message = text;
+						}
+
+						@Override
+						public void canceled () {
+							message = "canceled by user";
+						}
+					}, "Host IP", "192.168.0.");
+				}
+			
+			if(message!=""){
+				ConnectThread thr = new ConnectThread(message,9999,WorldMulti.buffer,sem);
 				thr.start();
 				Gdx.app.debug("PHTEST", "started connect thread");
 				try {
@@ -81,7 +103,7 @@ public class MultiplayerScreen implements Screen {
 				str = "CONNECTED";
 				game.setScreen(new GameScreenMulti(game));
 
-			}
+			}}
 			else if (OverlapTester.pointInRectangle(ServerBounds, touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);
 				str = "ACCEPTING";
