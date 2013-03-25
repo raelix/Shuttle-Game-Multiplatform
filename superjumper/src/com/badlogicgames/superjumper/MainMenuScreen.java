@@ -47,10 +47,10 @@ public class MainMenuScreen implements Screen {
 		guiCam.position.set(320 / 2, 480 / 2, 0);
 		batcher = new SpriteBatch();
 		soundBounds = new Rectangle(0, 0, 64, 64);
-		playBounds = new Rectangle(160 - 150, 200 + 18, 300, 36);
-		multiplayerBounds = new Rectangle(160 - 150, 200 - 18,300, 36);
-		highscoresBounds = new Rectangle(160 - 150, 200 - 36-18, 300, 36);
-		helpBounds = new Rectangle(160 - 150, 200 - 36 - 36-18, 300, 36);
+		playBounds = new Rectangle(147, 232, 79, 47);
+		multiplayerBounds = new Rectangle(38,163,68, 69);
+		highscoresBounds = new Rectangle(77, 102, 69, 66);
+		helpBounds = new Rectangle(154, 152, 69, 60);
 		touchPoint = new Vector3();
 	}
 
@@ -89,12 +89,17 @@ public class MainMenuScreen implements Screen {
 		batcher.setProjectionMatrix(guiCam.combined);
 		batcher.disableBlending();
 		batcher.begin();
-		batcher.draw(Assets.backgroundRegionmain, 0, 0, 320, 480);
+		batcher.draw(Assets.backgroundRegionmain, 0, 0, 340, 480);
 		batcher.end();
       batcher.enableBlending();
 		batcher.begin();
+		
+		//TextureRegion keyFrame = Assets.coinAnim.getKeyFrame(coin.deltaTime, Animation.ANIMATION_LOOPING);
+		
+		//batcher.draw(keyFrame,10, 20, 1.5f, 1.5f);
+	
 		/*batcher.draw(Assets.logo, 160 - 274 / 2, 480 - 10 - 142, 274, 142);*/
-		batcher.draw(Assets.mainMenu, 10, 200 - 110, 300, 240);
+		//batcher.draw(Assets.mainMenu, 10, 200 - 110, 300, 240);
 		batcher.draw(Settings.soundEnabled ? Assets.soundOn : Assets.soundOff, 0, 0, 54, 44);
 		batcher.end();
 	}

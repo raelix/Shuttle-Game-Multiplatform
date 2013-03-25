@@ -134,7 +134,7 @@ public class Assets {
 		background18 = loadTexture("data/sfondo18.png");
 		background19 = loadTexture("data/sfondo19.png");
 		background20 = loadTexture("data/sfondo20.png");
-		backgroundmain = loadTexture("data/backgroundmain.png");
+		backgroundmain = loadTexture("data/mainsfondo.png");
 		Pause = loadTexture("data/pause.png");
 		shuttle = loadTexture("data/alieno1.png");
 		shuttle1 = loadTexture("data/alieno2.png");
@@ -144,11 +144,12 @@ public class Assets {
 		life = loadTexture("data/life.png");
 		life1= loadTexture("data/life1.png");
 		projectile= loadTexture("data/projectile.png");
-		projectile1= loadTexture("data/projectile1.png");
+		projectile1= loadTexture("data/projectile.png");
 		portaproj= loadTexture("data/portaproj.png");
 		pixmap = new Pixmap(2048, 2048, Pixmap.Format.RGBA8888);
 		tmptext = new Texture(pixmap);
 		DrawSmiley();
+		backgroundmain.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		background.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		background2.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		background3.setFilter(TextureFilter.Linear, TextureFilter.Linear);
@@ -182,7 +183,7 @@ public class Assets {
 		backgroundRegion19 = new TextureRegion(background18, 2, 4, 1024, 1024);
 		backgroundRegion20 = new TextureRegion(background19, 2, 4, 1024, 1024);
 		backgroundRegion21 = new TextureRegion(background20, 2, 4, 1024, 1024);
-		backgroundRegionmain = new TextureRegion(backgroundmain, 0,0, 680, 1024);
+		backgroundRegionmain = new TextureRegion(backgroundmain, 3,0, 1024, 1024);
 		items = loadTexture("data/items.png");
 		items.setFilter(TextureFilter.Linear, TextureFilter.Nearest);
 		mainMenu = new TextureRegion(mainmenu, 0, 0, 346, 512);
@@ -202,7 +203,7 @@ public class Assets {
 		breakanim = new Animation(0.2f, new TextureRegion(coin6, 0, 0, 128, 128), new TextureRegion(coin7, 0, 0, 128, 128),
 			new TextureRegion(coin8, 0, 0, 128, 128), new TextureRegion(coin9, 0, 0, 128, 128));
 		lifeAnim = new Animation(0.5f, new TextureRegion(life, 0, 0, 120, 128), new TextureRegion(life1, 0, 0, 120, 128));
-		projAnim = new Animation(0.2f, new TextureRegion(projectile, 0, 0, 128, 128), new TextureRegion(projectile1, 1, 0, 120, 128));
+		projAnim = new Animation(0.2f, new TextureRegion(projectile, 0, 0, 64, 64), new TextureRegion(projectile1, 1, 0, 64, 64));
 		bobJump = new Animation(0.2f, new TextureRegion(shuttle, 0, 0, 512, 512), new TextureRegion(shuttle1, 0, 0, 512, 512));
 		bobFall = new Animation(0.2f, new TextureRegion(items, 64, 128, 32, 32), new TextureRegion(items, 96, 128, 32, 32));
 		bobHit = new TextureRegion(items, 128, 128, 32, 32);

@@ -93,7 +93,7 @@ public class WorldRenderer {
 
 	/*	float side = world.bob.velocity.x < 0 ? -1 : 1;*/
 		
-		batch.draw(keyFrame, world.bob.position.x -0.65f, world.bob.position.y -3f, 2.8f, 3.5f);
+		batch.draw(keyFrame, world.bob.position.x -0.65f, world.bob.position.y -2.5f, 2.3f, 3f);
 		}
 
 	private void renderPlatforms () {
