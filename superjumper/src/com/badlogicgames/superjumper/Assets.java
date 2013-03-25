@@ -23,6 +23,7 @@ public class Assets {
 	public static Texture coin1;
 	public static Texture coin2;
 	public static Texture coin3;
+	public static Texture coin4;
 	public static Texture coin6;
 	public static Texture coin7;
 	public static Texture coin8;
@@ -109,6 +110,7 @@ public class Assets {
 		coin1 = loadTexture("data/coin1.png");
 		coin2 = loadTexture("data/coin2.png");
 		coin3 = loadTexture("data/coin3.png");
+		coin4 = loadTexture("data/coin4.png");
 		coin6 = loadTexture("data/coin6.png");
 		coin7 = loadTexture("data/coin7.png");
 		coin8 = loadTexture("data/coin8.png");
@@ -199,13 +201,13 @@ public class Assets {
 		spring = new TextureRegion(items, 128, 0, 32, 32);
 		castle = new TextureRegion(items, 128, 64, 64, 64);
 		coinAnim = new Animation(0.2f, new TextureRegion(coin1, 0, 0, 128, 128), new TextureRegion(coin2, 0, 0, 128, 128),
-			new TextureRegion(coin3, 0, 0, 128, 128), new TextureRegion(coin1, 0, 0, 128, 128));
+			new TextureRegion(coin3, 0, 0, 128, 128), new TextureRegion(coin4, 0, 0, 128, 128));
 		breakanim = new Animation(0.2f, new TextureRegion(coin6, 0, 0, 128, 128), new TextureRegion(coin7, 0, 0, 128, 128),
 			new TextureRegion(coin8, 0, 0, 128, 128), new TextureRegion(coin9, 0, 0, 128, 128));
 		lifeAnim = new Animation(0.5f, new TextureRegion(life, 0, 0, 120, 128), new TextureRegion(life1, 0, 0, 120, 128));
 		projAnim = new Animation(0.2f, new TextureRegion(projectile, 0, 0, 64, 64), new TextureRegion(projectile1, 1, 0, 64, 64));
 		bobJump = new Animation(0.2f, new TextureRegion(shuttle, 0, 0, 512, 512), new TextureRegion(shuttle1, 0, 0, 512, 512));
-		bobFall = new Animation(0.2f, new TextureRegion(items, 64, 128, 32, 32), new TextureRegion(items, 96, 128, 32, 32));
+		bobFall = new Animation(0.2f, new TextureRegion(shuttle, 0, 0, 512, 512), new TextureRegion(shuttle1, 0, 0, 512, 512));
 		bobHit = new TextureRegion(items, 128, 128, 32, 32);
 		squirrelFly = new Animation(0.2f, new TextureRegion(items, 0, 160, 32, 32), new TextureRegion(items, 32, 160, 32, 32));
 		platform = new TextureRegion(nuvole, 0, 0, 250, 250);
