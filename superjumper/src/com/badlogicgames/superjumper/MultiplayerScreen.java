@@ -73,25 +73,7 @@ public class MultiplayerScreen implements Screen {
 				str = "CONNECTING";
 				if (WorldMulti.buffer.selfTest()) Gdx.app.debug("PHTEST", "BUFFER OK");
 				else Gdx.app.debug("PHTEST", "BUFFER KO");
-				TextInputListener listener = null;
-				String ciao=null;
-				if(message=="")
-				if (Gdx.input.justTouched()) {
-					Gdx.input.getTextInput(new TextInputListener() {
-						@Override
-						public void input (String text) {
-							message = text;
-						}
-
-						@Override
-						public void canceled () {
-							message = "canceled by user";
-						}
-					}, "Host IP", "192.168.0.");
-				}
-			
-			if(message!=""){
-				ConnectThread thr = new ConnectThread(message,9999,WorldMulti.buffer,sem);
+				ConnectThread thr = new ConnectThread("192.168.0.3",10000,WorldMulti.buffer,sem);
 				thr.start();
 				Gdx.app.debug("PHTEST", "started connect thread");
 				try {
@@ -103,7 +85,7 @@ public class MultiplayerScreen implements Screen {
 				str = "CONNECTED";
 				game.setScreen(new GameScreenMulti(game));
 
-			}}
+			}
 			else if (OverlapTester.pointInRectangle(ServerBounds, touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);
 				str = "ACCEPTING";
@@ -111,7 +93,7 @@ public class MultiplayerScreen implements Screen {
 				if (WorldMulti.buffer.selfTest()) Gdx.app.debug("PHTEST", "BUFFER OK");
 				else Gdx.app.debug("PHTEST", "BUFFER KO");
 				Gdx.app.debug("PHTEST", "starto accept thread");
-				AcceptThread thr = new AcceptThread(9999,WorldMulti.buffer,sem);
+				AcceptThread thr = new AcceptThread(10000,WorldMulti.buffer,sem);
 				thr.start();
 				Gdx.app.debug("PHTEST", "started accept thread");
 				try {
@@ -126,7 +108,6 @@ public class MultiplayerScreen implements Screen {
 			}
 		}
 	}
-
 	public void draw (float deltaTime) {
 		GLCommon gl = Gdx.gl;
 		gl.glClear(GL10.GL_COLOR_BUFFER_BIT);

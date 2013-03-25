@@ -40,6 +40,7 @@ public class WorldMulti implements PROTOCOL_CONSTANTS {
 	public int turbo=1;
 	private Vector2 gravity = new Vector2(0,15);
 	protected static FullDuplexBuffer buffer = new FullDuplexBuffer();
+	public static String enemy = "";
 
 	public WorldMulti (WorldListener listener) {
 		this.bob = new Bob(4, 2);
@@ -98,8 +99,6 @@ public class WorldMulti implements PROTOCOL_CONSTANTS {
 			y -= rand.nextFloat() * (maxJumpHeight / 3);
 		}
 		castle = new Castle(WORLD_WIDTH / 2, y);
-
-
 	}
 
 	public void setGravity(float x, float y){
@@ -116,9 +115,7 @@ public class WorldMulti implements PROTOCOL_CONSTANTS {
 			Life life = lifes.get(i);
 			lifes.remove(life);
 			len = lifes.size();
-
 		}
-
 		else state = WORLD_STATE_GAME_OVER;
 	}
 
@@ -184,7 +181,7 @@ public class WorldMulti implements PROTOCOL_CONSTANTS {
 		checkRemovePlatform();
 		checkRemoveProjectile();
 		checkRemoveCoin();
-		//checkGameOver();
+		checkGameOver();
 		//checkGameOverMulti();
 
 	}
@@ -608,14 +605,12 @@ public class WorldMulti implements PROTOCOL_CONSTANTS {
 		}
 	}
 
+	@SuppressWarnings("static-access")
 	private void checkGameOver () {
 		if (heightSoFar - 7.5f > bob.position.y) {
 			state = WORLD_STATE_GAME_OVER;
+			this.buffer.putPaccoOutNOBLOCK(new PaccoEnd());
 		}
-		/*
-		int i = 0;
-		Life life = lifes.get(i);
-		if (i<0){ state = WORLD_STATE_GAME_OVER;}*/
 	}
 	private void checkGameOverMulti () {
 		if (heightSoFar - 7.5f > bobMulti.position.y) {
