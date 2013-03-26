@@ -49,7 +49,7 @@ public class MainMenuScreen implements Screen {
 		soundBounds = new Rectangle(0, 0, 64, 64);
 		playBounds = new Rectangle(147, 232, 79, 47);
 		multiplayerBounds = new Rectangle(38,163,68, 69);
-		highscoresBounds = new Rectangle(77, 102, 69, 66);
+		//highscoresBounds = new Rectangle(77, 102, 69, 66);
 		helpBounds = new Rectangle(154, 152, 69, 60);
 		touchPoint = new Vector3();
 	}
