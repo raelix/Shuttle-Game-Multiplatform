@@ -19,6 +19,7 @@ package com.badlogicgames.superjumper;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.GLCommon;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -72,12 +73,13 @@ public class HighscoresScreen implements Screen {
 		batcher.setProjectionMatrix(guiCam.combined);
 		batcher.disableBlending();
 		batcher.begin();
-		batcher.draw(Assets.backgroundRegion, 0, 0, 320, 480);
+		MainMenuScreen.drawGradient(batcher, Assets.rect, 0, 0, 320, 480,Color.BLACK,Color.BLUE, false);
+		//batcher.draw(Assets.backgroundRegion, 0, 0, 320, 480);
 		batcher.end();
 		batcher.enableBlending();
 		batcher.begin();
-		batcher.draw(Assets.highScoresRegion, 10, 360 - 16, 300, 33);
-
+		//batcher.draw(Assets.highScoresRegion, 10, 360 - 16, 300, 33);
+		Assets.font.draw(batcher, "HighScores", 100,460);
 		float y = 230;
 		for (int i = 4; i >= 0; i--) {
 			Assets.font.draw(batcher, highScores[i], xOffset, y);

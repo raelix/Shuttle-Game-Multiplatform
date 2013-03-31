@@ -54,6 +54,7 @@ public class Assets {
 	public static Texture background16;
 	public static Texture background17,background18,background19,background20;
 	public static Texture backgroundmain;
+	public static Texture backgroundmain1;
 	public static Texture projectile;
 	public static Texture projectile1;
 	public static Texture items;
@@ -85,6 +86,7 @@ public class Assets {
 	public static TextureRegion spring;
 	public static TextureRegion castle;
 	public static Animation coinAnim;
+	public static Animation backAnim;
 	public static Animation lifeAnim;
 	public static Animation projAnim;
 	public static Animation bobJump;
@@ -162,7 +164,8 @@ public class Assets {
 		background18 = loadTexture("data/sfondo18.png");
 		background19 = loadTexture("data/sfondo19.png");
 		background20 = loadTexture("data/sfondo20.png");
-		backgroundmain = loadTexture("data/mainsfondo.png");
+		backgroundmain = loadTexture("data/mainsfondo1.png");
+		backgroundmain1 = loadTexture("data/mainsfondo2.png");
 		Pause = loadTexture("data/pause.png");
 		shuttle = loadTexture("data/alieno1.png");
 		shuttle1 = loadTexture("data/alieno2.png");
@@ -178,6 +181,7 @@ public class Assets {
 		tmptext = new Texture(pixmap);
 		DrawSmiley();
 		backgroundmain.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		backgroundmain1.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		shuttle.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		shuttle1.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		background.setFilter(TextureFilter.Linear, TextureFilter.Linear);
@@ -230,6 +234,7 @@ public class Assets {
 		castle = new TextureRegion(items, 128, 64, 64, 64);
 		coinAnim = new Animation(0.2f, new TextureRegion(coin1, 0, 0, 128, 128), new TextureRegion(coin2, 0, 0, 128, 128),
 			new TextureRegion(coin3, 0, 0, 128, 128), new TextureRegion(coin4, 0, 0, 128, 128));
+		backAnim = new Animation(0.2f, new TextureRegion(backgroundmain, 0, 0, 1024, 1024), new TextureRegion(backgroundmain1, 0, 0, 1024, 1024));
 		breakanim = new Animation(0.2f, new TextureRegion(coin6, 0, 0, 128, 128), new TextureRegion(coin7, 0, 0, 128, 128),
 			new TextureRegion(coin8, 0, 0, 128, 128), new TextureRegion(coin9, 0, 0, 128, 128));
 		lifeAnim = new Animation(0.5f, new TextureRegion(life, 0, 0, 120, 128), new TextureRegion(life1, 0, 0, 120, 128));

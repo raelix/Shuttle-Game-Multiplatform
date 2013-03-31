@@ -16,7 +16,7 @@ public class BobMain extends DynamicGameObject {
 	public final int RAGGIO = 130;
 	private float totaltime = 0;
 	public static boolean BOB_DOUBLE_JUMP = false;
-	public float rotationcounter=360;//da sistemare
+	public float rotationcounter=0;//da sistemare
 	int state;
 	float stateTime;
 	public static float jumpTime;

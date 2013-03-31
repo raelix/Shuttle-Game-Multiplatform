@@ -16,9 +16,14 @@
 
 package com.badlogicgames.superjumper;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.GLCommon;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -32,6 +37,7 @@ public class MainMenuScreen implements Screen {
 	Sprite sprite;
 	Game game;
 	public final BobMain bob;
+	public final List<Star> stars;
 	OrthographicCamera guiCam;
 	SpriteBatch batcher;
 	Rectangle soundBounds;
@@ -42,10 +48,14 @@ public class MainMenuScreen implements Screen {
 	Vector3 touchPoint;
 	final static int centrox = 320/2;
 	final static int centroy = 480/2;
-
+	public final Random rand;
+	private	float stateTime=0;
+	private static float[] verts = new float[20];
 
 	public MainMenuScreen (Game game) {
 		this.game = game;
+		this.rand = new Random();
+		this.stars = new ArrayList<Star>();
 		this.bob = new BobMain(centrox, centroy);
 		guiCam = new OrthographicCamera(320, 480);
 		guiCam.position.set(320 / 2, 480 / 2, 0);
@@ -57,6 +67,7 @@ public class MainMenuScreen implements Screen {
 		highscoresBounds = new Rectangle(77, 102, 69, 66);
 		helpBounds = new Rectangle(154, 152, 69, 60);
 		touchPoint = new Vector3();
+		
 
 	}
 
@@ -83,9 +94,15 @@ public class MainMenuScreen implements Screen {
 				else
 					Assets.music.pause();
 			}
+			
 
 		}
 		updatebob(deltaTime);
+		int type_star = Star.STAR_TYPE_STATIC;//star
+		float y_star = rand.nextFloat() *480;//star
+		float x_star = rand.nextFloat() *320;//star
+		Star star = new Star(type_star, x_star, y_star);//star
+		stars.add(star);//star
 
 	}
 
@@ -97,7 +114,8 @@ public class MainMenuScreen implements Screen {
 		batcher.setProjectionMatrix(guiCam.combined);
 		batcher.disableBlending();
 		batcher.begin();
-		batcher.draw(Assets.backgroundRegionmain, 0, 0, 340, 480);
+		drawGradient(batcher, Assets.rect, 0, 0, 320, 480,Color.BLACK,Color.BLUE, false);
+		//batcher.draw(Assets.backgroundRegionmain, 0, 0, 340, 480);
 		batcher.end();
 		batcher.enableBlending();
 		batcher.begin();
@@ -109,9 +127,20 @@ public class MainMenuScreen implements Screen {
 		batcher.end();
 		batcher.enableBlending();
 		batcher.begin();
+		TextureRegion keyFrame1;
+		stateTime=stateTime+0.01f;
+		keyFrame1 = Assets.backAnim.getKeyFrame(stateTime, Animation.ANIMATION_LOOPING);
+		if(stateTime>2)stateTime=0;
 		TextureRegion keyFrame;
-		keyFrame = Assets.bobJump.getKeyFrame(0.2f, Animation.ANIMATION_LOOPING);
+		int len = stars.size();
+		for (int i = 0; i < len; i++) {
+			Star star = stars.get(i);
+			TextureRegion keyFrame2 = Assets.starRegion;
+			batcher.draw(keyFrame2, star.position.x , star.position.y , 5, 5);
+		}
+		keyFrame = Assets.bobJump.getKeyFrame(stateTime, Animation.ANIMATION_LOOPING);
 		//Gdx.app.debug("Animation", "position"+bob.position.x+" "+bob.position.y);
+		batcher.draw(keyFrame1,0, 0, 320, 480);
 		batcher.draw(keyFrame, bob.position.x,bob.position.y, 25, 35, 50, 70, 1, 1, bob.rotationcounter);
 		batcher.end();
 	}
@@ -153,5 +182,37 @@ public class MainMenuScreen implements Screen {
 
 	@Override
 	public void dispose () {
+	}
+	public static void drawGradient(SpriteBatch batch, TextureRegion tex, float x, float y,
+		float width, float height, Color a, Color b, boolean horiz) {
+		float ca = a.toFloatBits();
+		float cb = b.toFloatBits();
+
+		int idx = 0;
+		verts[idx++] = x;
+		verts[idx++] = y;
+		verts[idx++] = horiz ? ca : cb; // bottom left
+		verts[idx++] = tex.getU(); //NOTE: texture coords origin is top left
+		verts[idx++] = tex.getV2();
+
+		verts[idx++] = x;
+		verts[idx++] = y + height;
+		verts[idx++] = ca; // top left
+		verts[idx++] = tex.getU();
+		verts[idx++] = tex.getV();
+
+		verts[idx++] = x + width;
+		verts[idx++] = y + height;
+		verts[idx++] = horiz ? cb : ca; // top right
+		verts[idx++] = tex.getU2();
+		verts[idx++] = tex.getV();
+
+		verts[idx++] = x + width;
+		verts[idx++] = y;
+		verts[idx++] = cb; // bottom right
+		verts[idx++] = tex.getU2();
+		verts[idx++] = tex.getV2();
+
+		batch.draw(tex.getTexture(), verts, 0, verts.length);
 	}
 }
