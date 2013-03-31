@@ -31,7 +31,7 @@ import com.badlogic.gdx.math.Vector3;
 public class MainMenuScreen implements Screen {
 	Sprite sprite;
 	Game game;
-   public final BobMain bob;
+	public final BobMain bob;
 	OrthographicCamera guiCam;
 	SpriteBatch batcher;
 	Rectangle soundBounds;
@@ -40,13 +40,13 @@ public class MainMenuScreen implements Screen {
 	Rectangle highscoresBounds;
 	Rectangle helpBounds;
 	Vector3 touchPoint;
-	static int centrox = 320/2;
-   static int centroy = 480/2;
+	final static int centrox = 320/2;
+	final static int centroy = 480/2;
 
 
 	public MainMenuScreen (Game game) {
 		this.game = game;
-		  this.bob = new BobMain(centrox, centroy);
+		this.bob = new BobMain(centrox, centroy);
 		guiCam = new OrthographicCamera(320, 480);
 		guiCam.position.set(320 / 2, 480 / 2, 0);
 		batcher = new SpriteBatch();
@@ -57,7 +57,7 @@ public class MainMenuScreen implements Screen {
 		highscoresBounds = new Rectangle(77, 102, 69, 66);
 		helpBounds = new Rectangle(154, 152, 69, 60);
 		touchPoint = new Vector3();
-	
+
 	}
 
 	public void update (float deltaTime) {
@@ -83,10 +83,10 @@ public class MainMenuScreen implements Screen {
 				else
 					Assets.music.pause();
 			}
-		
+
 		}
 		updatebob(deltaTime);
-		
+
 	}
 
 	public void draw (float deltaTime) {
@@ -98,40 +98,27 @@ public class MainMenuScreen implements Screen {
 		batcher.disableBlending();
 		batcher.begin();
 		batcher.draw(Assets.backgroundRegionmain, 0, 0, 340, 480);
-	
 		batcher.end();
-      batcher.enableBlending();
+		batcher.enableBlending();
 		batcher.begin();
-		
 		//TextureRegion keyFrame = Assets.coinAnim.getKeyFrame(coin.deltaTime, Animation.ANIMATION_LOOPING);
-		
 		//batcher.draw(keyFrame,10, 20, 1.5f, 1.5f);
-	
-		/*batcher.draw(Assets.logo, 160 - 274 / 2, 480 - 10 - 142, 274, 142);*/
+		//batcher.draw(Assets.logo, 160 - 274 / 2, 480 - 10 - 142, 274, 142);
 		//batcher.draw(Assets.mainMenu, 10, 200 - 110, 300, 240);
 		batcher.draw(Settings.soundEnabled ? Assets.soundOn : Assets.soundOff, 0, 0, 54, 44);
 		batcher.end();
 		batcher.enableBlending();
 		batcher.begin();
-TextureRegion keyFrame;
-		
+		TextureRegion keyFrame;
 		keyFrame = Assets.bobJump.getKeyFrame(0.2f, Animation.ANIMATION_LOOPING);
-Gdx.app.debug("Animation", "position"+bob.position.x+" "+bob.position.y);
-
-if(bob.position.y>50) {
-   
-   batcher.draw(keyFrame, bob.position.x,bob.position.y, 25, 35, 50, 70, 1, 1, bob.rotationcounter);
-}
-else batcher.draw(keyFrame, bob.position.x, bob.position.y, 50, 70);    
-
-
-batcher.end();
+		//Gdx.app.debug("Animation", "position"+bob.position.x+" "+bob.position.y);
+		batcher.draw(keyFrame, bob.position.x,bob.position.y, 25, 35, 50, 70, 1, 1, bob.rotationcounter);
+		batcher.end();
 	}
-	
+
 
 	@Override
 	public void render (float delta) {
-
 		update(delta);
 		draw(delta);
 	}
@@ -143,12 +130,12 @@ batcher.end();
 	@Override
 	public void show () {
 	}
-	
+
 	private void updatebob(float deltaTime){
-	//	bob.setGravityBob(0,0);
+		//	bob.setGravityBob(0,0);
 		//if(bob.position.y>480/10)bob.velocity.y=100;
-		bob.velocity.set(13, 13);
-			bob.update(deltaTime);
+		//bob.velocity.set(13, 13);
+		bob.update(deltaTime);
 	}
 
 	@Override

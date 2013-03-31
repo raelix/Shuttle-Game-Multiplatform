@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<workbench progressCount="15" version="2.0">
+<workbench progressCount="16" version="2.0">
 <workbenchAdvisor/>
-<window height="728" maximized="true" width="1025" x="218" y="21">
+<window height="728" maximized="true" width="680" x="213" y="133">
 <fastViewData fastViewLocation="1024"/>
 <perspectiveBar>
 <itemSize x="250"/>
@@ -24,11 +24,13 @@
 <coolItem id="group.nav" itemType="typeGroupMarker"/>
 <coolItem id="org.eclipse.ui.workbench.navigate" itemType="typeToolBarContribution" x="190" y="22"/>
 <coolItem id="group.editor" itemType="typeGroupMarker"/>
+<coolItem id="org.eclipse.jdt.ui.ClassFileEditor" itemType="typePlaceholder" x="-1" y="-1"/>
+<coolItem id="com.android.ide.eclipse.editors.CommonXmlEditor" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="org.eclipse.jdt.ui.CompilationUnitEditor" itemType="typeToolBarContribution" x="-1" y="-1"/>
 <coolItem id="group.help" itemType="typeGroupMarker"/>
 <coolItem id="org.eclipse.ui.workbench.help" itemType="typeToolBarContribution" x="-1" y="-1"/>
 </coolbarLayout>
-<page aggregateWorkingSetId="Aggregate for window 1364165581161" focus="true" label="Workspace - Java">
+<page aggregateWorkingSetId="Aggregate for window 1362924525050" focus="true" label="Workspace - Java">
 <editors>
 <editorArea activeWorkbook="DefaultEditorWorkbook">
 <info part="DefaultEditorWorkbook">
@@ -37,21 +39,26 @@
 <part id="0"/>
 <part id="1"/>
 <part id="2"/>
+<part id="3"/>
 </presentation>
 </folder>
 </info>
 </editorArea>
-<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="MultiplayerScreen.java" partName="MultiplayerScreen.java" path="C:/Users/gianmarco/Documents/WorkSpace/superjumper/src/com/badlogicgames/superjumper/MultiplayerScreen.java" title="MultiplayerScreen.java" tooltip="superjumper/src/com/badlogicgames/superjumper/MultiplayerScreen.java" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/superjumper/src/com/badlogicgames/superjumper/MultiplayerScreen.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="2305" selectionTopPixel="680"/>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Assets.java" partName="Assets.java" path="C:/Users/gianmarco/workspace/superjumper/src/com/badlogicgames/superjumper/Assets.java" title="Assets.java" tooltip="superjumper/src/com/badlogicgames/superjumper/Assets.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/superjumper/src/com/badlogicgames/superjumper/Assets.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="4812" selectionTopPixel="1635"/>
 </editor>
-<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="SuperJumperServer.java" partName="SuperJumperServer.java" path="C:/Users/gianmarco/Documents/WorkSpace/SuperJumperServer/src/SuperJumperServer.java" title="SuperJumperServer.java" tooltip="SuperJumperServer/src/SuperJumperServer.java" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/SuperJumperServer/src/SuperJumperServer.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="0" selectionTopPixel="494"/>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="WorldRenderer.java" partName="WorldRenderer.java" path="C:/Users/gianmarco/workspace/superjumper/src/com/badlogicgames/superjumper/WorldRenderer.java" title="WorldRenderer.java" tooltip="superjumper/src/com/badlogicgames/superjumper/WorldRenderer.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/superjumper/src/com/badlogicgames/superjumper/WorldRenderer.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="8414" selectionOffset="0" selectionTopPixel="460"/>
 </editor>
-<editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="BTsocket.java" partName="BTsocket.java" path="C:/Users/gianmarco/Documents/WorkSpace/SuperJumperServer/src/BTsocket.java" title="BTsocket.java" tooltip="SuperJumperServer/src/BTsocket.java" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/SuperJumperServer/src/BTsocket.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="0" selectionTopPixel="286"/>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="MainMenuScreen.java" partName="MainMenuScreen.java" path="C:/Users/gianmarco/workspace/superjumper/src/com/badlogicgames/superjumper/MainMenuScreen.java" title="MainMenuScreen.java" tooltip="superjumper/src/com/badlogicgames/superjumper/MainMenuScreen.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/superjumper/src/com/badlogicgames/superjumper/MainMenuScreen.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="4259" selectionTopPixel="1260"/>
+</editor>
+<editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="World.java" partName="World.java" path="C:/Users/gianmarco/workspace/superjumper/src/com/badlogicgames/superjumper/World.java" title="World.java" tooltip="superjumper/src/com/badlogicgames/superjumper/World.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/superjumper/src/com/badlogicgames/superjumper/World.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="3427" selectionTopPixel="1331"/>
 </editor>
 </editors>
 <views>
@@ -69,18 +76,16 @@
 <view id="org.eclipse.ui.views.ProblemView" partName="Problems">
 <viewState PRIMARY_SORT_FIELD="org.eclipse.ui.ide.severityAndDescriptionField" categoryGroup="org.eclipse.ui.ide.severity" markerContentGenerator="org.eclipse.ui.ide.problemsGenerator" partName="Problems">
 <expanded>
-<category IMemento.internal.id="Errors (2 items)"/>
+<category IMemento.internal.id="Warnings (7 items)"/>
+<category IMemento.internal.id="Errors"/>
 </expanded>
-<columnWidths org.eclipse.ui.ide.locationField="90" org.eclipse.ui.ide.markerType="90" org.eclipse.ui.ide.pathField="120" org.eclipse.ui.ide.resourceField="90" org.eclipse.ui.ide.severityAndDescriptionField="300"/>
+<columnWidths org.eclipse.ui.ide.locationField="90" org.eclipse.ui.ide.markerType="90" org.eclipse.ui.ide.pathField="120" org.eclipse.ui.ide.resourceField="90" org.eclipse.ui.ide.severityAndDescriptionField="513"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.severityAndDescriptionField"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.resourceField"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.pathField"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.locationField"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.markerType"/>
 </viewState>
-</view>
-<view id="org.eclipse.ui.console.ConsoleView" partName="Console">
-<viewState/>
 </view>
 <view id="org.eclipse.jdt.ui.PackageExplorer" partName="Package Explorer">
 <viewState group_libraries="1" layout="2" linkWithEditor="0" rootMode="1" workingSetName="">
@@ -109,13 +114,18 @@
 </customFilters>
 </viewState>
 </view>
+<view id="org.eclipse.ui.console.ConsoleView" partName="Console">
+<viewState/>
+</view>
 <view id="com.android.ide.eclipse.ddms.views.SysInfoView" partName="System Information"/>
 <view id="com.android.ide.eclipse.ddms.views.EmulatorControlView" partName="Emulator Control"/>
 <view id="org.eclipse.jdt.ui.SourceView" partName="Declaration"/>
 <view id="com.android.ide.eclipse.ddms.views.AllocTrackerView" partName="Allocation Tracker"/>
-<view id="org.eclipse.jdt.ui.JavadocView" partName="Javadoc"/>
+<view id="org.eclipse.jdt.ui.JavadocView" partName="Javadoc">
+<viewState/>
+</view>
 </views>
-<perspectives activePart="org.eclipse.ui.console.ConsoleView" activePerspective="org.eclipse.jdt.ui.JavaPerspective">
+<perspectives activePart="org.eclipse.jdt.ui.CompilationUnitEditor" activePerspective="org.eclipse.jdt.ui.JavaPerspective">
 <perspective editorAreaTrimState="2" editorAreaVisible="0" fixed="0" version="0.016">
 <descriptor class="com.android.ide.eclipse.ddms.Perspective" id="com.android.ide.eclipse.ddms.Perspective" label="DDMS"/>
 <alwaysOnActionSet id="org.eclipse.ui.cheatsheets.actionSet"/>
@@ -243,12 +253,12 @@
 <hide_toolbar_item_id id="org.eclipse.debug.ui.commands.RunToLine"/>
 <hide_toolbar_item_id id="org.eclipse.jdt.ui.actions.OpenProjectWizard"/>
 <hide_toolbar_item_id id="org.eclipse.ui.edit.text.toggleShowSelectedElementOnly"/>
-<view id="org.eclipse.jdt.ui.PackageExplorer"/>
 <view id="org.eclipse.ui.views.ProblemView"/>
 <view id="org.eclipse.jdt.ui.JavadocView"/>
 <view id="org.eclipse.jdt.ui.SourceView"/>
 <view id="org.eclipse.ui.console.ConsoleView"/>
 <view id="com.android.ide.eclipse.ddms.views.LogCatView"/>
+<view id="org.eclipse.jdt.ui.PackageExplorer"/>
 <view id="org.eclipse.ui.views.ContentOutline"/>
 <fastViewBars/>
 <layout>
@@ -265,7 +275,7 @@
 </presentation>
 </folder>
 </info>
-<info folder="true" part="org.eclipse.ui.internal.ViewStack@4439a788" ratio="0.75" ratioLeft="750" ratioRight="250" relationship="2" relative="left">
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@75749e15" ratio="0.75" ratioLeft="750" ratioRight="250" relationship="2" relative="left">
 <folder appearance="2" expanded="2">
 <page content="org.eclipse.help.ui.HelpView" label="LabelNotFound"/>
 <page content="org.eclipse.ui.internal.introview" label="LabelNotFound"/>
@@ -311,166 +321,167 @@
 <workingSets/>
 <navigationHistory>
 <editors>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/superjumper/src/com/badlogicgames/superjumper/Assets.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/superjumper/src/com/badlogicgames/superjumper/World.java"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/superjumper/src/com/badlogicgames/superjumper/WorldRenderer.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/superjumper/src/com/badlogicgames/superjumper/Bob.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/superjumper/src/com/badlogicgames/superjumper/BobMain.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/superjumper/src/com/badlogicgames/superjumper/Star.java"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/superjumper/src/com/badlogicgames/superjumper/Assets.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/superjumper/src/com/badlogicgames/superjumper/Bob.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/superjumper/src/com/badlogicgames/superjumper/MultiplayerScreen.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/SuperJumperServer/src/PaccoUpdateBobMulti.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/SuperJumperServer/src/PaccoStart.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/SuperJumperServer/src/User.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/SuperJumperServer/src/SuperJumperServer.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/SuperJumperServer/src/PaccoWelcome.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/SuperJumperServer/src/Utils.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/SuperJumperServer/src/PaccoEnd.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/SuperJumperServer/src/BTsocket.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/superjumper/src/com/badlogicgames/superjumper/MainMenuScreen.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/superjumper/src/com/badlogicgames/superjumper/SuperJumperDesktop.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/superjumper/src/com/badlogicgames/superjumper/WorldRenderer.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/superjumper/src/com/badlogicgames/superjumper/Assets.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/superjumper/src/com/badlogicgames/superjumper/Assets.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/superjumper/src/com/badlogicgames/superjumper/World.java"/>
 </editors>
-<item historyLabel="Bob.java" index="2">
+<item historyLabel="World.java" index="0">
+<position info="not_deleted" x="2953" y="0"/>
+</item>
+<item historyLabel="WorldRenderer.java" index="1">
+<position info="not_deleted" x="1182" y="0"/>
+</item>
+<item historyLabel="Assets.java" index="4">
+<position info="not_deleted" x="4280" y="0"/>
+</item>
+<item historyLabel="World.java" index="0">
+<position info="not_deleted" x="2953" y="0"/>
+</item>
+<item historyLabel="Star.java" index="3">
+<position info="not_deleted" x="1000" y="0"/>
+</item>
+<item historyLabel="BobMain.java" index="2">
 <position/>
 </item>
 <item historyLabel="WorldRenderer.java" index="1">
-<position info="not_deleted" x="3985" y="0"/>
+<position info="not_deleted" x="7880" y="1"/>
 </item>
-<item historyLabel="Bob.java" index="2">
-<position info="not_deleted" x="459" y="0"/>
+<item historyLabel="Assets.java" index="4">
+<position info="not_deleted" x="4500" y="0"/>
 </item>
-<item historyLabel="Assets.java" index="0">
-<position info="not_deleted" x="9394" y="0"/>
+<item historyLabel="World.java" index="0">
+<position info="not_deleted" x="2953" y="0"/>
 </item>
-<item historyLabel="WorldRenderer.java" index="1">
+<item historyLabel="Assets.java" index="4">
+<position info="not_deleted" x="561" y="0"/>
+</item>
+<item historyLabel="World.java" index="0">
+<position info="not_deleted" x="2953" y="0"/>
+</item>
+<item historyLabel="Star.java" index="3">
+<position info="not_deleted" x="1000" y="0"/>
+</item>
+<item historyLabel="BobMain.java" index="2">
 <position/>
 </item>
-<item historyLabel="Bob.java" index="2">
-<position info="not_deleted" x="459" y="0"/>
+<item historyLabel="SuperJumperDesktop.java" index="6">
+<position info="not_deleted" x="1041" y="0"/>
 </item>
-<item historyLabel="WorldRenderer.java" index="1">
+<item historyLabel="WorldRenderer.java" index="7">
+<position info="not_deleted" x="4572" y="0"/>
+</item>
+<item historyLabel="Assets.java" index="8">
+<position info="not_deleted" x="4407" y="0"/>
+</item>
+<item historyLabel="WorldRenderer.java" index="7">
+<position info="not_deleted" x="1802" y="0"/>
+</item>
+<item historyLabel="Assets.java" index="9">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="WorldRenderer.java" index="7">
+<position info="not_deleted" x="513" y="0"/>
+</item>
+<item historyLabel="MainMenuScreen.java" index="5">
+<position info="not_deleted" x="4440" y="0"/>
+</item>
+<item historyLabel="WorldRenderer.java" index="7">
+<position info="not_deleted" x="1502" y="0"/>
+</item>
+<item historyLabel="Assets.java" index="9">
+<position info="not_deleted" x="4795" y="0"/>
+</item>
+<item historyLabel="WorldRenderer.java" index="7">
+<position info="not_deleted" x="1533" y="0"/>
+</item>
+<item historyLabel="Assets.java" index="9">
+<position info="not_deleted" x="4757" y="0"/>
+</item>
+<item historyLabel="WorldRenderer.java" index="7">
+<position info="not_deleted" x="1502" y="0"/>
+</item>
+<item historyLabel="MainMenuScreen.java" index="5">
+<position info="not_deleted" x="1517" y="0"/>
+</item>
+<item historyLabel="Assets.java" index="9">
+<position info="not_deleted" x="4857" y="0"/>
+</item>
+<item historyLabel="WorldRenderer.java" index="7">
+<position info="not_deleted" x="1502" y="0"/>
+</item>
+<item historyLabel="World.java" index="10">
+<position info="not_deleted" x="418" y="0"/>
+</item>
+<item historyLabel="WorldRenderer.java" index="7">
+<position info="not_deleted" x="1572" y="0"/>
+</item>
+<item historyLabel="MainMenuScreen.java" index="5">
+<position info="not_deleted" x="1517" y="0"/>
+</item>
+<item historyLabel="World.java" index="10">
+<position info="not_deleted" x="12671" y="0"/>
+</item>
+<item historyLabel="MainMenuScreen.java" index="5">
+<position info="not_deleted" x="1517" y="0"/>
+</item>
+<item historyLabel="WorldRenderer.java" index="7">
+<position info="not_deleted" x="8405" y="0"/>
+</item>
+<item historyLabel="World.java" index="10">
+<position info="not_deleted" x="550" y="0"/>
+</item>
+<item historyLabel="MainMenuScreen.java" index="5">
+<position info="not_deleted" x="1517" y="0"/>
+</item>
+<item historyLabel="WorldRenderer.java" index="7">
+<position info="not_deleted" x="1490" y="0"/>
+</item>
+<item historyLabel="MainMenuScreen.java" index="5">
+<position info="not_deleted" x="1517" y="0"/>
+</item>
+<item historyLabel="World.java" index="10">
+<position info="not_deleted" x="2939" y="0"/>
+</item>
+<item historyLabel="WorldRenderer.java" index="7">
+<position info="not_deleted" x="4165" y="0"/>
+</item>
+<item historyLabel="Assets.java" index="9">
+<position info="not_deleted" x="5022" y="0"/>
+</item>
+<item historyLabel="WorldRenderer.java" index="7">
+<position info="not_deleted" x="4165" y="0"/>
+</item>
+<item historyLabel="World.java" index="10">
+<position info="not_deleted" x="2939" y="0"/>
+</item>
+<item historyLabel="BobMain.java" index="2">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="World.java" index="10">
+<position info="not_deleted" x="2939" y="0"/>
+</item>
+<item historyLabel="MainMenuScreen.java" index="5">
 <position/>
 </item>
-<item historyLabel="Bob.java" index="2">
-<position info="not_deleted" x="459" y="0"/>
+<item historyLabel="Assets.java" index="9">
+<position info="not_deleted" x="4812" y="0"/>
 </item>
-<item historyLabel="Assets.java" index="0">
-<position info="not_deleted" x="9394" y="0"/>
+<item historyLabel="WorldRenderer.java" index="7">
+<position info="not_deleted" x="0" y="8414"/>
 </item>
-<item historyLabel="WorldRenderer.java" index="1">
-<position/>
+<item historyLabel="MainMenuScreen.java" index="5">
+<position info="not_deleted" x="4259" y="0"/>
 </item>
-<item historyLabel="Bob.java" index="2">
-<position/>
-</item>
-<item historyLabel="Assets.java" index="0">
-<position info="not_deleted" x="9394" y="0"/>
-</item>
-<item historyLabel="WorldRenderer.java" index="1">
-<position/>
-</item>
-<item historyLabel="Bob.java" index="2">
-<position info="not_deleted" x="410" y="2"/>
-</item>
-<item historyLabel="Assets.java" index="0">
-<position info="not_deleted" x="9394" y="0"/>
-</item>
-<item historyLabel="WorldRenderer.java" index="1">
-<position info="not_deleted" x="3966" y="0"/>
-</item>
-<item historyLabel="Bob.java" index="2">
-<position info="not_deleted" x="459" y="0"/>
-</item>
-<item historyLabel="WorldRenderer.java" index="1">
-<position info="not_deleted" x="3971" y="4"/>
-</item>
-<item historyLabel="Bob.java" index="2">
-<position info="not_deleted" x="410" y="2"/>
-</item>
-<item historyLabel="WorldRenderer.java" index="1">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="Assets.java" index="3"/>
-<item historyLabel="Bob.java" index="4"/>
-<item historyLabel="MultiplayerScreen.java" index="5">
-<position info="not_deleted" x="2305" y="0"/>
-</item>
-<item historyLabel="PaccoUpdateBobMulti.java" index="6">
-<position/>
-</item>
-<item historyLabel="MultiplayerScreen.java" index="5">
-<position info="not_deleted" x="2305" y="0"/>
-</item>
-<item historyLabel="PaccoStart.java" index="7">
-<position/>
-</item>
-<item historyLabel="MultiplayerScreen.java" index="5">
-<position info="not_deleted" x="2305" y="0"/>
-</item>
-<item historyLabel="User.java" index="8">
-<position/>
-</item>
-<item historyLabel="MultiplayerScreen.java" index="5">
-<position info="not_deleted" x="2305" y="0"/>
-</item>
-<item historyLabel="SuperJumperServer.java" index="9">
-<position info="not_deleted" x="1343" y="0"/>
-</item>
-<item historyLabel="PaccoWelcome.java" index="10">
-<position/>
-</item>
-<item historyLabel="SuperJumperServer.java" index="9">
-<position info="not_deleted" x="1343" y="0"/>
-</item>
-<item historyLabel="User.java" index="8">
-<position/>
-</item>
-<item historyLabel="SuperJumperServer.java" index="9">
-<position info="not_deleted" x="1343" y="0"/>
-</item>
-<item historyLabel="Utils.java" index="11">
-<position info="not_deleted" x="113" y="0"/>
-</item>
-<item historyLabel="SuperJumperServer.java" index="9">
-<position info="not_deleted" x="1343" y="0"/>
-</item>
-<item historyLabel="Utils.java" index="11">
-<position info="not_deleted" x="113" y="0"/>
-</item>
-<item historyLabel="MultiplayerScreen.java" index="5">
-<position info="not_deleted" x="2305" y="0"/>
-</item>
-<item historyLabel="SuperJumperServer.java" index="9">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="PaccoEnd.java" index="12">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="SuperJumperServer.java" index="9">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="PaccoStart.java" index="7">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="SuperJumperServer.java" index="9">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="PaccoUpdateBobMulti.java" index="6">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="SuperJumperServer.java" index="9">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="PaccoWelcome.java" index="10">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="SuperJumperServer.java" index="9">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="User.java" index="8">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="SuperJumperServer.java" index="9">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item active="true" historyLabel="BTsocket.java" index="13">
-<position info="not_deleted" x="0" y="0"/>
+<item active="true" historyLabel="World.java" index="10">
+<position info="not_deleted" x="2939" y="0"/>
 </item>
 </navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
@@ -478,6 +489,13 @@
 <workbenchWindowAdvisor/>
 <actionBarAdvisor/>
 <trimLayout>
+<trimArea IMemento.internal.id="16384">
+<trimItem IMemento.internal.id="left"/>
+</trimArea>
+<trimArea IMemento.internal.id="131072">
+<trimItem IMemento.internal.id="org.eclipse.ui.editorss"/>
+<trimItem IMemento.internal.id="right"/>
+</trimArea>
 <trimArea IMemento.internal.id="128">
 <trimItem IMemento.internal.id="org.eclipse.ui.internal.WorkbenchWindow.topBar"/>
 </trimArea>
@@ -490,41 +508,50 @@
 </trimLayout>
 </window>
 <mruList>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="BTsocket.java" tooltip="SuperJumperServer/src/BTsocket.java">
-<persistable path="/SuperJumperServer/src/BTsocket.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="BobMain.java" tooltip="superjumper/src/com/badlogicgames/superjumper/BobMain.java">
+<persistable path="/superjumper/src/com/badlogicgames/superjumper/BobMain.java"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="User.java" tooltip="SuperJumperServer/src/User.java">
-<persistable path="/SuperJumperServer/src/User.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="World.java" tooltip="superjumper/src/com/badlogicgames/superjumper/World.java">
+<persistable path="/superjumper/src/com/badlogicgames/superjumper/World.java"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="PaccoWelcome.java" tooltip="SuperJumperServer/src/PaccoWelcome.java">
-<persistable path="/SuperJumperServer/src/PaccoWelcome.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="PaccoUpdateBobMulti.java" tooltip="SuperJumperServer/src/PaccoUpdateBobMulti.java">
-<persistable path="/SuperJumperServer/src/PaccoUpdateBobMulti.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="PaccoStart.java" tooltip="SuperJumperServer/src/PaccoStart.java">
-<persistable path="/SuperJumperServer/src/PaccoStart.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="PaccoEnd.java" tooltip="SuperJumperServer/src/PaccoEnd.java">
-<persistable path="/SuperJumperServer/src/PaccoEnd.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="SuperJumperServer.java" tooltip="SuperJumperServer/src/SuperJumperServer.java">
-<persistable path="/SuperJumperServer/src/SuperJumperServer.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Utils.java" tooltip="SuperJumperServer/src/Utils.java">
-<persistable path="/SuperJumperServer/src/Utils.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="MultiplayerScreen.java" tooltip="superjumper/src/com/badlogicgames/superjumper/MultiplayerScreen.java">
-<persistable path="/superjumper/src/com/badlogicgames/superjumper/MultiplayerScreen.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Bob.java" tooltip="superjumper/src/com/badlogicgames/superjumper/Bob.java">
-<persistable path="/superjumper/src/com/badlogicgames/superjumper/Bob.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="MainMenuScreen.java" tooltip="superjumper/src/com/badlogicgames/superjumper/MainMenuScreen.java">
+<persistable path="/superjumper/src/com/badlogicgames/superjumper/MainMenuScreen.java"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="WorldRenderer.java" tooltip="superjumper/src/com/badlogicgames/superjumper/WorldRenderer.java">
 <persistable path="/superjumper/src/com/badlogicgames/superjumper/WorldRenderer.java"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Assets.java" tooltip="superjumper/src/com/badlogicgames/superjumper/Assets.java">
 <persistable path="/superjumper/src/com/badlogicgames/superjumper/Assets.java"/>
+</file>
+<file factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" name="Random.class" tooltip="java.util.Random">
+<persistable org.eclipse.jdt.ui.ClassFileIdentifier="=superjumper/C:\/Program Files\/Java\/jre7\/lib\/rt.jar&lt;java.util(Random.class"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Star.java" tooltip="superjumper/src/com/badlogicgames/superjumper/Star.java">
+<persistable path="/superjumper/src/com/badlogicgames/superjumper/Star.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Platform.java" tooltip="superjumper/src/com/badlogicgames/superjumper/Platform.java">
+<persistable path="/superjumper/src/com/badlogicgames/superjumper/Platform.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Castle.java" tooltip="superjumper/src/com/badlogicgames/superjumper/Castle.java">
+<persistable path="/superjumper/src/com/badlogicgames/superjumper/Castle.java"/>
+</file>
+<file factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" name="ParticleEffect.class" tooltip="com.badlogic.gdx.graphics.g2d.ParticleEffect">
+<persistable org.eclipse.jdt.ui.ClassFileIdentifier="=superjumper/libs\/gdx.jar&lt;com.badlogic.gdx.graphics.g2d(ParticleEffect.class"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="GameScreen.java" tooltip="superjumper/src/com/badlogicgames/superjumper/GameScreen.java">
+<persistable path="/superjumper/src/com/badlogicgames/superjumper/GameScreen.java"/>
+</file>
+<file factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" name="SpriteBatch.class" tooltip="com.badlogic.gdx.graphics.g2d.SpriteBatch">
+<persistable org.eclipse.jdt.ui.ClassFileIdentifier="=superjumper/libs\/gdx.jar&lt;com.badlogic.gdx.graphics.g2d(SpriteBatch.class"/>
+</file>
+<file factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" name="LwjglApplication.class" tooltip="com.badlogic.gdx.backends.lwjgl.LwjglApplication">
+<persistable org.eclipse.jdt.ui.ClassFileIdentifier="=superjumper-desktop/libs\/gdx-backend-lwjgl.jar&lt;com.badlogic.gdx.backends.lwjgl(LwjglApplication.class"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.systemExternalEditor" name="sfondo.png" tooltip="superjumper/data/sfondo.png">
+<persistable path="/superjumper/data/sfondo.png"/>
+</file>
+<file factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" name="Pixmap.class" tooltip="com.badlogic.gdx.graphics.Pixmap">
+<persistable org.eclipse.jdt.ui.ClassFileIdentifier="=superjumper/libs\/gdx.jar&lt;com.badlogic.gdx.graphics(Pixmap.class"/>
 </file>
 </mruList>
 </workbench>

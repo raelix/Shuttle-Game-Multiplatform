@@ -37,7 +37,7 @@ public class MultiplayerScreen implements Screen {
 	static String client = "PARTECIPA";
 	static String server = "OSPITA";
 	String message="";
-	
+
 	public MultiplayerScreen (Game game) {
 		this.game = game;
 
@@ -56,7 +56,7 @@ public class MultiplayerScreen implements Screen {
 			xOffset = Math.max(Assets.font.getBounds(highScores[i]).width, xOffset);
 		}
 		xOffset = 160 - xOffset / 2 + Assets.font.getSpaceWidth() / 2;
-	*/
+		 */
 	}
 
 	public void update (float deltaTime) {
@@ -74,7 +74,7 @@ public class MultiplayerScreen implements Screen {
 				str = "CONNECTING";
 				if (WorldMulti.buffer.selfTest()) Gdx.app.debug("PHTEST", "BUFFER OK");
 				else Gdx.app.debug("PHTEST", "BUFFER KO");
-				 ConnectThread thr = new ConnectThread("192.168.0.16",10000,WorldMulti.buffer,sem);
+				ConnectThread thr = new ConnectThread("192.168.0.16",10000,WorldMulti.buffer,sem);
 				thr.start();
 				Gdx.app.debug("PHTEST", "started connect thread");
 				try {
@@ -84,7 +84,7 @@ public class MultiplayerScreen implements Screen {
 					return;
 				}
 				str = "CONNECTED";
-				 game.setScreen(new GameScreenMulti(game,seed));
+				game.setScreen(new GameScreenMulti(game,seed));
 
 			}
 			else if (OverlapTester.pointInRectangle(ServerBounds, touchPoint.x, touchPoint.y)) {
@@ -104,7 +104,7 @@ public class MultiplayerScreen implements Screen {
 					return;
 				}
 				str = "CONNECTED";
-				 game.setScreen(new GameScreenMulti(game,seed));
+				game.setScreen(new GameScreenMulti(game,seed));
 
 			}
 		}
@@ -125,8 +125,8 @@ public class MultiplayerScreen implements Screen {
 		//batcher.draw(Assets.highScoresRegion, 10, 360 - 16, 300, 33);
 		Assets.font.draw(batcher, client, 100,230);
 		Assets.font.draw(batcher, server, 120,280);
-	//	batcher.draw(Assets.life1, 200, 100, 33, 33);
-	//	batcher.draw(Assets.life, 280, 180, 33, 33);
+		//	batcher.draw(Assets.life1, 200, 100, 33, 33);
+		//	batcher.draw(Assets.life, 280, 180, 33, 33);
 		Assets.font.draw(batcher, str, 30, 460);
 
 

@@ -116,7 +116,7 @@ public class GameScreen implements Screen {
 	}
 
 	private void updateRunning (float deltaTime) {
-				if (Gdx.input.justTouched()) {
+		if (Gdx.input.justTouched()) {
 			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
 			world.ShotProjectile();
 			if (OverlapTester.pointInRectangle(pauseBounds, touchPoint.x, touchPoint.y)) {

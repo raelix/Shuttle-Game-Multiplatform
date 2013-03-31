@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
+		<item value="257" key="DIALOG_WIDTH"/>
+		<item value="152" key="DIALOG_Y_ORIGIN"/>
+		<item value="381" key="DIALOG_HEIGHT"/>
+		<item value="771" key="DIALOG_X_ORIGIN"/>
+		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
+		<item value="true" key="wrap"/>
+		<item value="false" key="isRegEx"/>
+		<item value="false" key="casesensitive"/>
+		<item value="false" key="incremental"/>
+		<item value="false" key="wholeword"/>
+		<item value="verts" key="selection"/>
+		<list key="findhistory">
+			<item value="verts"/>
+			<item value="PLATFORM_VELOCITY"/>
+			<item value="PLATFORM_PULVERIZE_TIME"/>
+			<item value="PLATFORM_STATE_PULVERIZING"/>
+			<item value="PLATFORM_STATE_NORMAL"/>
+			<item value="PLATFORM_TYPE_MOVING"/>
+			<item value="PLATFORM_TYPE_STATIC"/>
+			<item value="PLATFORM_HEIGHT"/>
+		</list>
+		<list key="replacehistory">
+			<item value="STAR_VELOCITY"/>
+			<item value="STAR_PULVERIZE_TIME"/>
+			<item value="STAR_STATE_PULVERIZING"/>
+			<item value="STAR_STATE_NORMAL"/>
+			<item value="STAR_TYPE_MOVING"/>
+			<item value="STAR_TYPE_STATIC"/>
+			<item value="STAR_HEIGHT"/>
+			<item value="STAR_WIDTH"/>
+		</list>
+	</section>
+</section>

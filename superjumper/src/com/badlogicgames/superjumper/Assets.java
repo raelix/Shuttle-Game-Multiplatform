@@ -4,14 +4,20 @@ package com.badlogicgames.superjumper;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Array;
 
 public class Assets {
+	public static ParticleEffect particleEffect;
+	public static Array laserPEmitters;
+	public static Texture star;
 	public static Texture shuttle;
 	public static Texture shuttle1;
 	public static Texture portaproj;
@@ -56,6 +62,7 @@ public class Assets {
 	public static Texture mainmenu;
 	public static Texture SoundOn;
 	public static Texture SoundOff;
+	public static TextureRegion starRegion;
 	public static TextureRegion backgroundRegion;
 	public static TextureRegion backgroundRegion1;
 	public static TextureRegion backgroundRegion2;
@@ -90,7 +97,10 @@ public class Assets {
 	public static BitmapFont font;
 	public static Pixmap pixmap;
 	public static Texture tmptext;
-
+	public static TextureRegion  rect;
+	public static Texture tmptext1;
+	public static Pixmap pixmap1;
+	public static Color colore;
 	public static Music music;
 	public static Sound jumpSound;
 	public static Sound highJumpSound;
@@ -103,6 +113,22 @@ public class Assets {
 	}
 
 	public static void load () {
+		pixmap1=new Pixmap(512, 512, Pixmap.Format.RGBA8888);
+		tmptext1 = new Texture(pixmap1);
+		colore=new Color();
+		colore.set(0, 0, 1, 1);
+		colore.mul(4.7f);
+		pixmap1.setColor(colore);
+		pixmap1.fillRectangle(0, 0, 512, 512);
+		tmptext1.draw(pixmap1, 0, 0);
+		rect = new TextureRegion(tmptext1, 0, 0, 10, 15);
+		//fuoco dietro bob
+		particleEffect = new ParticleEffect();
+		particleEffect.load(Gdx.files.internal("data/ecco.p"), Gdx.files.internal("data"));
+		laserPEmitters = new Array(particleEffect.getEmitters());
+		particleEffect.getEmitters();
+		particleEffect.allowCompletion();
+		star = loadTexture("data/particle.png");
 		nuvole = loadTexture("data/nuvole.png");
 		nuvole1 = loadTexture("data/nuvole1.png");
 		nuvole2 = loadTexture("data/nuvole2.png");
@@ -152,6 +178,8 @@ public class Assets {
 		tmptext = new Texture(pixmap);
 		DrawSmiley();
 		backgroundmain.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		shuttle.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		shuttle1.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		background.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		background2.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		background3.setFilter(TextureFilter.Linear, TextureFilter.Linear);
@@ -162,7 +190,7 @@ public class Assets {
 		Pause.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		life.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		life1.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		
+		starRegion= new TextureRegion(star, 0, 0, 128, 128);
 		backgroundRegion = new TextureRegion(tmptext, 0, 0, 1024, 1280);
 		backgroundRegion1 = new TextureRegion(background, 2, 4, 1024, 1024);
 		backgroundRegion2 = new TextureRegion(background1, 2, 4, 1024, 1024);
@@ -227,25 +255,25 @@ public class Assets {
 	}
 	private static void DrawSmiley(){
 		Gdx.app.log("MyLibGDXGame", "Game.DrawSmiley()");
-		
+
 		pixmap.setColor(1, 1, 0, 1);
 		pixmap.fillCircle(512/2, 512/2, 512/2);
- 
+
 		//first draw a black circle for the smile
 		pixmap.setColor(0, 0, 0,1);
 		pixmap.fillCircle(512/2, 280, 160);
- 
+
 		//then a yellow larger over it, to make it look like a partial circle/ a smile
 		pixmap.setColor(1, 1, 0, 1);
 		pixmap.fillCircle(512/2, 200, 200);
- 
+
 		//now draw the two eyes
 		pixmap.setColor(0, 0, 0,1);
 		pixmap.fillCircle(512/3, 200, 60);
 		pixmap.fillCircle(512-512/3, 200, 60);
- 
+
 		tmptext.draw(pixmap, 0, 0);
-		
+
 		//tmptext.bind();
 	}
 	public static void playSound (Sound sound) {

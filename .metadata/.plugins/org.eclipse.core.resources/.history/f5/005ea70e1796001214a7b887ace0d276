@@ -1,0 +1,183 @@
+package com.example;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.Service;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.media.MediaPlayer;
+import android.net.Uri;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
+import android.os.IBinder;
+import android.util.Log;
+import android.widget.Toast;
+
+public class MyService extends Service {
+	private static final String TAG = "MyService";
+	 private Timer timer1=new Timer();    
+	 private static long UPDATE_INTERVAL = 1*5*1000; 
+	 private static Timer timer = new Timer();
+	 final static String ACTION = "NotifyServiceAction";
+	 final static String STOP_SERVICE = "";
+	 final static int RQS_STOP_SERVICE = 1;
+	 private static final int MY_NOTIFICATION_ID=1;
+	 private NotificationManager notificationManager;
+	 private Notification myNotification;
+	 private  int b=0;
+	 private final String myBlog = "com.example.ServiceDemo";
+	 NotifyServiceReceiver notifyServiceReceiver;
+
+	 
+	@Override
+	public IBinder onBind(Intent intent) {
+		return null;
+	}
+	
+	@Override
+	public void onCreate() {
+		super.onCreate();
+		Toast.makeText(this, "My Service Created", Toast.LENGTH_LONG).show();
+		Log.d(TAG, "onCreate");
+		_startService();
+		
+	//	player = MediaPlayer.create(this, R.raw.braincandy);
+	//	player.setLooping(false); // Set looping
+	}
+	
+	private void _startService()
+    {      
+        timer.scheduleAtFixedRate(    
+
+                new TimerTask() {
+
+                    public void run() {
+
+                    	WifiManager wifiMgr = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+                		WifiInfo wifiInfo = wifiMgr.getConnectionInfo();
+                		String name = wifiInfo.getSSID();
+                		
+                		if (wifiMgr.isWifiEnabled()&&name.startsWith("NETGEAR65")){
+                		//wifi is enabled
+                		
+                		
+                		imposto("http://raelixx.ns0.it:441/decoder_control.cgi?user=raelix&pwd=Enrico1952&command=31");
+                		notificami();
+                		
+                		
+                		}
+                		
+                	if (wifiMgr.getWifiState()==wifiMgr.WIFI_STATE_DISABLED  ){
+                		//wifi is disabled
+                		imposto("http://raelixx.ns0.it:441/decoder_control.cgi?user=raelix&pwd=Enrico1952&command=37");
+                		notificami();
+                		
+                		//Toast.makeText(this, "disconnesso", Toast.LENGTH_LONG).show();
+                		}
+
+                    }
+                }, 1000,UPDATE_INTERVAL);
+        Log.i(getClass().getSimpleName(), "FileScannerService Timer started....");
+    }
+
+	
+	@Override
+	public void onDestroy() {
+		Toast.makeText(this, "My Service Stopped", Toast.LENGTH_LONG).show();
+		Log.d(TAG, "onDestroy");
+	//	player.stop();
+	}
+
+	
+
+	@Override
+	public void onStart(Intent intent, int startid) {}
+	
+	
+	@SuppressWarnings("deprecation")
+	public void notificami(){
+		Log.d(TAG, "onStart");
+		IntentFilter intentFilter = new IntentFilter();
+		intentFilter.addAction(ACTION);
+		registerReceiver(notifyServiceReceiver, intentFilter);
+
+		// Send Notification
+		notificationManager =
+		 (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+		myNotification = new Notification(R.drawable.icon,
+		  "Notification!",
+		  System.currentTimeMillis());
+		Context context = getApplicationContext();
+		String notificationTitle = "Automatizzazione Sorveglianza";
+		String notificationText = "by raelix";
+		Intent myIntent = new Intent(Intent.ACTION_VIEW);
+		myIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+		myIntent.setClassName(MyService.this, "com.example.ServicesDemo");
+		PendingIntent pendingIntent
+		  = PendingIntent.getActivity(getBaseContext(),
+		    0, myIntent,
+		    Intent.FLAG_ACTIVITY_NEW_TASK);
+		myNotification.defaults |= Notification.DEFAULT_SOUND;
+		myNotification.flags |= Notification.FLAG_AUTO_CANCEL;
+		myNotification.setLatestEventInfo(context,
+		   notificationTitle,
+		   notificationText,
+		   pendingIntent);
+		notificationManager.notify(MY_NOTIFICATION_ID, myNotification);
+		
+	}
+	
+	public void imposto(String str){
+	    HttpResponse response = null;
+		try {        
+		        HttpClient client = new DefaultHttpClient();
+		        HttpGet request = new HttpGet();
+		        request.setURI(new URI(str));
+		        response = client.execute(request);
+		    } catch (URISyntaxException e) {
+		        e.printStackTrace();
+		    } catch (ClientProtocolException e) {
+		        // TODO Auto-generated catch block
+		        e.printStackTrace();
+		    } catch (IOException e) {
+		        // TODO Auto-generated catch block
+		        e.printStackTrace();
+		    }   
+		
+	}
+	
+	
+	public class NotifyServiceReceiver extends BroadcastReceiver{
+
+		public void onReceive(Context arg0, Intent arg1) {
+		 // TODO Auto-generated method stub
+		 int rqs = arg1.getIntExtra("RQS", 0);
+		 if (rqs == RQS_STOP_SERVICE){
+		  stopSelf();
+		 }
+		}
+		}
+	
+	
+}
