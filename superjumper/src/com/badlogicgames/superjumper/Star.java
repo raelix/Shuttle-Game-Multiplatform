@@ -24,7 +24,7 @@ public class Star extends DynamicGameObject {
 	public static final int STAR_STATE_NORMAL = 0;
 	public static final int STAR_STATE_PULVERIZING = 1;
 	public static final float STAR_PULVERIZE_TIME = 0.2f * 4;
-	public static final float STAR_VELOCITY = 0.5f;
+	public static final float STAR_VELOCITY = 0.8f;
 
 	int type;
 	int state;
@@ -36,29 +36,38 @@ public class Star extends DynamicGameObject {
 		this.state = STAR_STATE_NORMAL;
 		this.stateTime = 0;
 		if (type == STAR_TYPE_MOVING) {
-			velocity.x = STAR_VELOCITY;
+			//velocity.x = STAR_VELOCITY;
+		//	velocity.y = STAR_VELOCITY;
 		}
 	}
 
 	public void update (float deltaTime) {
 		if (type == STAR_TYPE_MOVING) {
-			position.add(velocity.x * deltaTime, 0);
+			position.add(velocity.x * deltaTime,velocity.y * deltaTime);
 			bounds.x = position.x - STAR_WIDTH / 2;
 			bounds.y = position.y - STAR_HEIGHT / 2;
 /*
-			if (position.x < STAR_WIDTH / 2) {
+			if (position.x < World.WORLD_WIDTH/ 2) {
 				velocity.x = -velocity.x;
-				position.x = STAR_WIDTH / 2;
+				//position.x = -World.WORLD_WIDTH / 2;
 			}
-			if (position.x > World.WORLD_WIDTH - STAR_WIDTH / 2) {
-				velocity.x = -velocity.x;
-				position.x = World.WORLD_WIDTH - STAR_WIDTH / 2;
-			}*/
+			if (position.x > World.WORLD_WIDTH / 2) {
+				velocity.x = +velocity.x;
+				//	position.x = World.WORLD_WIDTH / 2;
+			}
+			
+			if (position.y < World.WORLD_HEIGHT / 2) {
+				velocity.y = +velocity.y+4;
+				//position.y =  World.WORLD_HEIGHT / 2;
+			}
+			if (position.y >  World.WORLD_HEIGHT / 2) {
+				velocity.y = +velocity.y+4;
+				//position.y =  World.WORLD_HEIGHT / 2;
+			}
+*/
+			stateTime += deltaTime;
 		}
-
-		stateTime += deltaTime;
 	}
-
 	public void pulverize () {
 		state = STAR_STATE_PULVERIZING;
 		stateTime = 0;

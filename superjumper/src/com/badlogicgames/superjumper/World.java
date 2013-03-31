@@ -6,6 +6,7 @@ import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -74,19 +75,19 @@ public class World {
 		float maxJumpHeight = this.PLATFORMS_DISTANCE;
 		float minJumpHeight = this.STARS_DISTANCE;
 		while (y < WORLD_HEIGHT - WORLD_WIDTH / 2) {
-			int type = rand.nextFloat() > 0.8f ? Platform.PLATFORM_TYPE_MOVING : Platform.PLATFORM_TYPE_STATIC;
+			int type = rand.nextFloat() > 0.5f ? Platform.PLATFORM_TYPE_MOVING : Platform.PLATFORM_TYPE_STATIC;
 			float random = rand.nextFloat();
 			float x = rand.nextFloat() > 0.5f ? random *3 : WORLD_WIDTH/ - random *3;
 			//star generate
 			int type_star = Star.STAR_TYPE_STATIC;//star
-			float y_star = rand.nextFloat() *15;//star
+			float y_star = rand.nextFloat() *20;//star
 			float x_star = rand.nextFloat() *10;//star
 			Star star = new Star(type_star, x_star, y_star);//star
-			stars.add(star);//star
+			stars.add(star);
 			//end star generate
 			Platform platform = new Platform(type, x, y);
 			platforms.add(platform);
-			if (rand.nextFloat() > 0.9f && type != Platform.PLATFORM_TYPE_MOVING) {
+			if (rand.nextFloat() > 0.2f && type != Platform.PLATFORM_TYPE_MOVING) {
 				Spring spring = new Spring(platform.position.x, platform.position.y + Platform.PLATFORM_HEIGHT / 2 + Spring.SPRING_HEIGHT / 2);
 				springs.add(spring);
 
@@ -95,7 +96,7 @@ public class World {
 						+ Squirrel.SQUIRREL_HEIGHT + rand.nextFloat() * 2);
 					squirrels.add(squirrel);
 				}
-				if (rand.nextFloat() > 0.3f) {
+				if (rand.nextFloat() > 0.01f) {
 					random = rand.nextFloat();
 					Coin coin = new Coin(platform.position.x + (platform.position.x < WORLD_WIDTH /2 ? 3*random : -3*random), 
 						platform.position.y + (rand.nextFloat() > 0.5f ? 3*random : -3*random));
@@ -166,6 +167,8 @@ public class World {
 		updateSquirrels(deltaTime);
 		updateCoins(deltaTime);
 		updateLifes(deltaTime);
+		addStarDynamic();
+		updateStar( deltaTime);
 		updateProjectiles(deltaTime);
 		if (rand.nextFloat() > 0.5f) score += (int)bob.velocity.y;
 		if (bob.state != Bob.BOB_STATE_HIT) checkCollisions();
@@ -173,6 +176,7 @@ public class World {
 		checkRemoveProjectile();
 		checkRemoveCoin();
 		checkGameOver();
+		checkRemoveStars();
 
 	}
 
@@ -181,6 +185,28 @@ public class World {
 		if (bob.state != Bob.BOB_STATE_HIT) bob.velocity.x = -accelX / 10 * Bob.BOB_MOVE_VELOCITY;
 		bob.update(deltaTime);
 		heightSoFar = Math.max(bob.position.y, heightSoFar);
+	}
+
+	private void addStarDynamic(){
+		//star generate
+		int type_star = Star.STAR_TYPE_MOVING;//star
+		float y_star = rand.nextFloat() *5;//star
+		float x_star = rand.nextFloat() *10;//star
+		Star star = new Star(type_star, x_star, y_star+bob.position.y+15);//star
+		stars.add(star);//star
+		////end star generate
+
+
+
+	}
+
+
+	private void updateStar(float deltaTime){
+		int len = stars.size();
+		for (int i = 0; i < len; i++) {
+			Star star= stars.get(i);
+			star.update(deltaTime);
+		}
 	}
 
 	private void updatePlatforms (float deltaTime) {
@@ -246,6 +272,13 @@ public class World {
 			if (bob.position.y > platforms.get(0).position.y+5  ) platforms.remove(0);
 		}
 	}
+
+	private void checkRemoveStars() {
+		if (!stars.isEmpty()) { 
+			if (bob.position.y > stars.get(0).position.y+5  ) stars.remove(0);
+		}
+	}
+
 	private void checkRemoveCoin() {
 		if (!coins.isEmpty()) { 
 			if (bob.position.y > coins.get(0).position.y+5  ) coins.remove(0);

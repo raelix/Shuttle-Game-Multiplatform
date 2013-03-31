@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.FloatArray;
 
 public class WorldRenderer {
 
@@ -40,7 +41,6 @@ public class WorldRenderer {
 	}
 
 	public void renderBackground () {
-
 		GLCommon gl = Gdx.gl;
 		gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT | GL10.GL_STENCIL_BUFFER_BIT);
@@ -48,6 +48,7 @@ public class WorldRenderer {
 		batch.begin();
 		batch.disableBlending();
 		drawGradient(batch, Assets.rect, 0, 0, 10, 110,Color.BLACK,Assets.colore, false);
+		batch.enableBlending();
 		//batch.draw(Assets.backgroundRegion, 0, 0);
 		/*batch.draw(Assets.backgroundRegion2, 0, 15, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
 		batch.draw(Assets.backgroundRegion3, 0, 30, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
@@ -77,6 +78,8 @@ public class WorldRenderer {
 	public void renderObjects () {
 		batch.enableBlending();
 		batch.begin();
+		renderStars();
+
 		renderBob();
 		renderPlatforms();
 		renderItems();
@@ -84,15 +87,14 @@ public class WorldRenderer {
 		renderSquirrels();
 		renderCastle();
 		renderProjectiles();
-		renderStars();
 		batch.end();
 	}
 
 	private void renderBob () {
 		TextureRegion keyFrame;
 		int i;
-
-
+//render world terra
+		batch.draw(Assets.backgroundRegion1, 0, -1, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
 		switch (world.bob.state) {
 		case Bob.BOB_STATE_FALL:
 			keyFrame = Assets.bobFall.getKeyFrame(world.bob.stateTime, Animation.ANIMATION_LOOPING);

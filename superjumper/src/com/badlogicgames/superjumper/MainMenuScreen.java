@@ -67,7 +67,7 @@ public class MainMenuScreen implements Screen {
 		highscoresBounds = new Rectangle(77, 102, 69, 66);
 		helpBounds = new Rectangle(154, 152, 69, 60);
 		touchPoint = new Vector3();
-		
+
 
 	}
 
@@ -94,7 +94,7 @@ public class MainMenuScreen implements Screen {
 				else
 					Assets.music.pause();
 			}
-			
+
 
 		}
 		updatebob(deltaTime);
@@ -119,10 +119,12 @@ public class MainMenuScreen implements Screen {
 		batcher.end();
 		batcher.enableBlending();
 		batcher.begin();
-		//TextureRegion keyFrame = Assets.coinAnim.getKeyFrame(coin.deltaTime, Animation.ANIMATION_LOOPING);
-		//batcher.draw(keyFrame,10, 20, 1.5f, 1.5f);
-		//batcher.draw(Assets.logo, 160 - 274 / 2, 480 - 10 - 142, 274, 142);
-		//batcher.draw(Assets.mainMenu, 10, 200 - 110, 300, 240);
+		int len = stars.size();
+		for (int i = 0; i < len; i++) {
+			Star star = stars.get(i);
+			TextureRegion keyFrame2 = Assets.starRegion;
+			batcher.draw(keyFrame2, star.position.x , star.position.y , 5, 5);
+		}
 		batcher.draw(Settings.soundEnabled ? Assets.soundOn : Assets.soundOff, 0, 0, 54, 44);
 		batcher.end();
 		batcher.enableBlending();
@@ -132,12 +134,6 @@ public class MainMenuScreen implements Screen {
 		keyFrame1 = Assets.backAnim.getKeyFrame(stateTime, Animation.ANIMATION_LOOPING);
 		if(stateTime>2)stateTime=0;
 		TextureRegion keyFrame;
-		int len = stars.size();
-		for (int i = 0; i < len; i++) {
-			Star star = stars.get(i);
-			TextureRegion keyFrame2 = Assets.starRegion;
-			batcher.draw(keyFrame2, star.position.x , star.position.y , 5, 5);
-		}
 		keyFrame = Assets.bobJump.getKeyFrame(stateTime, Animation.ANIMATION_LOOPING);
 		//Gdx.app.debug("Animation", "position"+bob.position.x+" "+bob.position.y);
 		batcher.draw(keyFrame1,0, 0, 320, 480);
