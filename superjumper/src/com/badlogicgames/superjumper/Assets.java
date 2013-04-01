@@ -167,6 +167,8 @@ public class Assets {
 		backgroundmain7.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		shuttle.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		shuttle1.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		shuttlef.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		shuttlef1.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		star1.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		star2.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		background.setFilter(TextureFilter.Linear, TextureFilter.Linear);
