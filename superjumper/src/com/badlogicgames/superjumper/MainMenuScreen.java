@@ -62,10 +62,10 @@ public class MainMenuScreen implements Screen {
 		batcher = new SpriteBatch();
 		sprite= new Sprite();
 		soundBounds = new Rectangle(0, 0, 64, 64);
-		playBounds = new Rectangle(147, 232, 79, 47);
-		multiplayerBounds = new Rectangle(38,163,68, 69);
-		highscoresBounds = new Rectangle(77, 102, 69, 66);
-		helpBounds = new Rectangle(154, 152, 69, 60);
+		playBounds = new Rectangle(149, 195, 86, 58);
+		multiplayerBounds = new Rectangle(37,124,70, 90);
+		highscoresBounds = new Rectangle(78, 67, 75, 85);
+		helpBounds = new Rectangle(156, 125, 75, 50);
 		touchPoint = new Vector3();
 
 
@@ -76,7 +76,7 @@ public class MainMenuScreen implements Screen {
 			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
 			if (OverlapTester.pointInRectangle(playBounds, touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);
-				game.setScreen(new GameScreen(game));
+				game.setScreen(new CharScreen(game));
 			} else if (OverlapTester.pointInRectangle(multiplayerBounds, touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);
 				game.setScreen(new MultiplayerScreen(game));
@@ -130,7 +130,7 @@ public class MainMenuScreen implements Screen {
 		batcher.enableBlending();
 		batcher.begin();
 		TextureRegion keyFrame1;
-		stateTime=stateTime+0.01f;
+		stateTime=stateTime+0.015f;
 		keyFrame1 = Assets.backAnim.getKeyFrame(stateTime, Animation.ANIMATION_LOOPING);
 		if(stateTime>2)stateTime=0;
 		TextureRegion keyFrame;

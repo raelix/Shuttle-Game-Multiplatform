@@ -111,7 +111,12 @@ public class WorldRenderer {
 		Assets.particleEffect.start();
 		Assets.particleEffect.setPosition(world.bob.position.x,world.bob.position.y-1);
 		Assets.particleEffect.draw(batch, Gdx.graphics.getDeltaTime());
+		if(CharScreen.state==1)
 		batch.draw(keyFrame, world.bob.position.x -0.65f, world.bob.position.y -2.5f, 2.3f, 3f);
+		else {
+			keyFrame = Assets.bobfJump.getKeyFrame(world.bob.stateTime, Animation.ANIMATION_LOOPING);
+			batch.draw(keyFrame, world.bob.position.x -0.65f, world.bob.position.y -2.5f, 2.3f, 3f);
+			}
 	}
 
 	private void renderPlatforms () {
@@ -161,7 +166,7 @@ public class WorldRenderer {
 		for (int i = 0; i < len; i++) {
 			Projectile projectile = world.projectiles.get(i);
 			TextureRegion keyFrame = Assets.projAnim.getKeyFrame(projectile.stateTime, Animation.ANIMATION_LOOPING);	
-			batch.draw(keyFrame, projectile.position.x-0.2f  , projectile.position.y, 0.3f,0.6f);
+			batch.draw(keyFrame, projectile.position.x -0.07f , projectile.position.y+0.4f, 0.3f,0.6f);
 		}
 	}
 
@@ -187,12 +192,14 @@ public class WorldRenderer {
 		int len = world.stars.size();
 		for (int i = 0; i < len; i++) {
 			Star star = world.stars.get(i);
-			TextureRegion keyFrame = Assets.starRegion;
-			if (star.state == Platform.PLATFORM_STATE_PULVERIZING) {
-				keyFrame = Assets.brakingPlatform.getKeyFrame(star.stateTime, Animation.ANIMATION_NONLOOPING);
+			TextureRegion keyFrame = Assets.star1Region;
+			if (star.type == Star.STAR_TYPE_MOVING ) {
+				keyFrame = Assets.staranim.getKeyFrame(star.stateTime, Animation.ANIMATION_LOOPING);
+				batch.draw(keyFrame, star.position.x , star.position.y , 0.18f, 0.15f);
 			}
-
-			batch.draw(keyFrame, star.position.x , star.position.y , 0.3f, 0.3f);
+			else if(star.type != Star.STAR_TYPE_MOVING ){
+				keyFrame = Assets.star1Region;
+			batch.draw(keyFrame, star.position.x , star.position.y , 0.13f, 0.1f);}
 		}
 	}
 	public static void drawGradient(SpriteBatch batch, TextureRegion tex, float x, float y,

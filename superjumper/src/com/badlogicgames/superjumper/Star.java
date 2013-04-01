@@ -43,6 +43,7 @@ public class Star extends DynamicGameObject {
 
 	public void update (float deltaTime) {
 		if (type == STAR_TYPE_MOVING) {
+			velocity.y=2;
 			position.add(velocity.x * deltaTime,velocity.y * deltaTime);
 			bounds.x = position.x - STAR_WIDTH / 2;
 			bounds.y = position.y - STAR_HEIGHT / 2;
@@ -67,6 +68,12 @@ public class Star extends DynamicGameObject {
 */
 			stateTime += deltaTime;
 		}
+		if (type != STAR_TYPE_MOVING) {
+			velocity.y=3;
+			position.add(velocity.x * deltaTime,velocity.y * deltaTime);
+			bounds.x = position.x - STAR_WIDTH / 2;
+			bounds.y = position.y - STAR_HEIGHT / 2;
+			stateTime += deltaTime;}
 	}
 	public void pulverize () {
 		state = STAR_STATE_PULVERIZING;

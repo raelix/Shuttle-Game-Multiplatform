@@ -18,8 +18,12 @@ public class Assets {
 	public static ParticleEffect particleEffect;
 	public static Array laserPEmitters;
 	public static Texture star;
+	public static Texture star1;
+	public static Texture star2;
 	public static Texture shuttle;
 	public static Texture shuttle1;
+	public static Texture shuttlef;
+	public static Texture shuttlef1;
 	public static Texture portaproj;
 	public static Texture disegno;
 	public static Texture nuvole;
@@ -38,25 +42,14 @@ public class Assets {
 	public static Texture background;
 	public static Texture background1;
 	public static Texture background2;
-	public static Texture background3;
-	public static Texture background4;
-	public static Texture background5;
-	public static Texture background6;
-	public static Texture background7;
-	public static Texture background8;
-	public static Texture background9;
-	public static Texture background10;
-	public static Texture background11;
-	public static Texture background12;
-	public static Texture background13;
-	public static Texture background14;
-	public static Texture background15;
-	public static Texture background16;
-	public static Texture background17,background18,background19,background20;
-	public static Texture backgroundmain;
 	public static Texture backgroundmain1;
+	public static Texture backgroundmain2;
+	public static Texture backgroundmain3;
+	public static Texture backgroundmain4;
+	public static Texture backgroundmain5;
+	public static Texture backgroundmain6;
+	public static Texture backgroundmain7;
 	public static Texture projectile;
-	public static Texture projectile1;
 	public static Texture items;
 	public static Texture life;
 	public static Texture life1;
@@ -64,6 +57,7 @@ public class Assets {
 	public static Texture SoundOn;
 	public static Texture SoundOff;
 	public static TextureRegion starRegion;
+	public static TextureRegion star1Region;
 	public static TextureRegion backgroundRegion;
 	public static TextureRegion backgroundRegion1;
 	public static TextureRegion backgroundRegion2;
@@ -90,12 +84,14 @@ public class Assets {
 	public static Animation lifeAnim;
 	public static Animation projAnim;
 	public static Animation bobJump;
+	public static Animation bobfJump;
 	public static Animation breakanim;
 	public static Animation bobFall;
 	public static TextureRegion bobHit;
 	public static Animation squirrelFly;
 	public static TextureRegion platform;
 	public static Animation brakingPlatform;
+	public static Animation staranim;
 	public static BitmapFont font;
 	public static Pixmap pixmap;
 	public static Texture tmptext;
@@ -124,13 +120,15 @@ public class Assets {
 		pixmap1.fillRectangle(0, 0, 512, 512);
 		tmptext1.draw(pixmap1, 0, 0);
 		rect = new TextureRegion(tmptext1, 0, 0, 10, 15);
-		//fuoco dietro bob
+		//particelle effetto fuoco
 		particleEffect = new ParticleEffect();
 		particleEffect.load(Gdx.files.internal("data/ecco.p"), Gdx.files.internal("data"));
 		laserPEmitters = new Array(particleEffect.getEmitters());
 		particleEffect.getEmitters();
 		particleEffect.allowCompletion();
 		star = loadTexture("data/particle.png");
+		star1 = loadTexture("data/particle1.png");
+		star2 = loadTexture("data/particle2.png");
 		nuvole = loadTexture("data/nuvole.png");
 		nuvole1 = loadTexture("data/nuvole1.png");
 		nuvole2 = loadTexture("data/nuvole2.png");
@@ -144,47 +142,53 @@ public class Assets {
 		coin8 = loadTexture("data/coin8.png");
 		coin9 = loadTexture("data/coin9.png");
 		background = loadTexture("data/worldini.png");
-
-		backgroundmain = loadTexture("data/mainsfondo1.png");
-		backgroundmain1 = loadTexture("data/mainsfondo2.png");
+		backgroundmain4 = loadTexture("data/main4.png");
+		backgroundmain5 = loadTexture("data/main5.png");
+		backgroundmain6 = loadTexture("data/main6.png");
+		backgroundmain7 = loadTexture("data/main7.png");
 		Pause = loadTexture("data/pause.png");
 		shuttle = loadTexture("data/alieno1.png");
 		shuttle1 = loadTexture("data/alieno2.png");
-		mainmenu = loadTexture("data/imain.png");
+		shuttlef = loadTexture("data/aliena.png");
+		shuttlef1 = loadTexture("data/aliena2.png");
 		SoundOn = loadTexture("data/play.png");
 		SoundOff = loadTexture("data/stop.png");
 		life = loadTexture("data/life.png");
 		life1= loadTexture("data/life1.png");
 		projectile= loadTexture("data/projectile.png");
-		projectile1= loadTexture("data/projectile.png");
 		portaproj= loadTexture("data/portaproj.png");
 		pixmap = new Pixmap(2048, 2048, Pixmap.Format.RGBA8888);
 		tmptext = new Texture(pixmap);
 		DrawSmiley();
-		backgroundmain.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		backgroundmain1.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+
+		backgroundmain4.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		backgroundmain5.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		backgroundmain6.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		backgroundmain7.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		shuttle.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		shuttle1.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		star1.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		star2.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		background.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		mainmenu.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		SoundOn.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		SoundOff.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		Pause.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		life.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		life1.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		//load texture region,animation & sound
 		starRegion= new TextureRegion(star, 0, 0, 128, 128);
-		backgroundRegion = new TextureRegion(tmptext, 0, 0, 1024, 1280);
+		backgroundRegion = new TextureRegion(shuttle, 0, 0, 512, 512);
+		backgroundRegion10=new TextureRegion(shuttlef,0,0,512,512);
 		backgroundRegion1 = new TextureRegion(background, 2, 4, 1024, 1024);
-		backgroundRegionmain = new TextureRegion(backgroundmain, 3,0, 1024, 1024);
+		backgroundRegionmain = new TextureRegion(backgroundmain4, 3,0, 1024, 1024);
 		items = loadTexture("data/items.png");
-		items.setFilter(TextureFilter.Linear, TextureFilter.Nearest);
-		mainMenu = new TextureRegion(mainmenu, 0, 0, 346, 512);
 		pauseMenu = new TextureRegion(items, 224, 128, 192, 96);
 		ready = new TextureRegion(items, 320, 224, 192, 32);
 		gameOver = new TextureRegion(items, 352, 256, 160, 96);
 		highScoresRegion = new TextureRegion(Assets.items, 0, 257, 300, 110 / 3);
 		logo = new TextureRegion(items, 0, 352, 274, 142);
 		soundOff = new TextureRegion(SoundOff, 0, 0, 110, 128);
+		star1Region = new TextureRegion(star2, 0, 0, 128, 128);
 		soundOn = new TextureRegion(SoundOn, 0, 0, 110, 128);
 		arrow = new TextureRegion(items, 0, 64, 64, 64);
 		pause = new TextureRegion(Pause, 0, 0, 120, 128);
@@ -192,12 +196,17 @@ public class Assets {
 		castle = new TextureRegion(items, 128, 64, 64, 64);
 		coinAnim = new Animation(0.2f, new TextureRegion(coin1, 0, 0, 128, 128), new TextureRegion(coin2, 0, 0, 128, 128),
 			new TextureRegion(coin3, 0, 0, 128, 128), new TextureRegion(coin4, 0, 0, 128, 128));
-		backAnim = new Animation(0.2f, new TextureRegion(backgroundmain, 0, 0, 1024, 1024), new TextureRegion(backgroundmain1, 0, 0, 1024, 1024));
+		backAnim = new Animation(0.25f, new TextureRegion(backgroundmain4, 0, 0, 1024, 1024), new TextureRegion(backgroundmain5, 0, 0, 1024, 1024), new TextureRegion(backgroundmain6, 0, 0, 1024, 1024),
+			new TextureRegion(backgroundmain5, 0, 0, 1024, 1024), new TextureRegion(backgroundmain4, 0, 0, 1024, 1024),
+			new TextureRegion(backgroundmain5, 0, 0, 1024, 1024), new TextureRegion(backgroundmain6, 0, 0, 1024, 1024),
+			new TextureRegion(backgroundmain5, 0, 0, 1024, 1024));
+		staranim = new Animation(0.2f, new TextureRegion(star1, 0, 0, 128, 128), new TextureRegion(star2, 0, 0, 128, 128));
 		breakanim = new Animation(0.2f, new TextureRegion(coin6, 0, 0, 128, 128), new TextureRegion(coin7, 0, 0, 128, 128),
 			new TextureRegion(coin8, 0, 0, 128, 128), new TextureRegion(coin9, 0, 0, 128, 128));
 		lifeAnim = new Animation(0.5f, new TextureRegion(life, 0, 0, 120, 128), new TextureRegion(life1, 0, 0, 120, 128));
-		projAnim = new Animation(0.2f, new TextureRegion(projectile, 0, 0, 64, 64), new TextureRegion(projectile1, 1, 0, 64, 64));
+		projAnim = new Animation(0.2f, new TextureRegion(projectile, 0, 0, 64, 64), new TextureRegion(projectile, 1, 0, 64, 64));
 		bobJump = new Animation(0.2f, new TextureRegion(shuttle, 0, 0, 512, 512), new TextureRegion(shuttle1, 0, 0, 512, 512));
+		bobfJump = new Animation(0.2f, new TextureRegion(shuttlef, 0, 0, 512, 512), new TextureRegion(shuttlef1, 0, 0, 512, 512));
 		bobFall = new Animation(0.2f, new TextureRegion(shuttle, 0, 0, 512, 512), new TextureRegion(shuttle1, 0, 0, 512, 512));
 		bobHit = new TextureRegion(items, 128, 128, 32, 32);
 		squirrelFly = new Animation(0.2f, new TextureRegion(items, 0, 160, 32, 32), new TextureRegion(items, 32, 160, 32, 32));

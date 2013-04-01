@@ -127,6 +127,7 @@ public class MultiplayerScreen implements Screen {
 		//batcher.draw(Assets.highScoresRegion, 10, 360 - 16, 300, 33);
 		Assets.font.draw(batcher, client, 100,230);
 		Assets.font.draw(batcher, server, 120,280);
+		Assets.font.draw(batcher, "BACK", 3,35);
 		//	batcher.draw(Assets.life1, 200, 100, 33, 33);
 		//	batcher.draw(Assets.life, 280, 180, 33, 33);
 		Assets.font.draw(batcher, str, 30, 460);

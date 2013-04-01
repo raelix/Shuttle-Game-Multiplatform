@@ -189,10 +189,10 @@ public class World {
 
 	private void addStarDynamic(){
 		//star generate
-		int type_star = Star.STAR_TYPE_MOVING;//star
-		float y_star = rand.nextFloat() *5;//star
+		int type_star = rand.nextFloat()>0.3?Star.STAR_TYPE_STATIC:Star.STAR_TYPE_MOVING;//star light
+		float y_star = rand.nextFloat() *10;//star
 		float x_star = rand.nextFloat() *10;//star
-		Star star = new Star(type_star, x_star, y_star+bob.position.y+15);//star
+		Star star = new Star(type_star, x_star, y_star+bob.position.y+13);//star
 		stars.add(star);//star
 		////end star generate
 
