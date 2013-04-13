@@ -75,7 +75,7 @@ public class MultiplayerScreen implements Screen {
 				str = "CONNECTING";
 				if (WorldMulti.buffer.selfTest()) Gdx.app.debug("PHTEST", "BUFFER OK");
 				else Gdx.app.debug("PHTEST", "BUFFER KO");
-				ConnectThread thr = new ConnectThread("192.168.0.16",10000,WorldMulti.buffer,sem);
+				ConnectThread thr = new ConnectThread("192.168.0.2",10000,WorldMulti.buffer,sem);
 				thr.start();
 				Gdx.app.debug("PHTEST", "started connect thread");
 				try {

@@ -30,6 +30,8 @@ public class Assets {
 	public static Texture nuvole1;
 	public static Texture nuvole2;
 	public static Texture nuvole3;
+	public static Texture bubblestart;
+	public static Texture bubble;
 	public static Texture coin1;
 	public static Texture coin2;
 	public static Texture coin3;
@@ -57,6 +59,8 @@ public class Assets {
 	public static Texture SoundOn;
 	public static Texture SoundOff;
 	public static TextureRegion starRegion;
+	public static TextureRegion bubbles;
+	public static TextureRegion bubblesstart;
 	public static TextureRegion star1Region;
 	public static TextureRegion backgroundRegion;
 	public static TextureRegion backgroundRegion1;
@@ -127,6 +131,8 @@ public class Assets {
 		particleEffect.getEmitters();
 		particleEffect.allowCompletion();
 		star = loadTexture("data/particle.png");
+		bubble = loadTexture("data/bubble.png");
+		bubblestart = loadTexture("data/bubblestart.png");
 		star1 = loadTexture("data/particle1.png");
 		star2 = loadTexture("data/particle2.png");
 		nuvole = loadTexture("data/nuvole.png");
@@ -160,7 +166,6 @@ public class Assets {
 		pixmap = new Pixmap(2048, 2048, Pixmap.Format.RGBA8888);
 		tmptext = new Texture(pixmap);
 		DrawSmiley();
-
 		backgroundmain4.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		backgroundmain5.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		backgroundmain6.setFilter(TextureFilter.Linear, TextureFilter.Linear);
@@ -179,6 +184,8 @@ public class Assets {
 		life1.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		//load texture region,animation & sound
 		starRegion= new TextureRegion(star, 0, 0, 128, 128);
+		bubbles= new TextureRegion(bubble, 0, 0, 256, 256);
+		bubblesstart= new TextureRegion(bubblestart, 0, 0, 256, 256);
 		backgroundRegion = new TextureRegion(shuttle, 0, 0, 512, 512);
 		backgroundRegion10=new TextureRegion(shuttlef,0,0,512,512);
 		backgroundRegion1 = new TextureRegion(background, 2, 4, 1024, 1024);
