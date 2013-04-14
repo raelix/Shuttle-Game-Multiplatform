@@ -105,6 +105,8 @@ public class WorldRenderer {
 			}
 		}
 	}
+	
+	
 	private void renderBob () {
 		TextureRegion keyFrame;
 		int i;

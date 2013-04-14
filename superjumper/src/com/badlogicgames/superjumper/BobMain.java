@@ -36,7 +36,7 @@ public class BobMain extends DynamicGameObject {
 		//Gdx.app.debug("OVERLAPCIRCLE", "overlap returns " +(int)Math.sqrt((int)Math.pow((double)MainMenuScreen.centrox - (double)this.position.x,2) + (int)Math.pow((double)MainMenuScreen.centroy - (double)this.position.y,2)));
 		return (int)Math.sqrt((int)Math.pow((double)MainMenuScreen.centrox - (double)this.position.x,2) + (int)Math.pow((double)MainMenuScreen.centroy - (double)this.position.y,2)) >= RAGGIO ? true : false;
 	}
-	
+	/*
 	private void updateGravity(){
 
 		final float TESTGRAVITY = 10f;
@@ -102,8 +102,8 @@ public class BobMain extends DynamicGameObject {
 			this.gravity.rotate(270);
 			} else if (position.x < MainMenuScreen.centrox && position.y < MainMenuScreen.centroy){
 			this.gravity.rotate(180);
-		}*/
-	}
+		}
+	}*/
 	
 	private void setCircularPosition(float deltaTime, int raggio, int x, int y){
 		//Gdx.app.debug("SETCIRCULARPOSITION", "deltatime = " + deltaTime);

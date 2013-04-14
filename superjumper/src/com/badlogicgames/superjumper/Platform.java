@@ -37,6 +37,9 @@ public class Platform extends DynamicGameObject {
 		this.stateTime = 0;
 		if (type == PLATFORM_TYPE_MOVING) {
 			velocity.x = PLATFORM_VELOCITY;
+		} else {
+			velocity.x = 0;
+			velocity.y = 0;
 		}
 	}
 
@@ -54,8 +57,11 @@ public class Platform extends DynamicGameObject {
 				velocity.x = -velocity.x;
 				position.x = World.WORLD_WIDTH - PLATFORM_WIDTH / 2;
 			}
+		} else {
+			position.add(velocity.x * deltaTime/2,velocity.y * deltaTime/2);
+			bounds.x = position.x - PLATFORM_WIDTH / 2;
+			bounds.y = position.y - PLATFORM_HEIGHT / 2;
 		}
-
 		stateTime += deltaTime;
 	}
 

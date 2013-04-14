@@ -16,18 +16,16 @@
 
 package com.badlogicgames.superjumper;
 
-public class Bubble extends GameObject {
-	public static final float COIN_WIDTH = 0.5f;
-	public static final float COIN_HEIGHT = 1f;
+public class GravityPlanet extends DynamicGameObject {
+	public static final float COIN_WIDTH = 1.5f;
+	public static final float COIN_HEIGHT = 1.5f;
 	public static final int COIN_SCORE = 100;
 	public static final int COIN_STATE_PULVERIZING = 1;
-	public static final int BUBBLE_STATE_BOB = 1;
-	public static final int BUBBLE_STATE_NOBOB = 0;
 	public static final float COIN_PULVERIZE_TIME = 0.09f * 4;
-	float crashtime = 0;
+
 	float stateTime;
 	int state;
-	public Bubble (float x, float y) {
+	public GravityPlanet (float x, float y) {
 		super(x, y, COIN_WIDTH, COIN_HEIGHT);
 		stateTime = 0;
 	}

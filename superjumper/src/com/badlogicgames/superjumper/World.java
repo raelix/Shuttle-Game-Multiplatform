@@ -21,7 +21,7 @@ public class World {
 		public void projectile();
 	}
 	public static final float WORLD_WIDTH = 10;
-	public static final float WORLD_HEIGHT = 15 * 20;
+	public static final float WORLD_HEIGHT = 1000;
 	public static final int WORLD_STATE_RUNNING = 0;
 	public static final int WORLD_STATE_NEXT_LEVEL = 1;
 	public static final int WORLD_STATE_GAME_OVER = 2;
@@ -41,11 +41,10 @@ public class World {
 	public final Random rand;
 	public float heightSoFar;
 	public int score;
-	public static int bubl=0;
 	public int state;
 	public int shot=5;
 	public int turbo=1;
-	public int stato=3;
+	public float bubbletimes;
 	private Vector2 gravity = new Vector2(0,15);
 
 	public World (WorldListener listener) {
@@ -59,7 +58,7 @@ public class World {
 		this.coins = new ArrayList<Coin>();
 		this.lifes = new ArrayList<Life>();
 		this.listener = listener;
-		this.rand = new Random();
+		this.rand = new Random(5000L);
 		this.generateLevel();
 		this.setGravity(0, 3);
 		this.heightSoFar = 0;
@@ -74,14 +73,14 @@ public class World {
 	}
 
 	private void generateLevel () {
+		final float k = 5;
 		float y = Platform.PLATFORM_HEIGHT / 2;
 		//float maxJumpHeight = Bob.BOB_JUMP_VELOCITY * Bob.BOB_JUMP_VELOCITY / (2 * this.gravity.y);
 		float maxJumpHeight = this.PLATFORMS_DISTANCE;
 		float minJumpHeight = this.STARS_DISTANCE;
 		while (y < WORLD_HEIGHT - WORLD_WIDTH / 2) {
 			int type = rand.nextFloat() > 0.5f ? Platform.PLATFORM_TYPE_MOVING : Platform.PLATFORM_TYPE_STATIC;
-			float random = rand.nextFloat();
-			float x = rand.nextFloat() > 0.5f ? random *3 : WORLD_WIDTH/ - random *3;
+			float x = rand.nextFloat() > 0.5f ? rand.nextFloat() *k : WORLD_WIDTH/ - rand.nextFloat() *k;
 			//star generate
 			int type_star = Star.STAR_TYPE_STATIC;//star
 			float y_star = rand.nextFloat() *20;//star
@@ -96,22 +95,32 @@ public class World {
 				springs.add(spring);
 
 				if (y > WORLD_HEIGHT / 3 && rand.nextFloat() > 0.8f) {
-					Squirrel squirrel = new Squirrel(platform.position.x + rand.nextFloat(), platform.position.y
-						+ Squirrel.SQUIRREL_HEIGHT + rand.nextFloat() * 2);
+					Squirrel squirrel = new Squirrel(platform.position.x + rand.nextFloat()*k, platform.position.y
+						+ Squirrel.SQUIRREL_HEIGHT + rand.nextFloat() * k);
 					squirrels.add(squirrel);
 				}
-				if (rand.nextFloat() > 0.01f) {
-					random = rand.nextFloat();
-					Coin coin = new Coin(platform.position.x + (platform.position.x < WORLD_WIDTH /2 ? 3*random : -3*random), 
-						platform.position.y + (rand.nextFloat() > 0.5f ? 3*random : -3*random));
-					coins.add(coin);
-					Bubble bubble = new Bubble(platform.position.x + (platform.position.x < WORLD_WIDTH /2 ? 1*random : -1*random), 
-						platform.position.y + (rand.nextFloat() > 0.5f ? 1*random : -1*random));
-					bubbles.add(bubble);
-				}
+			}
+			if (rand.nextFloat() > 0.5f) {
+				/*Coin coin = new Coin(platform.position.x + (platform.position.x < WORLD_WIDTH /2 ? 5*rand.nextFloat() : -k*rand.nextFloat()), 
+					platform.position.y + (rand.nextFloat() > 0.5f ? k*rand.nextFloat() : -k*rand.nextFloat()));
+				coins.add(coin);*/
+				Bubble bubble = new Bubble(platform.position.x + (platform.position.x < WORLD_WIDTH /2 ? 5*rand.nextFloat() : -k*rand.nextFloat()), 
+					platform.position.y + (rand.nextFloat() > 0.5f ? k*rand.nextFloat() : -k*rand.nextFloat()));
+				bubbles.add(bubble);
 			}
 			y += (maxJumpHeight - 0.5f);
-			y -= rand.nextFloat() * (maxJumpHeight / 3);
+			//y -= rand.nextFloat() * (maxJumpHeight / 3);
+			
+			
+			if (y > WORLD_HEIGHT / 2) {
+				Coin coin = new Coin(platform.position.x + (platform.position.x < WORLD_WIDTH /2 ? 5*rand.nextFloat() : -k*rand.nextFloat()), 
+					platform.position.y + (rand.nextFloat() > 0.5f ? k*rand.nextFloat() : -k*rand.nextFloat()));
+				coins.add(coin);
+			}
+			
+			
+			
+			
 		}
 		castle = new Castle(WORLD_WIDTH / 2, y);
 	}
@@ -174,6 +183,7 @@ public class World {
 		updateBubbles(deltaTime);
 		updateSquirrels(deltaTime);
 		updateCoins(deltaTime);
+		//updateGravityPlanet(deltaTime);
 		updateLifes(deltaTime);
 		addStarDynamic();
 		updateStar( deltaTime);
@@ -188,7 +198,15 @@ public class World {
 		/* checkRemoveBubble();*/
 
 	}
-
+	
+	private void updateGravityPlanet(float deltaTime){
+		for ( Platform plat : this.platforms) {
+			if (plat.type != Platform.PLATFORM_TYPE_MOVING){
+				Utils.changeGravityTowards(plat, bob);
+			}
+		}
+	}
+	
 	private void updateBob (float deltaTime, float accelX) {
 		if (bob.state != Bob.BOB_STATE_HIT && bob.position.y <= 0.5f) bob.hitPlatform();
 		if (bob.state != Bob.BOB_STATE_HIT) bob.velocity.x = -accelX / 10 * Bob.BOB_MOVE_VELOCITY;
@@ -219,15 +237,28 @@ public class World {
 	}
 
 	private void updatePlatforms (float deltaTime) {
+		
+		for ( Platform plat : this.platforms) {
+			if (plat.type != Platform.PLATFORM_TYPE_MOVING){
+				Utils.changeGravityTowards(plat, bob);
+			}
+			plat.update(deltaTime);
+		}
+		
+		
+		/*
 		int len = platforms.size();
 		for (int i = 0; i < len; i++) {
 			Platform platform = platforms.get(i);
+			if (platform.type != Platform.PLATFORM_TYPE_MOVING){
+				Utils.changeGravityTowards(platform, bob);
+			}
 			platform.update(deltaTime);
-			if (platform.state == Platform.PLATFORM_STATE_PULVERIZING && platform.stateTime > Platform.PLATFORM_PULVERIZE_TIME) {
+			if (platform.state == Platform.PLATFORM_STATE_PULVERIZING && platform.stateTime > Platform.PLATFORM_PULVERIZE_TIME) { //FIXME
 				platforms.remove(platform);
 				len = platforms.size();
 			}
-		}
+		}*/
 	}
 	
 	private void updateBubbles (float deltaTime) {
@@ -235,10 +266,8 @@ public class World {
 		for (int i = 0; i < len; i++) {
 			Bubble bubble = bubbles.get(i);
 			bubble.update(deltaTime);
-			if(bubble.stateTime>stato){
+			if(bubble.crashtime != 0 && bubble.crashtime<bubble.stateTime-6){
 				bubbles.remove(bubble);
-				bubl=0;
-				stato+=1.8f;
 			}
 				len = bubbles.size();
 			}
@@ -273,7 +302,6 @@ public class World {
 			projectile.update(deltaTime);
 		}
 	}
-
 
 	private void updateLifes (float deltaTime) {
 		int len = lifes.size();
@@ -449,10 +477,9 @@ public class World {
 			Bubble bubble=bubbles.get(i);
 			if (OverlapTester.overlapRectangles(bubble.bounds, bob.bounds)) {
 				Gdx.input.vibrate(new long[] { 1, 10, 6, 10}, -1);
-				if (bubl==0){
+			
 				bubble.state=Bubble.BUBBLE_STATE_BOB;
-				bubl=1;
-				}
+			bubble.crashtime=bubble.stateTime;
 				len = bubbles.size();
 				break;
 			}
@@ -479,11 +506,8 @@ public class World {
 		for (int i = 0; i < len; i++) {
 			int p=0;
 		
-			Bubble bubble = null;
-			if(!bubbles.isEmpty())
-			bubble=bubbles.get(0);
 			Coin coin = coins.get(i);
-			if (bubble.state != Bubble.BUBBLE_STATE_BOB && coin.state != Coin.COIN_STATE_PULVERIZING && OverlapTester.overlapRectangles(bob.bounds, coin.bounds)) {
+			if (coin.state != Coin.COIN_STATE_PULVERIZING && OverlapTester.overlapRectangles(bob.bounds, coin.bounds)) {
 
 				Gdx.input.vibrate(new long[] { 1, 90, 40, 90},-1); 
 				bob.velocity.y=2;
