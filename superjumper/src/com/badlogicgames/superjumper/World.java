@@ -239,7 +239,7 @@ public class World {
 	private void updatePlatforms (float deltaTime) {
 		
 		for ( Platform plat : this.platforms) {
-			if (plat.type != Platform.PLATFORM_TYPE_MOVING){
+			if (plat.type != Platform.PLATFORM_TYPE_MOVING && bob.position.y-plat.position.y>-10){
 				Utils.changeGravityTowards(plat, bob);
 			}
 			plat.update(deltaTime);

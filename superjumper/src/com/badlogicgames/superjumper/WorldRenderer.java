@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GLCommon;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.ParticleEmitter.GradientColorValue;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
@@ -140,13 +141,14 @@ public class WorldRenderer {
 		int len = world.platforms.size();
 		for (int i = 0; i < len; i++) {
 			Platform platform = world.platforms.get(i);
-			TextureRegion keyFrame = Assets.platform;
+			TextureRegion keyFrame ;
 			if (platform.state == Platform.PLATFORM_STATE_PULVERIZING) {
-				keyFrame = Assets.brakingPlatform.getKeyFrame(platform.stateTime, Animation.ANIMATION_NONLOOPING);
+				keyFrame = Assets.brakingPlatform.getKeyFrame(platform.stateTime, Animation.ANIMATION_LOOPING);
+				batch.draw(keyFrame, platform.position.x - 1, platform.position.y - 0.25f, 4, 4);
 			}
-
-			batch.draw(keyFrame, platform.position.x - 1, platform.position.y - 0.25f, 2, 0.5f);
-		}
+			else {keyFrame = Assets.platform.getKeyFrame(platform.stateTime, Animation.ANIMATION_LOOPING);
+			batch.draw(keyFrame, platform.position.x - 1, platform.position.y - 0.25f, 2.5f, 2.5f);
+			}}
 	}
 
 
@@ -163,7 +165,7 @@ public class WorldRenderer {
 			Coin coin = world.coins.get(i);
 			TextureRegion keyFrame = Assets.coinAnim.getKeyFrame(coin.stateTime, Animation.ANIMATION_LOOPING);
 			if (coin.state == Coin.COIN_STATE_PULVERIZING) {
-				keyFrame = Assets.breakanim.getKeyFrame(coin.stateTime, Animation.ANIMATION_NONLOOPING);
+				//keyFrame = Assets.breakanim.getKeyFrame(coin.stateTime, Animation.ANIMATION_NONLOOPING);
 			}
 			batch.draw(keyFrame, coin.position.x - 0.75f, coin.position.y - 0.75f, 1.5f, 1.5f);
 		}
@@ -174,7 +176,9 @@ public class WorldRenderer {
 		for (int i = 0; i < len; i++) {
 			Life life = world.lifes.get(i);
 			TextureRegion keyFrame = Assets.lifeAnim.getKeyFrame(life.stateTime, Animation.ANIMATION_LOOPING);	
-			batch.draw(keyFrame, cam.position.x - FRUSTUM_WIDTH/2, cam.position.y + i+3, 0.5f, 0.5f);
+			batch.draw(keyFrame, cam.position.x - FRUSTUM_WIDTH/2, cam.position.y + i+1, 0.5f, 0.5f);
+			TextureRegion breakanim = Assets.breakanim;	
+			batch.draw(breakanim, cam.position.x - 5.1f, cam.position.y + 5.1f, 7, 5f);
 
 
 		}

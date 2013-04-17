@@ -8,6 +8,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.GLCommon;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
@@ -155,7 +156,7 @@ public class GameScreen implements Screen {
 
 				scoreString = "NEW HIGHSCORE: " + lastScore;
 			else
-				scoreString = "SCORE: " + lastScore;
+				scoreString = "SCORE:" + lastScore;
 			Settings.addScore(lastScore);
 			Settings.save();
 		}
@@ -229,20 +230,22 @@ public class GameScreen implements Screen {
 
 	private void presentRunning () {
 		batcher.draw(Assets.pause, 320 - 54, 480 - 54, 54, 44);
-		Assets.font.draw(batcher, scoreString, 16, 480 - 10);
+		Assets.font.getRegion().getTexture().setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+		Assets.font.draw(batcher, scoreString, 18, 480 - 10);
 
 
 		String scoret;
 		scoret = world.shot+"x ";
-		Assets.font.draw(batcher, scoret, 2, 480 - 190);
-		batcher.draw(Assets.portaproj, 320 - 318, 480 - 190, 35, 35);
+		Assets.font.draw(batcher, scoret, 2, 480 - 250);
+		batcher.draw(Assets.portaproj, 320 - 318, 480 - 250, 35, 35);
 	}
 
 	private void presentPaused () {
 		Assets.font.draw(batcher, "R e s u m e",160 - 85, 265);
 		Assets.font.draw(batcher, "Q u i t",160 - 45, 230 );
 		//batcher.draw(Assets.pauseMenu, 160 - 192 / 2, 240 - 96 / 2, 192, 96);
-		Assets.font.draw(batcher, scoreString, 16, 480 - 20);
+		Assets.font.getRegion().getTexture().setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+		Assets.font.draw(batcher, scoreString, 18, 480 - 10);
 	}
 
 	private void presentLevelEnd () {

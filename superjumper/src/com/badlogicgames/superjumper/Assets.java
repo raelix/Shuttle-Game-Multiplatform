@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.Array;
 
 public class Assets {
 	public static ParticleEffect particleEffect;
+	public static ParticleEffect particleClouds;
 	public static Array laserPEmitters;
 	public static Texture star;
 	public static Texture star1;
@@ -30,6 +31,7 @@ public class Assets {
 	public static Texture nuvole1;
 	public static Texture nuvole2;
 	public static Texture nuvole3;
+	public static Texture nuvole4;
 	public static Texture bubblestart;
 	public static Texture bubble;
 	public static Texture coin1;
@@ -89,11 +91,11 @@ public class Assets {
 	public static Animation projAnim;
 	public static Animation bobJump;
 	public static Animation bobfJump;
-	public static Animation breakanim;
+	public static TextureRegion breakanim;
 	public static Animation bobFall;
 	public static TextureRegion bobHit;
 	public static Animation squirrelFly;
-	public static TextureRegion platform;
+	public static Animation platform;
 	public static Animation brakingPlatform;
 	public static Animation staranim;
 	public static BitmapFont font;
@@ -126,27 +128,32 @@ public class Assets {
 		rect = new TextureRegion(tmptext1, 0, 0, 10, 15);
 		//particelle effetto fuoco
 		particleEffect = new ParticleEffect();
+		particleClouds = new ParticleEffect();
 		particleEffect.load(Gdx.files.internal("data/ecco.p"), Gdx.files.internal("data"));
-		laserPEmitters = new Array(particleEffect.getEmitters());
+		particleClouds.load(Gdx.files.internal("data/clouds.p"), Gdx.files.internal("data"));
+		//laserPEmitters = new Array(particleEffect.getEmitters());
+		particleClouds.getEmitters();
 		particleEffect.getEmitters();
+		particleClouds.allowCompletion();
 		particleEffect.allowCompletion();
 		star = loadTexture("data/particle.png");
 		bubble = loadTexture("data/bubble.png");
 		bubblestart = loadTexture("data/bubblestart.png");
 		star1 = loadTexture("data/particle1.png");
 		star2 = loadTexture("data/particle2.png");
-		nuvole = loadTexture("data/nuvole.png");
-		nuvole1 = loadTexture("data/nuvole1.png");
-		nuvole2 = loadTexture("data/nuvole2.png");
-		nuvole3 = loadTexture("data/nuvole3.png");
+		nuvole = loadTexture("data/cloud.png");
+		nuvole1 = loadTexture("data/cloud1.png");
+		nuvole2 = loadTexture("data/cloud2.png");
+		nuvole3 = loadTexture("data/cloud3.png");
+		nuvole4 = loadTexture("data/cloud4.png");
 		coin1 = loadTexture("data/coin1.png");
 		coin2 = loadTexture("data/coin2.png");
 		coin3 = loadTexture("data/coin3.png");
 		coin4 = loadTexture("data/coin4.png");
-		coin6 = loadTexture("data/coin6.png");
-		coin7 = loadTexture("data/coin7.png");
-		coin8 = loadTexture("data/coin8.png");
-		coin9 = loadTexture("data/coin9.png");
+		coin6 = loadTexture("data/explo.png");
+		coin7 = loadTexture("data/explo1.png");
+		coin8 = loadTexture("data/explo2.png");
+		coin9 = loadTexture("data/tubo.png");
 		background = loadTexture("data/worldini.png");
 		backgroundmain4 = loadTexture("data/main4.png");
 		backgroundmain5 = loadTexture("data/main5.png");
@@ -166,6 +173,7 @@ public class Assets {
 		pixmap = new Pixmap(2048, 2048, Pixmap.Format.RGBA8888);
 		tmptext = new Texture(pixmap);
 		DrawSmiley();
+		coin9.setFilter(TextureFilter.Nearest, TextureFilter.Linear);
 		backgroundmain4.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		backgroundmain5.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		backgroundmain6.setFilter(TextureFilter.Linear, TextureFilter.Linear);
@@ -210,8 +218,7 @@ public class Assets {
 			new TextureRegion(backgroundmain5, 0, 0, 1024, 1024), new TextureRegion(backgroundmain6, 0, 0, 1024, 1024),
 			new TextureRegion(backgroundmain5, 0, 0, 1024, 1024));
 		staranim = new Animation(0.2f, new TextureRegion(star1, 0, 0, 128, 128), new TextureRegion(star2, 0, 0, 128, 128));
-		breakanim = new Animation(0.2f, new TextureRegion(coin6, 0, 0, 128, 128), new TextureRegion(coin7, 0, 0, 128, 128),
-			new TextureRegion(coin8, 0, 0, 128, 128), new TextureRegion(coin9, 0, 0, 128, 128));
+		breakanim = new TextureRegion(coin9, 0, 0, 512,512);
 		lifeAnim = new Animation(0.5f, new TextureRegion(life, 0, 0, 120, 128), new TextureRegion(life1, 0, 0, 120, 128));
 		projAnim = new Animation(0.2f, new TextureRegion(projectile, 0, 0, 64, 64), new TextureRegion(projectile, 1, 0, 64, 64));
 		bobJump = new Animation(0.2f, new TextureRegion(shuttle, 0, 0, 512, 512), new TextureRegion(shuttle1, 0, 0, 512, 512));
@@ -219,9 +226,9 @@ public class Assets {
 		bobFall = new Animation(0.2f, new TextureRegion(shuttle, 0, 0, 512, 512), new TextureRegion(shuttle1, 0, 0, 512, 512));
 		bobHit = new TextureRegion(items, 128, 128, 32, 32);
 		squirrelFly = new Animation(0.2f, new TextureRegion(items, 0, 160, 32, 32), new TextureRegion(items, 32, 160, 32, 32));
-		platform = new TextureRegion(nuvole, 0, 0, 250, 250);
-		brakingPlatform = new Animation(0.2f, new TextureRegion(nuvole, 0, 0, 250, 250), new TextureRegion(nuvole1, 0, 0, 250, 250),
-			new TextureRegion(nuvole2, -1, -3, 250, 250), new TextureRegion(nuvole3, 0, 0, 250, 250));
+		platform = new Animation(0.1f, new TextureRegion(nuvole, 0, 0, 250, 250), new TextureRegion(nuvole1, 0, 0, 250, 250),
+			new TextureRegion(nuvole2, -1, -3, 250, 250), new TextureRegion(nuvole3, 0, 0, 250, 250),new TextureRegion(nuvole4, 0, 0, 250, 250));
+		brakingPlatform = new Animation(0.2f, new TextureRegion(coin6, 0, 0, 512, 512),new TextureRegion(coin7, 0, 0, 512, 512),new TextureRegion(coin8, 0, 0, 512, 512));
 		font = new BitmapFont(Gdx.files.internal("data/font.fnt"), Gdx.files.internal("data/font.png"), false);
 		font.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		music = Gdx.audio.newMusic(Gdx.files.internal("data/music.mp3"));

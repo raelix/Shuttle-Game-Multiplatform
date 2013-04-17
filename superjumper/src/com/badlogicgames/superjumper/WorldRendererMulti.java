@@ -80,11 +80,11 @@ public class WorldRendererMulti {
 		int len = world.platforms.size();
 		for (int i = 0; i < len; i++) {
 			Platform platform = world.platforms.get(i);
-			TextureRegion keyFrame = Assets.platform;
+			TextureRegion keyFrame ;
 			if (platform.state == Platform.PLATFORM_STATE_PULVERIZING) {
 				keyFrame = Assets.brakingPlatform.getKeyFrame(platform.stateTime, Animation.ANIMATION_NONLOOPING);
 			}
-
+			else keyFrame = Assets.platform.getKeyFrame(platform.stateTime, Animation.ANIMATION_LOOPING);
 			batch.draw(keyFrame, platform.position.x - 1, platform.position.y - 0.25f, 2, 0.5f);
 		}
 	}
@@ -101,7 +101,7 @@ public class WorldRendererMulti {
 			Coin coin = world.coins.get(i);
 			TextureRegion keyFrame = Assets.coinAnim.getKeyFrame(coin.stateTime, Animation.ANIMATION_LOOPING);
 			if (coin.state == Coin.COIN_STATE_PULVERIZING) {
-				keyFrame = Assets.breakanim.getKeyFrame(coin.stateTime, Animation.ANIMATION_NONLOOPING);
+			//	keyFrame = Assets.breakanim.getKeyFrame(coin.stateTime, Animation.ANIMATION_NONLOOPING);
 			}
 			batch.draw(keyFrame, coin.position.x - 0.75f, coin.position.y - 0.75f, 1.5f, 1.5f);
 		}
