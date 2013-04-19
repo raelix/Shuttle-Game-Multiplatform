@@ -26,6 +26,8 @@ public class Assets {
 	public static Texture shuttlef;
 	public static Texture shuttlef1;
 	public static Texture portaproj;
+	public static Texture portalife;
+	public static Texture portanos;
 	public static Texture disegno;
 	public static Texture nuvole;
 	public static Texture nuvole1;
@@ -97,6 +99,7 @@ public class Assets {
 	public static Animation squirrelFly;
 	public static Animation platform;
 	public static Animation brakingPlatform;
+	public static Animation portagadget;
 	public static Animation staranim;
 	public static BitmapFont font;
 	public static Pixmap pixmap;
@@ -170,10 +173,16 @@ public class Assets {
 		life1= loadTexture("data/life1.png");
 		projectile= loadTexture("data/projectile.png");
 		portaproj= loadTexture("data/portaproj.png");
+		portalife=loadTexture("data/portalife.png");
+		portanos=loadTexture("data/portanos.png");
 		pixmap = new Pixmap(2048, 2048, Pixmap.Format.RGBA8888);
 		tmptext = new Texture(pixmap);
 		DrawSmiley();
 		coin9.setFilter(TextureFilter.Nearest, TextureFilter.Linear);
+		portaproj.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		portalife.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		portanos.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		bubblestart.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		backgroundmain4.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		backgroundmain5.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		backgroundmain6.setFilter(TextureFilter.Linear, TextureFilter.Linear);
@@ -218,6 +227,7 @@ public class Assets {
 			new TextureRegion(backgroundmain5, 0, 0, 1024, 1024), new TextureRegion(backgroundmain6, 0, 0, 1024, 1024),
 			new TextureRegion(backgroundmain5, 0, 0, 1024, 1024));
 		staranim = new Animation(0.2f, new TextureRegion(star1, 0, 0, 128, 128), new TextureRegion(star2, 0, 0, 128, 128));
+		portagadget = new Animation(0.12f, new TextureRegion(portaproj, 0, 0, 256, 256), new TextureRegion(portalife, 0, 0, 256, 256), new TextureRegion(portanos, 0, 0, 256, 256),new TextureRegion(bubblesstart, 0, 0, 256, 256));
 		breakanim = new TextureRegion(coin9, 0, 0, 512,512);
 		lifeAnim = new Animation(0.5f, new TextureRegion(life, 0, 0, 120, 128), new TextureRegion(life1, 0, 0, 120, 128));
 		projAnim = new Animation(0.2f, new TextureRegion(projectile, 0, 0, 64, 64), new TextureRegion(projectile, 1, 0, 64, 64));

@@ -146,8 +146,8 @@ public class WorldRenderer {
 				keyFrame = Assets.brakingPlatform.getKeyFrame(platform.stateTime, Animation.ANIMATION_LOOPING);
 				batch.draw(keyFrame, platform.position.x - 1, platform.position.y - 0.25f, 4, 4);
 			}
-			else {keyFrame = Assets.platform.getKeyFrame(platform.stateTime, Animation.ANIMATION_LOOPING);
-			batch.draw(keyFrame, platform.position.x - 1, platform.position.y - 0.25f, 2.5f, 2.5f);
+			else {keyFrame = Assets.coinAnim.getKeyFrame(platform.stateTime, Animation.ANIMATION_LOOPING);
+			batch.draw(keyFrame, platform.position.x - 0.75f, platform.position.y - 0.75f, 1.5f, 1.5f);
 			}}
 	}
 
@@ -163,11 +163,10 @@ public class WorldRenderer {
 		len = world.coins.size();
 		for (int i = 0; i < len; i++) {
 			Coin coin = world.coins.get(i);
-			TextureRegion keyFrame = Assets.coinAnim.getKeyFrame(coin.stateTime, Animation.ANIMATION_LOOPING);
+			TextureRegion keyFrame = Assets.platform.getKeyFrame(coin.stateTime, Animation.ANIMATION_LOOPING);
 			if (coin.state == Coin.COIN_STATE_PULVERIZING) {
-				//keyFrame = Assets.breakanim.getKeyFrame(coin.stateTime, Animation.ANIMATION_NONLOOPING);
 			}
-			batch.draw(keyFrame, coin.position.x - 0.75f, coin.position.y - 0.75f, 1.5f, 1.5f);
+			batch.draw(keyFrame, coin.position.x - 1, coin.position.y - 0.25f, 2.5f, 2.5f);
 		}
 	}
 
@@ -197,13 +196,15 @@ public class WorldRenderer {
 		int len = world.squirrels.size();
 		for (int i = 0; i < len; i++) {
 			Squirrel squirrel = world.squirrels.get(i);
-			TextureRegion keyFrame = Assets.lifeAnim.getKeyFrame(squirrel.stateTime, Animation.ANIMATION_LOOPING);
-			float side = squirrel.velocity.x < 0 ? -1 : 1;
-			if (side < 0)
-				batch.draw(keyFrame, squirrel.position.x + 0.5f, squirrel.position.y - 0.5f, side * 1, 1);
-			else
-				batch.draw(keyFrame, squirrel.position.x - 0.5f, squirrel.position.y - 0.5f, side * 1, 1);
-		}
+			
+			if (squirrel.state == Squirrel.BUBBLE_CLISION ) {
+				TextureRegion keyFrame = Assets.bubbles;
+				batch.draw(keyFrame,world.bob.position.x-1.2f , world.bob.position.y-2.3f , 2.5f, 3f);
+			}
+			else {
+				TextureRegion keyFrame = Assets.portagadget.getKeyFrame(squirrel.stateTime, Animation.ANIMATION_LOOPING);
+				batch.draw(keyFrame, squirrel.position.x - 0.5f, squirrel.position.y - 0.5f, 1, 1);
+		}}
 	}
 
 	private void renderCastle () {

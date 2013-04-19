@@ -20,9 +20,15 @@ public class Squirrel extends DynamicGameObject {
 	public static final float SQUIRREL_WIDTH = 1;
 	public static final float SQUIRREL_HEIGHT = 0.6f;
 	public static final float SQUIRREL_VELOCITY = 3f;
-
+	public static final float BUBBLE_CLISION=3;
+	public static final float NOS_CLISION=2;
+	public static final float LIFE_CLISION=1;
+	public static final float PROJ_CLISION=4;
 	float stateTime = 0;
-
+	public float state;
+	float crashtime = 0;
+	float nostime = 0;
+	float inuse= 0;
 	public Squirrel (float x, float y) {
 		super(x, y, SQUIRREL_WIDTH, SQUIRREL_HEIGHT);
 		velocity.set(SQUIRREL_VELOCITY, 0);
