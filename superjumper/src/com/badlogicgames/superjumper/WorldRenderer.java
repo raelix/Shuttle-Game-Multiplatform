@@ -203,8 +203,13 @@ public class WorldRenderer {
 			}
 			else {
 				TextureRegion keyFrame = Assets.portagadget.getKeyFrame(squirrel.stateTime, Animation.ANIMATION_LOOPING);
-				batch.draw(keyFrame, squirrel.position.x - 0.5f, squirrel.position.y - 0.5f, 1, 1);
-		}}
+				batch.draw(keyFrame, squirrel.position.x - 0.6f, squirrel.position.y - 0.6f, 1.3f, 1.3f);
+		}
+			if(squirrel.nosuse == 1 ){
+				TextureRegion keyFrame = Assets.nos;
+				batch.draw(keyFrame,cam.position.x + 3.4f, cam.position.y - 5.8f , 1.5f, 1.5f);
+			}
+			}
 	}
 
 	private void renderCastle () {

@@ -33,6 +33,7 @@ public class GameScreen implements Screen {
 	Rectangle pauseBounds;
 	Rectangle resumeBounds;
 	Rectangle quitBounds;
+	Rectangle nosBounds;
 	int lastScore;
 	String scoreString;
 
@@ -83,6 +84,7 @@ public class GameScreen implements Screen {
 		pauseBounds = new Rectangle(320 - 64, 480 - 64, 64, 64);
 		resumeBounds = new Rectangle(160 - 96, 240, 192, 36);
 		quitBounds = new Rectangle(160 - 96, 240 - 36, 192, 36);
+		nosBounds = new Rectangle(320 - 64, 480 - 430, 64, 64);
 		lastScore = 0;
 		scoreString = "SCORE: 0";
 	}
@@ -118,20 +120,27 @@ public class GameScreen implements Screen {
 
 	private void updateRunning (float deltaTime) {
 		if (Gdx.input.justTouched()) {
+
 			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
-			world.ShotProjectile();
+			if ((!(OverlapTester.pointInRectangle(pauseBounds, touchPoint.x, touchPoint.y)))&&
+				(!(OverlapTester.pointInRectangle(nosBounds, touchPoint.x, touchPoint.y))))
+					world.ShotProjectile();
 			if (OverlapTester.pointInRectangle(pauseBounds, touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);
 				state = GAME_PAUSED;
 				return;
-			}
-			else if(Bob.BOB_DOUBLE_JUMP==false){
-				if(Bob.jumpTime>0.8f){
-					Bob.BOB_DOUBLE_JUMP=true;
-					Bob.jumpTime=0f;
-				}
-			}
-		}
+			}//controllo sul click del nos
+			float len = world.squirrels.size();
+			for (int i = 0; i < len; i++) {
+				Squirrel squirrel = world.squirrels.get(i);
+				if(squirrel.nosuse==1)
+					if (OverlapTester.pointInRectangle(nosBounds, touchPoint.x, touchPoint.y)) {
+						Gdx.app.debug("UPDATEGRAVITY", "sto cliccando");
+						if(world.squirrels.get(i).nostime==0)world.squirrels.get(i).nostime=world.squirrels.get(i).stateTime;
+						world.Turbo();
+						world.turbo=world.turbo+1;
+						return;
+					}}}
 
 		ApplicationType appType = Gdx.app.getType();
 		// should work also with Gdx.input.isPeripheralAvailable(Peripheral.Accelerometer)

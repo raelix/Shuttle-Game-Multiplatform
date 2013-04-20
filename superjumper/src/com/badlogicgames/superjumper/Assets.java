@@ -64,6 +64,7 @@ public class Assets {
 	public static Texture SoundOff;
 	public static TextureRegion starRegion;
 	public static TextureRegion bubbles;
+	public static TextureRegion nos;
 	public static TextureRegion bubblesstart;
 	public static TextureRegion star1Region;
 	public static TextureRegion backgroundRegion;
@@ -181,7 +182,7 @@ public class Assets {
 		coin9.setFilter(TextureFilter.Nearest, TextureFilter.Linear);
 		portaproj.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		portalife.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		portanos.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		portanos.setFilter(TextureFilter.Nearest, TextureFilter.Linear);
 		bubblestart.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		backgroundmain4.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		backgroundmain5.setFilter(TextureFilter.Linear, TextureFilter.Linear);
@@ -202,6 +203,7 @@ public class Assets {
 		//load texture region,animation & sound
 		starRegion= new TextureRegion(star, 0, 0, 128, 128);
 		bubbles= new TextureRegion(bubble, 0, 0, 256, 256);
+		nos= new TextureRegion(portanos, 0, 0, 256, 256);
 		bubblesstart= new TextureRegion(bubblestart, 0, 0, 256, 256);
 		backgroundRegion = new TextureRegion(shuttle, 0, 0, 512, 512);
 		backgroundRegion10=new TextureRegion(shuttlef,0,0,512,512);

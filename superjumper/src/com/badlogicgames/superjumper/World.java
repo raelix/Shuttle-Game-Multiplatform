@@ -167,14 +167,14 @@ public class World {
 
 	public void Turbo(){
 		if(turbo>=1){
-			bob.velocity.y=13;
+			bob.velocity.y=16;
 			turbo-=1;
 
 		}
 	}
 	public void TurboLess()
 	{
-		bob.velocity.y=9;
+		bob.velocity.y=10;
 	}
 
 
@@ -407,6 +407,7 @@ public class World {
 						Gdx.input.vibrate(new long[] { 1, 20,10, 5}, -1); 
 						//turbo=turbo+1;
 						//shot=shot+5;
+						projectiles.remove(i);
 						platform.pulverize();
 						//score += 100;
 						listener.jump();
@@ -512,13 +513,12 @@ public class World {
 				}
 				else if(random>0.3f && random < 0.5f && squirrel.inuse<1)
 				{    
-					squirrel.nostime=squirrel.stateTime;
+					//GameScreen si occupa di controllare il click sul nos x attivarlo
 					squirrel.state=Squirrel.NOS_CLISION;
-					Turbo();
-					turbo=turbo+1;
 					squirrel.inuse=1;
+					squirrel.nosuse=1;
 				}
-				else if(random>0.5f && random<0.8f && squirrel.inuse<1 )
+				else if(random>0.5f && random<0.8f && squirrel.inuse<1 && squirrel.state!=Squirrel.BUBBLE_CLISION)
 				{
 					squirrel.state=Squirrel.BUBBLE_CLISION;
 					squirrel.crashtime=squirrel.stateTime;
@@ -537,6 +537,7 @@ public class World {
 			}
 		}
 	}
+
 
 	private void checkItemCollisions () {
 		int len = coins.size();
