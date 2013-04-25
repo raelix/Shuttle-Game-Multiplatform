@@ -104,20 +104,23 @@ public class CharScreen implements Screen {
 				// TODO Auto-generated method stub
 				Gdx.app.debug("x"+velocityX, "y"+velocityY);
 				 if(Math.abs(velocityX)>Math.abs(velocityY)){
-                if(velocityX>0 && bob.position.x<320){
-            
+                if(velocityX>0 && bob.position.x<320)
+                {
+               	 Assets.playSound(Assets.clickSound);
+               	 Gdx.input.vibrate(new long[] { 1, 10, 6, 10}, -1);
                        bob.velocity.x+=790;
                        bob.velocity.y+=160;
                        bobfem.velocity.y-=200;
-                }else if (velocityX<0&& bob.position.x>120){
-               	 if(bob.position.x>310)
-               	choose=1;
-               	 if(choose==1){
-               	  bob.velocity.x-=790;
-               	  bob.velocity.y-=160;
-               	  bobfem.velocity.y+=200;
-               	 
-               	 }
+                }
+                else if (velocityX<0&& bob.position.x>120){
+               	 	if(bob.position.x>310)choose=1;
+               	 	if(choose==1)
+               	 	 { Assets.playSound(Assets.clickSound);
+               	 	Gdx.input.vibrate(new long[] { 1, 10, 6, 10}, -1);
+               	 		bob.velocity.x-=790;
+               	 		bob.velocity.y-=160;
+               	 		bobfem.velocity.y+=200;
+               	 	 }
               
                 } else {
                   // Do nothing.
@@ -165,12 +168,14 @@ public class CharScreen implements Screen {
 		//bobfem.position.y=-80;
 		if(bob.position.x>320)
 		{
+			
 			bob.velocity.x=0;
 			 bob.velocity.y=0;
 			 bobfem.velocity.y=0;
 		}
 		if(bobfem.position.x<-100)
 		{
+			 
 			bob.velocity.x=0;
 			bob.velocity.y=0;
 			 bobfem.velocity.y=0;

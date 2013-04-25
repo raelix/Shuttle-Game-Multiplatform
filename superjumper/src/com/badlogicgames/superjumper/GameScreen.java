@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.GLCommon;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -244,10 +245,11 @@ public class GameScreen implements Screen {
 	}
 
 	private void presentRunning () {
-		batcher.draw(Assets.pause, 320 - 54, 480 - 54, 54, 44);
-		Assets.font.getRegion().getTexture().setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
-		Assets.font.draw(batcher, scoreString, 18, 480 - 10);
-
+		batcher.draw(Assets.pause, 320 - 47, 480 - 59, 44, 44);
+	//	Assets.font.getRegion().getTexture().setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+		Assets.font.draw(batcher, scoreString, 60, 480 - 28);
+		
+		batcher.draw(Assets.coin9, 0, 220, 270, 280);
 
 		String scoret;
 		scoret = world.shot+"x ";
@@ -256,6 +258,9 @@ public class GameScreen implements Screen {
 	}
 
 	private void presentPaused () {
+		batcher.disableBlending();
+		WorldRenderer.drawGradient(batcher, Assets.rect, 0, 0, 320, 480,Color.BLACK,Assets.colore, false);
+		batcher.enableBlending();
 		Assets.font.draw(batcher, "R e s u m e",160 - 85, 265);
 		Assets.font.draw(batcher, "Q u i t",160 - 45, 230 );
 		//batcher.draw(Assets.pauseMenu, 160 - 192 / 2, 240 - 96 / 2, 192, 96);

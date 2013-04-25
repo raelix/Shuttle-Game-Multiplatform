@@ -44,6 +44,8 @@ public class Assets {
 	public static Texture coin7;
 	public static Texture coin8;
 	public static Texture coin9;
+	public static Texture coin10;
+	public static Texture coin11;
 	public static Texture Pause;
 	public static Texture background;
 	public static Texture background1;
@@ -94,7 +96,7 @@ public class Assets {
 	public static Animation projAnim;
 	public static Animation bobJump;
 	public static Animation bobfJump;
-	public static TextureRegion breakanim;
+	public static Animation breakanim;
 	public static Animation bobFall;
 	public static TextureRegion bobHit;
 	public static Animation squirrelFly;
@@ -158,6 +160,8 @@ public class Assets {
 		coin7 = loadTexture("data/explo1.png");
 		coin8 = loadTexture("data/explo2.png");
 		coin9 = loadTexture("data/tubo.png");
+		coin10 = loadTexture("data/tubo1.png");
+		coin11 = loadTexture("data/tubo2.png");
 		background = loadTexture("data/worldini.png");
 		backgroundmain4 = loadTexture("data/main4.png");
 		backgroundmain5 = loadTexture("data/main5.png");
@@ -179,7 +183,9 @@ public class Assets {
 		pixmap = new Pixmap(2048, 2048, Pixmap.Format.RGBA8888);
 		tmptext = new Texture(pixmap);
 		DrawSmiley();
-		coin9.setFilter(TextureFilter.Nearest, TextureFilter.Linear);
+		coin9.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		coin10.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		coin11.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		portaproj.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		portalife.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		portanos.setFilter(TextureFilter.Nearest, TextureFilter.Linear);
@@ -215,11 +221,11 @@ public class Assets {
 		gameOver = new TextureRegion(items, 352, 256, 160, 96);
 		highScoresRegion = new TextureRegion(Assets.items, 0, 257, 300, 110 / 3);
 		logo = new TextureRegion(items, 0, 352, 274, 142);
-		soundOff = new TextureRegion(SoundOff, 0, 0, 110, 128);
+		soundOff = new TextureRegion(SoundOff, 0, 0, 128, 128);
 		star1Region = new TextureRegion(star2, 0, 0, 128, 128);
-		soundOn = new TextureRegion(SoundOn, 0, 0, 110, 128);
+		soundOn = new TextureRegion(SoundOn, 0, 0, 128, 128);
 		arrow = new TextureRegion(items, 0, 64, 64, 64);
-		pause = new TextureRegion(Pause, 0, 0, 120, 128);
+		pause = new TextureRegion(Pause, 0, 0, 128, 128);
 		spring = new TextureRegion(items, 128, 0, 32, 32);
 		castle = new TextureRegion(items, 128, 64, 64, 64);
 		coinAnim = new Animation(0.2f, new TextureRegion(coin1, 0, 0, 128, 128), new TextureRegion(coin2, 0, 0, 128, 128),
@@ -230,7 +236,7 @@ public class Assets {
 			new TextureRegion(backgroundmain5, 0, 0, 1024, 1024));
 		staranim = new Animation(0.2f, new TextureRegion(star1, 0, 0, 128, 128), new TextureRegion(star2, 0, 0, 128, 128));
 		portagadget = new Animation(0.12f, new TextureRegion(portaproj, 0, 0, 256, 256), new TextureRegion(portalife, 0, 0, 256, 256), new TextureRegion(portanos, 0, 0, 256, 256),new TextureRegion(bubblesstart, 0, 0, 256, 256));
-		breakanim = new TextureRegion(coin9, 0, 0, 512,512);
+		breakanim = new Animation(3.9f, new TextureRegion(coin9, 0, 0, 512,512),new TextureRegion(coin10, 0, 0, 512,512),new TextureRegion(coin9, 0, 0, 512,512));
 		lifeAnim = new Animation(0.5f, new TextureRegion(life, 0, 0, 120, 128), new TextureRegion(life1, 0, 0, 120, 128));
 		projAnim = new Animation(0.2f, new TextureRegion(projectile, 0, 0, 64, 64), new TextureRegion(projectile, 1, 0, 64, 64));
 		bobJump = new Animation(0.2f, new TextureRegion(shuttle, 0, 0, 512, 512), new TextureRegion(shuttle1, 0, 0, 512, 512));

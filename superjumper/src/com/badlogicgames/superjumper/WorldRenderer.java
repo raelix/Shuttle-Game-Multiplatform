@@ -186,9 +186,9 @@ public class WorldRenderer {
 			Life life = world.lifes.get(i);
 			TextureRegion keyFrame = Assets.lifeAnim.getKeyFrame(life.stateTime, Animation.ANIMATION_LOOPING);	
 			batch.draw(keyFrame, cam.position.x - FRUSTUM_WIDTH/2, cam.position.y + i+1, 0.5f, 0.5f);
-			TextureRegion breakanim = Assets.breakanim;	
-			batch.draw(breakanim, cam.position.x - 5.1f, cam.position.y + 5.1f, 7, 5f);
-
+			/*TextureRegion breakanim = Assets.breakanim.getKeyFrame(life.stateTime, Animation.ANIMATION_LOOPING);;	
+			batch.draw(breakanim, cam.position.x, cam.position.y , 7, 6f);
+*/
 
 		}
 	}

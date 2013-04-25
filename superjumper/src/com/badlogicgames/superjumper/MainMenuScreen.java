@@ -127,7 +127,7 @@ public class MainMenuScreen implements Screen {
 			TextureRegion keyFrame2 = Assets.starRegion;
 			batcher.draw(keyFrame2, star.position.x , star.position.y , 5, 5);
 		}
-		batcher.draw(Settings.soundEnabled ? Assets.soundOn : Assets.soundOff, 0, 0, 54, 44);
+		batcher.draw(Settings.soundEnabled ? Assets.soundOn : Assets.soundOff, 0, 0, 46, 46);
 		batcher.end();
 		batcher.enableBlending();
 		batcher.begin();
