@@ -133,8 +133,8 @@ public class Assets {
 		//particelle effetto fuoco
 		particleEffect = new ParticleEffect();
 		particleClouds = new ParticleEffect();
-		particleEffect.load(Gdx.files.internal("data/ecco.p"), Gdx.files.internal("data"));
-		particleClouds.load(Gdx.files.internal("data/clouds.p"), Gdx.files.internal("data"));
+		particleEffect.load(Gdx.files.internal("data/pfire.p"), Gdx.files.internal("data"));
+		particleClouds.load(Gdx.files.internal("data/pfire1.p"), Gdx.files.internal("data"));
 		//laserPEmitters = new Array(particleEffect.getEmitters());
 		particleClouds.getEmitters();
 		particleEffect.getEmitters();

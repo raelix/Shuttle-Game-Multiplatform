@@ -16,6 +16,8 @@
 
 package com.badlogicgames.superjumper;
 
+import java.util.Random;
+
 public class Platform extends DynamicGameObject {
 	public static final float PLATFORM_WIDTH = 2;
 	public static final float PLATFORM_HEIGHT = 0.5f;
@@ -29,6 +31,7 @@ public class Platform extends DynamicGameObject {
 	int type;
 	int state;
 	float stateTime;
+	
 
 	public Platform (int type, float x, float y) {
 		super(x, y, PLATFORM_WIDTH, PLATFORM_HEIGHT);
@@ -36,6 +39,7 @@ public class Platform extends DynamicGameObject {
 		this.state = PLATFORM_STATE_NORMAL;
 		this.stateTime = 0;
 		if (type == PLATFORM_TYPE_MOVING) {
+			
 			velocity.y = PLATFORM_VELOCITY;
 		} else {
 			velocity.x = 0;
@@ -45,14 +49,14 @@ public class Platform extends DynamicGameObject {
 
 	public void update (float deltaTime) {
 		if (type == PLATFORM_TYPE_MOVING) {
-			position.add(0,velocity.y*deltaTime);
+			position.add(velocity.x*deltaTime,velocity.y*deltaTime);
 			bounds.x = position.x - PLATFORM_WIDTH / 2;
 			bounds.y = position.y - PLATFORM_HEIGHT / 2;
 
-			if (position.x < PLATFORM_HEIGHT / 2) {
-				velocity.y = -velocity.y;
-				position.y = PLATFORM_HEIGHT / 2;
-			}
+			//if (position.x < PLATFORM_HEIGHT / 2) {
+			//	velocity.y = -velocity.y;
+			//	position.y = PLATFORM_HEIGHT / 2;
+			//}
 			if (position.x > World.WORLD_HEIGHT - PLATFORM_HEIGHT / 2) {
 				velocity.y = -velocity.y;
 				position.x = World.WORLD_HEIGHT - PLATFORM_HEIGHT / 2;

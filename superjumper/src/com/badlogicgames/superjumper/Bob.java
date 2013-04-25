@@ -10,6 +10,7 @@ public class Bob extends DynamicGameObject {
 	public static final float BOB_MOVE_VELOCITY = 20;
 	public static final float BOB_WIDTH = 0.8f;
 	public static final float BOB_HEIGHT = 0.8f;
+	public  float CHARSCREENUSE = 0;
 	public final float MAXVELOCITY = 10f;
 	public Vector2 gravity = new Vector2();
 
@@ -49,10 +50,10 @@ public class Bob extends DynamicGameObject {
 				stateTime = 0;
 			}
 		}
-
+if(CHARSCREENUSE==0){
 		if (position.x < 0) position.x = World.WORLD_WIDTH;
 		if (position.x > World.WORLD_WIDTH) position.x = 0;
-
+}
 		stateTime += deltaTime;
 		jumpTime += deltaTime;
 	}

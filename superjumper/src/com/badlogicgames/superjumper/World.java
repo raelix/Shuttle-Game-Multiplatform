@@ -40,7 +40,8 @@ public class World {
 	public float heightSoFar;
 	public int score;
 	public int state;
-	public int shot=5;
+	public int shot=10;
+	public int nosinuse=0;
 	public int turbo=1;
 	public float bubbletimes;
 	private Vector2 gravity = new Vector2(0,15);
@@ -190,8 +191,10 @@ public class World {
 		addStarDynamic();
 		updateStar( deltaTime);
 		updateProjectiles(deltaTime);
-		if (rand.nextFloat() > 0.5f) score += (int)bob.velocity.y;
-		if (bob.state != Bob.BOB_STATE_HIT) checkCollisions();
+		if (rand.nextFloat() > 0.5f) 
+			score += (int)bob.velocity.y;
+		if (bob.state != Bob.BOB_STATE_HIT) 
+			checkCollisions();
 		checkRemovePlatform();
 		checkRemoveProjectile();
 		checkRemoveCoin();
@@ -204,14 +207,14 @@ public class World {
 	private void updateGravityPlanet(float deltaTime){
 		for ( Platform plat : this.platforms) {
 			if (plat.type != Platform.PLATFORM_TYPE_MOVING){
-				Utils.changeGravityTowards(plat, bob);
+				Utils.changeGravityTowards(bob, plat);
 			}
 		}
 	}
 
 	private void updateBob (float deltaTime, float accelX) {
 		if (bob.state != Bob.BOB_STATE_HIT && bob.position.y <= 0.5f) bob.hitPlatform();
-		if (bob.state != Bob.BOB_STATE_HIT) bob.velocity.x = -accelX / 10 * Bob.BOB_MOVE_VELOCITY;
+		if (bob.state != Bob.BOB_STATE_HIT) bob.velocity.x = -accelX / 5 * Bob.BOB_MOVE_VELOCITY;
 		bob.update(deltaTime);
 		heightSoFar = Math.max(bob.position.y, heightSoFar);
 	}
@@ -224,9 +227,6 @@ public class World {
 		Star star = new Star(type_star, x_star, y_star+bob.position.y+13);//star
 		stars.add(star);//star
 		////end star generate
-
-
-
 	}
 
 
@@ -245,7 +245,7 @@ public class World {
 				Utils.changeGravityTowards(plat, bob);
 			}
 			plat.update(deltaTime);
-			}
+		}
 		int len = platforms.size();
 		for (int i = 0; i < len; i++) {
 			Platform platform = platforms.get(i);
@@ -269,6 +269,19 @@ public class World {
 		}
 	}
 
+	public void nosActivate(){
+		int len = squirrels.size();
+		for (int i = 0; i < len; i++) {
+			Squirrel squirrel = squirrels.get(i);
+			if(squirrel.nosuse==1){
+				if(squirrels.get(i).nostime==0)squirrels.get(i).nostime=squirrels.get(i).stateTime;
+				Turbo();
+				turbo=turbo+1;
+				nosinuse=1;
+			}
+		}
+	}
+
 
 	private void updateSquirrels (float deltaTime) {
 		int len = squirrels.size();
@@ -281,6 +294,7 @@ public class World {
 			}
 			else if(squirrel.state==Squirrel.NOS_CLISION && squirrel.nostime != 0 && squirrel.nostime<squirrel.stateTime-6){
 				TurboLess();
+				nosinuse=0;
 				squirrels.remove(squirrel);
 				squirrel.inuse=0;
 			}
@@ -554,6 +568,7 @@ public class World {
 				listener.coin();
 				coin.pulverize();
 				LifeLess();
+				nosinuse=0;
 				score -= 300;
 				coins.remove(coin);
 				break;

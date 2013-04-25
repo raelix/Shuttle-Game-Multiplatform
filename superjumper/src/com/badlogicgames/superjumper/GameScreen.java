@@ -130,17 +130,23 @@ public class GameScreen implements Screen {
 				state = GAME_PAUSED;
 				return;
 			}//controllo sul click del nos
-			float len = world.squirrels.size();
-			for (int i = 0; i < len; i++) {
-				Squirrel squirrel = world.squirrels.get(i);
-				if(squirrel.nosuse==1)
+		
 					if (OverlapTester.pointInRectangle(nosBounds, touchPoint.x, touchPoint.y)) {
-						Gdx.app.debug("UPDATEGRAVITY", "sto cliccando");
-						if(world.squirrels.get(i).nostime==0)world.squirrels.get(i).nostime=world.squirrels.get(i).stateTime;
-						world.Turbo();
-						world.turbo=world.turbo+1;
+						//Gdx.app.debug("UPDATEGRAVITY", "sto cliccando");
+						world.nosActivate();
 						return;
-					}}}
+					}}
+				//es: world.Squirrels(); si può creare una funzione in game tale e quale a questa di modo 
+				//da non disperdere il principio dell MVC
+				//float len = world.squirrels.size();
+				//for (int i = 0; i < len; i++) {
+				//Squirrel squirrel = world.squirrels.get(i);
+				//if(squirrel.nosuse==1)
+				//	if(world.squirrels.get(i).nostime==0)world.squirrels.get(i).nostime=world.squirrels.get(i).stateTime;
+				//	world.Turbo();
+				//	world.turbo=world.turbo+1;
+				//}
+						
 
 		ApplicationType appType = Gdx.app.getType();
 		// should work also with Gdx.input.isPeripheralAvailable(Peripheral.Accelerometer)

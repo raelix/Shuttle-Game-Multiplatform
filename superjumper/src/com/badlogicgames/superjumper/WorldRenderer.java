@@ -126,9 +126,19 @@ public class WorldRenderer {
 		}
 		/*	float side = world.bob.velocity.x < 0 ? -1 : 1;*/
 		//Particelle di fuoco dietro Bob
-		Assets.particleEffect.start();
-		Assets.particleEffect.setPosition(world.bob.position.x,world.bob.position.y-1);
-		Assets.particleEffect.draw(batch, Gdx.graphics.getDeltaTime());
+		
+      if(world.nosinuse==1)
+       {
+              Assets.particleClouds.start();
+              Assets.particleClouds.setPosition(world.bob.position.x,world.bob.position.y-1);
+              Assets.particleClouds.draw(batch, Gdx.graphics.getDeltaTime());
+       }
+      else
+       {    
+      	Assets.particleEffect.start();
+      	Assets.particleEffect.setPosition(world.bob.position.x,world.bob.position.y-1);
+      	Assets.particleEffect.draw(batch, Gdx.graphics.getDeltaTime());
+       }
 		if(CharScreen.state==1)
 		batch.draw(keyFrame, world.bob.position.x -0.65f, world.bob.position.y -2.5f, 2.3f, 3f);
 		else {
