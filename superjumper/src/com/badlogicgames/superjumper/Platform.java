@@ -26,7 +26,7 @@ public class Platform extends DynamicGameObject {
 	public static final int PLATFORM_STATE_NORMAL = 0;
 	public static final int PLATFORM_STATE_PULVERIZING = 1;
 	public static final float PLATFORM_PULVERIZE_TIME = 0.1f * 4;
-	public static final float PLATFORM_VELOCITY = -3;
+	public static final float PLATFORM_VELOCITY = -2;
 
 	int type;
 	int state;
@@ -57,10 +57,12 @@ public class Platform extends DynamicGameObject {
 			//	velocity.y = -velocity.y;
 			//	position.y = PLATFORM_HEIGHT / 2;
 			//}
-			if (position.x > World.WORLD_HEIGHT - PLATFORM_HEIGHT / 2) {
-				velocity.y = -velocity.y;
-				position.x = World.WORLD_HEIGHT - PLATFORM_HEIGHT / 2;
-			}
+			//if (position.x > World.WORLD_HEIGHT - PLATFORM_HEIGHT / 2) {
+			//	velocity.y = -velocity.y;
+			//	position.x = World.WORLD_HEIGHT - PLATFORM_HEIGHT / 2;
+			//}
+			if (position.x > World.WORLD_WIDTH/2)velocity.x=-velocity.x;
+			else if (position.x > World.WORLD_WIDTH/2)velocity.x=velocity.x;
 		} else {
 			position.add(velocity.x * deltaTime/2,velocity.y * deltaTime/2);
 			bounds.x = position.x - PLATFORM_WIDTH / 2;

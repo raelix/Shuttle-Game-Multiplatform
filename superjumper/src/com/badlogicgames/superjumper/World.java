@@ -78,8 +78,8 @@ public class World {
 		float maxJumpHeight = this.PLATFORMS_DISTANCE;
 		float minJumpHeight = this.STARS_DISTANCE;
 		while (y < WORLD_HEIGHT - WORLD_WIDTH / 2) {
-			int type = rand.nextFloat() > 0.5f ? Platform.PLATFORM_TYPE_MOVING : Platform.PLATFORM_TYPE_STATIC;
-			float x = rand.nextFloat() > 0.5f ? rand.nextFloat() *k : WORLD_WIDTH/ - rand.nextFloat() *k;
+			int type = y>WORLD_HEIGHT/3 ? Platform.PLATFORM_TYPE_MOVING : Platform.PLATFORM_TYPE_STATIC;
+			float x = rand.nextFloat() > 0.5f ? rand.nextFloat() *k : WORLD_WIDTH - rand.nextFloat() *k/2;
 			//star generate
 			int type_star = Star.STAR_TYPE_STATIC;//star
 			float y_star = rand.nextFloat() *20;//star
@@ -87,14 +87,14 @@ public class World {
 			Star star = new Star(type_star, x_star, y_star);//star
 			stars.add(star);
 			//end star generate
-			Platform platform = new Platform(type, x, y);
+			Platform platform = new Platform(type, x, y*2);
 			platforms.add(platform);
 			if (rand.nextFloat() > 0.2f && type != Platform.PLATFORM_TYPE_MOVING) {
 				Spring spring = new Spring(platform.position.x, platform.position.y + Platform.PLATFORM_HEIGHT / 2 + Spring.SPRING_HEIGHT / 2);
 				springs.add(spring);
 
 				//	if (y > WORLD_HEIGHT / 3 && rand.nextFloat() > 0.8f) {
-				Squirrel squirrel = new Squirrel(platform.position.x + rand.nextFloat()*k, platform.position.y
+				Squirrel squirrel = new Squirrel(platform.position.x + rand.nextFloat()*k, platform.position.y*3
 					+ Squirrel.SQUIRREL_HEIGHT + rand.nextFloat() * k);
 				squirrels.add(squirrel);
 				//}
@@ -241,7 +241,7 @@ public class World {
 	private void updatePlatforms (float deltaTime) {
 
 		for ( Platform plat : this.platforms) {
-			if (plat.type != Platform.PLATFORM_TYPE_MOVING && bob.position.y-plat.position.y>-8){
+			if (plat.type == Platform.PLATFORM_TYPE_MOVING && bob.position.y-plat.position.y>-5){
 				Utils.changeGravityTowards(plat, bob);
 			}
 			plat.update(deltaTime);

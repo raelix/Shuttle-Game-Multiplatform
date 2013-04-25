@@ -77,7 +77,7 @@ public class CharScreen implements Screen {
 			
 			@Override
 			public boolean tap (float x, float y, int count, int button) {
-				// TODO Auto-generated method stub
+			//guiCam.zoom=0.2f;
 				return false;
 			}
 			
@@ -95,7 +95,7 @@ public class CharScreen implements Screen {
 			
 			@Override
 			public boolean longPress (float x, float y) {
-				// TODO Auto-generated method stub
+				//guiCam.zoom=1f;
 				return false;
 			}
 			
