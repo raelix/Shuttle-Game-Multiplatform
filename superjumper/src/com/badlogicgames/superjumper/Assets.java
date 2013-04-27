@@ -64,6 +64,7 @@ public class Assets {
 	public static Texture SoundOff;
 	public static Texture tmptext;
 	public static Texture tmptext1;
+	public static Texture swipetext,swipe,swipe1,swipe2;
 	public static TextureRegion starRegion;
 	public static TextureRegion bubbles;
 	public static TextureRegion nos;
@@ -92,6 +93,7 @@ public class Assets {
 	public static TextureRegion castle;
 	public static TextureRegion bobHit;
 	public static TextureRegion  rect;
+	public static Animation swipeAnim;
 	public static Animation coinAnim;
 	public static Animation backAnim;
 	public static Animation lifeAnim;
@@ -173,6 +175,10 @@ public class Assets {
 		portanos=loadTexture("data/portanos.png");
 		icontext=loadTexture("data/icontext1.png");
 		icontextback=loadTexture("data/icontextback.png");
+		swipe=loadTexture("data/swipe.png");
+		swipe1=loadTexture("data/swipe1.png");
+		swipe2=loadTexture("data/swipe2.png");
+		swipetext=loadTexture("data/swipetext.png");
 	SetFilter();//setto i filtri sulle texture
 		//load texture region,animation & sound
 		items = loadTexture("data/items.png");
@@ -205,6 +211,7 @@ public class Assets {
 			new TextureRegion(backgroundmain5, 0, 0, 1024, 1024), new TextureRegion(backgroundmain6, 0, 0, 1024, 1024),
 			new TextureRegion(backgroundmain5, 0, 0, 1024, 1024));
 		staranim = new Animation(0.2f, new TextureRegion(star1, 0, 0, 128, 128), new TextureRegion(star2, 0, 0, 128, 128));
+		swipeAnim = new Animation(1.1f, new TextureRegion(swipe, 0, 0, 512, 512), new TextureRegion(swipe1, 0, 0, 512, 512), new TextureRegion(swipe2, 0, 0, 512, 512));
 		portagadget = new Animation(0.12f, new TextureRegion(portaproj, 0, 0, 256, 256), new TextureRegion(portalife, 0, 0, 256, 256), new TextureRegion(portanos, 0, 0, 256, 256),new TextureRegion(bubblesstart, 0, 0, 256, 256));
 		breakanim = new Animation(3.9f, new TextureRegion(tubo, 0, 0, 512,512),new TextureRegion(coin10, 0, 0, 512,512),new TextureRegion(tubo, 0, 0, 512,512));
 		lifeAnim = new Animation(0.5f, new TextureRegion(life, 0, 0, 120, 128), new TextureRegion(life1, 0, 0, 120, 128));
@@ -232,6 +239,10 @@ public class Assets {
 
 
 	private static void SetFilter(){
+		swipe.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		swipe1.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		swipe2.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		swipetext.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 		icontextback.setFilter(TextureFilter.Linear, TextureFilter.Nearest);
 		icontext.setFilter(TextureFilter.Linear, TextureFilter.Nearest);
 		tubo.setFilter(TextureFilter.Linear, TextureFilter.Linear);

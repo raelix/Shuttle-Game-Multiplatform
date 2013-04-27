@@ -48,6 +48,9 @@ public class CharScreen implements Screen {
 	Rectangle character;
 	public static int state=1;
 	public  int choose=0;
+	public  int swipedeactive=0;
+	private	float stateTime=0;
+	
 	public CharScreen (Game game) {
 		this.game = game;
 		this.bob = new Bob(130,125);
@@ -105,7 +108,7 @@ public class CharScreen implements Screen {
 				Gdx.app.debug("x"+velocityX, "y"+velocityY);
 				 if(Math.abs(velocityX)>Math.abs(velocityY)){
                 if(velocityX>0 && bob.position.x<320)
-                {
+                {swipedeactive=1;
                	 Assets.playSound(Assets.clickSound);
                	 Gdx.input.vibrate(new long[] { 1, 10, 6, 10}, -1);
                        bob.velocity.x+=790;
@@ -141,7 +144,7 @@ public class CharScreen implements Screen {
 		
 		if (Gdx.input.justTouched()) {
 			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
-
+			
 			if (OverlapTester.pointInRectangle(nextBounds, touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);
 				game.setScreen(new GameScreen(game));
@@ -201,6 +204,14 @@ public class CharScreen implements Screen {
 		batcher.draw(Assets.icontextback,0,10,45,45);
 		Assets.font.draw(batcher, "Choose Character", 29,440);
 		Assets.fontsmall.draw(batcher, "GO", 285,40);
+		stateTime=stateTime+0.015f;
+	  TextureRegion keyFrame1 = Assets.swipeAnim.getKeyFrame(stateTime, Animation.ANIMATION_LOOPING);
+		if(stateTime>3)stateTime=0;
+		if(swipedeactive==0)
+		{
+			batcher.draw(Assets.swipetext,10,0,320,256);
+			batcher.draw(keyFrame1,10,0,320,256);
+			}
 		//Assets.fontsmall.draw(batcher, "BACK", 15,40);
 	
 			batcher.draw(Assets.backgroundRegion,bob.position.x ,bob.position.y ,130,130);

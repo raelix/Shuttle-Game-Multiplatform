@@ -33,7 +33,7 @@ public class SuperJumper extends Game {
 		Settings.load();
 		Assets.load();
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
-		setScreen(new MainMenuScreen(this));
+		setScreen(new FirstScreen(this));
 		fps = new FPSLogger();
 	}
 
