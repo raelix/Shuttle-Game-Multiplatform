@@ -36,6 +36,8 @@ public class GameScreen implements Screen {
 	Rectangle quitBounds;
 	Rectangle nosBounds;
 	int lastScore;
+	int usataono;
+	static float statet=0;
 	String scoreString;
 
 	public GameScreen (Game game) {
@@ -258,8 +260,22 @@ public class GameScreen implements Screen {
 		scoreproj = world.shot+"x ";
 		Assets.fontsmall.draw(batcher, scoreproj, 4, 480 - 250);
 		batcher.draw(Assets.portaproj, 320 - 318, 480 - 250, 35, 35);
+	if (world.incrementoproj==1){
+			
+			Assets.font.scale(0.2f);
+			
+		Assets.font.draw(batcher, "X2", guiCam.position.x,guiCam.position.y);
+		statet+=1f;
+			if(statet==23 ){
+				
+					Assets.font.scale(-0.2f*23);
+				
+				statet=0;
+				world.incrementoproj=0;
+				}
+								}
+			
 	}
-
 	private void presentPaused () {
 		batcher.disableBlending();
 		MainMenuScreen.drawGradient(batcher, Assets.rect, 0, 0, 320, 480,Color.BLACK,Assets.colore, false);

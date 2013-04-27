@@ -182,6 +182,8 @@ public class WorldRenderer {
 			}
 			}
 	}
+	
+	
 
 	private void renderCastle () {
 		Castle castle = world.castle;

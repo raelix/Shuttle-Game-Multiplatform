@@ -42,6 +42,7 @@ public class World {
 	public int shot=10;
 	public int nosinuse=0;
 	public int turbo=1;
+	public float incrementoproj=0;
 	public float bubbletimes;
 	private Vector2 gravity = new Vector2(0,15);
 
@@ -266,7 +267,7 @@ public class World {
 			}
 		}
 	}
-
+	
 
 	private void updateSquirrels (float deltaTime) {
 		int len = squirrels.size();
@@ -493,6 +494,7 @@ public class World {
 					squirrel.state=Squirrel.LIFE_CLISION;
 					LifeMore();
 					squirrel.inuse=1;
+					incrementoproj=1;
 				}
 				else if(random>0.3f && random < 0.5f && squirrel.inuse<1)
 				{    
@@ -500,18 +502,21 @@ public class World {
 					squirrel.state=Squirrel.NOS_CLISION;
 					squirrel.inuse=1;
 					squirrel.nosuse=1;
+					
 				}
 				else if(random>0.5f && random<0.8f && squirrel.inuse<1 && squirrel.state!=Squirrel.BUBBLE_CLISION)
 				{
 					squirrel.state=Squirrel.BUBBLE_CLISION;
 					squirrel.crashtime=squirrel.stateTime;
 					squirrel.inuse=1;
+					
 				}
 				else if(random>0.8f && squirrel.inuse<1 )
 				{ 
 					squirrel.state=Squirrel.PROJ_CLISION;
 					shot=shot+5;
 					squirrel.inuse=1;
+					incrementoproj=1;
 				}
 				listener.hit(); 
 				//squirrels.remove(squirrel);
