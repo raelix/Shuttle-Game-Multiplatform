@@ -153,8 +153,8 @@ public class Assets {
 		coin7 = loadTexture("data/explo1.png");
 		coin8 = loadTexture("data/explo2.png");
 		tubo = loadTexture("data/tubo.png");
-		coin10 = loadTexture("data/tubo1.png");
-		coin11 = loadTexture("data/tubo2.png");
+		//coin10 = loadTexture("data/tubo1.png");
+		//coin11 = loadTexture("data/tubo2.png");
 		background = loadTexture("data/worldini.png");
 		backgroundmain4 = loadTexture("data/main4.png");
 		backgroundmain5 = loadTexture("data/main5.png");
@@ -211,9 +211,9 @@ public class Assets {
 			new TextureRegion(backgroundmain5, 0, 0, 1024, 1024), new TextureRegion(backgroundmain6, 0, 0, 1024, 1024),
 			new TextureRegion(backgroundmain5, 0, 0, 1024, 1024));
 		staranim = new Animation(0.2f, new TextureRegion(star1, 0, 0, 128, 128), new TextureRegion(star2, 0, 0, 128, 128));
-		swipeAnim = new Animation(1.1f, new TextureRegion(swipe, 0, 0, 512, 512), new TextureRegion(swipe1, 0, 0, 512, 512), new TextureRegion(swipe2, 0, 0, 512, 512));
+		swipeAnim = new Animation(0.7f, new TextureRegion(swipe, 0, 0, 512, 512), new TextureRegion(swipe1, 0, 0, 512, 512), new TextureRegion(swipe2, 0, 0, 512, 512));
 		portagadget = new Animation(0.12f, new TextureRegion(portaproj, 0, 0, 256, 256), new TextureRegion(portalife, 0, 0, 256, 256), new TextureRegion(portanos, 0, 0, 256, 256),new TextureRegion(bubblesstart, 0, 0, 256, 256));
-		breakanim = new Animation(3.9f, new TextureRegion(tubo, 0, 0, 512,512),new TextureRegion(coin10, 0, 0, 512,512),new TextureRegion(tubo, 0, 0, 512,512));
+		breakanim = new Animation(3.9f, new TextureRegion(tubo, 0, 0, 512,512),new TextureRegion(tubo, 0, 0, 512,512),new TextureRegion(tubo, 0, 0, 512,512));
 		lifeAnim = new Animation(0.5f, new TextureRegion(life, 0, 0, 120, 128), new TextureRegion(life1, 0, 0, 120, 128));
 		projAnim = new Animation(0.2f, new TextureRegion(projectile, 0, 0, 64, 64), new TextureRegion(projectile, 1, 0, 64, 64));
 		bobJump = new Animation(0.2f, new TextureRegion(shuttle, 0, 0, 512, 512), new TextureRegion(shuttle1, 0, 0, 512, 512));
@@ -246,8 +246,6 @@ public class Assets {
 		icontextback.setFilter(TextureFilter.Linear, TextureFilter.Nearest);
 		icontext.setFilter(TextureFilter.Linear, TextureFilter.Nearest);
 		tubo.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		coin10.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		coin11.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		portaproj.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		portalife.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		portanos.setFilter(TextureFilter.Nearest, TextureFilter.Linear);
