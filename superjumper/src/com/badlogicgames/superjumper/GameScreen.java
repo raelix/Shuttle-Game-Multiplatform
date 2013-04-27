@@ -1,5 +1,5 @@
 package com.badlogicgames.superjumper;
-
+/*CONTROLLER*/
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Application.ApplicationType;
@@ -249,21 +249,20 @@ public class GameScreen implements Screen {
 	}
 
 	private void presentRunning () {
-		batcher.draw(Assets.pause, 320 - 47, 480 - 59, 44, 44);
-		//	Assets.font.getRegion().getTexture().setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
-		Assets.font.draw(batcher, scoreString, 60, 480 - 28);
-
-		batcher.draw(Assets.coin9, 0, 220, 270, 280);
-
-		String scoret;
-		scoret = world.shot+"x ";
-		Assets.font.draw(batcher, scoret, 2, 480 - 250);
+		batcher.draw(Assets.pause, 320 - 49, 480 - 53, 44, 44);
+		//Assets.fontsmall.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		//Assets.fontsmall.scale(3f);explosion text 
+		batcher.draw(Assets.tubo, 0, 225, 250, 280);
+		Assets.fontsmall.draw(batcher, scoreString, 63, 480 - 26);
+		String scoreproj;
+		scoreproj = world.shot+"x ";
+		Assets.fontsmall.draw(batcher, scoreproj, 4, 480 - 250);
 		batcher.draw(Assets.portaproj, 320 - 318, 480 - 250, 35, 35);
 	}
 
 	private void presentPaused () {
 		batcher.disableBlending();
-		WorldRenderer.drawGradient(batcher, Assets.rect, 0, 0, 320, 480,Color.BLACK,Assets.colore, false);
+		MainMenuScreen.drawGradient(batcher, Assets.rect, 0, 0, 320, 480,Color.BLACK,Assets.colore, false);
 		batcher.enableBlending();
 		Assets.font.draw(batcher, "R e s u m e",160 - 85, 265);
 		Assets.font.draw(batcher, "Q u i t",160 - 45, 230 );

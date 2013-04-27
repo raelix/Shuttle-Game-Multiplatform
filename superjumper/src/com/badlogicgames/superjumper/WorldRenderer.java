@@ -1,5 +1,5 @@
 package com.badlogicgames.superjumper;
-
+/*VIEW*/
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
@@ -50,29 +50,6 @@ public class WorldRenderer {
 		batch.disableBlending();
 		drawGradient(batch, Assets.rect, 0, 0, 10, 110,Color.BLACK,Assets.colore, false);
 		batch.enableBlending();
-		//batch.draw(Assets.backgroundRegion, 0, 0);
-		/*batch.draw(Assets.backgroundRegion2, 0, 15, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
-		batch.draw(Assets.backgroundRegion3, 0, 30, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
-		batch.draw(Assets.backgroundRegion4, 0, 45, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
-		batch.draw(Assets.backgroundRegion5, 0, 60, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
-		batch.draw(Assets.backgroundRegion6, 0, 75, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
-		batch.draw(Assets.backgroundRegion7, 0, 90, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
-		batch.draw(Assets.backgroundRegion8, 0, 105, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
-		batch.draw(Assets.backgroundRegion9, 0, 120, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
-		batch.draw(Assets.backgroundRegion10,0, 135, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
-		batch.draw(Assets.backgroundRegion11, 0, 150, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
-		batch.draw(Assets.backgroundRegion12, 0, 165, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
-		batch.draw(Assets.backgroundRegion13, 0, 180, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
-		batch.draw(Assets.backgroundRegion14, 0, 195, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
-		batch.draw(Assets.backgroundRegion15, 0, 210, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
-		batch.draw(Assets.backgroundRegion16, 0, 225, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
-		batch.draw(Assets.backgroundRegion17, 0, 240, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
-		batch.draw(Assets.backgroundRegion18, 0, 255, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
-		batch.draw(Assets.backgroundRegion19, 0, 270, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
-		batch.draw(Assets.backgroundRegion20, 0, 285, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
-		batch.draw(Assets.backgroundRegion21, 0, 300, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);*/
-		//batch.draw(Assets.backgroundRegion, 0, 0, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
-
 		batch.end();
 	}
 

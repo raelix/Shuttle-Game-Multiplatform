@@ -43,16 +43,13 @@ public class Assets {
 	public static Texture coin6;
 	public static Texture coin7;
 	public static Texture coin8;
-	public static Texture coin9;
+	public static Texture tubo;
 	public static Texture coin10;
 	public static Texture coin11;
 	public static Texture Pause;
 	public static Texture background;
 	public static Texture background1;
 	public static Texture background2;
-	public static Texture backgroundmain1;
-	public static Texture backgroundmain2;
-	public static Texture backgroundmain3;
 	public static Texture backgroundmain4;
 	public static Texture backgroundmain5;
 	public static Texture backgroundmain6;
@@ -76,7 +73,7 @@ public class Assets {
 	public static TextureRegion disegno1;
 	public static TextureRegion backgroundRegion4;
 	public static TextureRegion backgroundRegion5;
-	public static TextureRegion backgroundRegion6,backgroundRegion7,backgroundRegion8,backgroundRegion9,backgroundRegion10,backgroundRegion11,backgroundRegion12,backgroundRegion13,backgroundRegion14,backgroundRegion15,backgroundRegion16,backgroundRegion17,backgroundRegion18,backgroundRegion19,backgroundRegion20,backgroundRegion21;
+	public static TextureRegion backgroundRegion10;
 	public static TextureRegion backgroundRegionmain;
 	public static TextureRegion mainMenu;
 	public static TextureRegion pauseMenu;
@@ -105,6 +102,7 @@ public class Assets {
 	public static Animation portagadget;
 	public static Animation staranim;
 	public static BitmapFont font;
+	public static BitmapFont fontsmall;
 	public static Pixmap pixmap;
 	public static Texture tmptext;
 	public static TextureRegion  rect;
@@ -137,7 +135,6 @@ public class Assets {
 		particleClouds = new ParticleEffect();
 		particleEffect.load(Gdx.files.internal("data/pfire.p"), Gdx.files.internal("data"));
 		particleClouds.load(Gdx.files.internal("data/pfire1.p"), Gdx.files.internal("data"));
-		//laserPEmitters = new Array(particleEffect.getEmitters());
 		particleClouds.getEmitters();
 		particleEffect.getEmitters();
 		particleClouds.allowCompletion();
@@ -159,7 +156,7 @@ public class Assets {
 		coin6 = loadTexture("data/explo.png");
 		coin7 = loadTexture("data/explo1.png");
 		coin8 = loadTexture("data/explo2.png");
-		coin9 = loadTexture("data/tubo.png");
+		tubo = loadTexture("data/tubo.png");
 		coin10 = loadTexture("data/tubo1.png");
 		coin11 = loadTexture("data/tubo2.png");
 		background = loadTexture("data/worldini.png");
@@ -182,8 +179,8 @@ public class Assets {
 		portanos=loadTexture("data/portanos.png");
 		pixmap = new Pixmap(2048, 2048, Pixmap.Format.RGBA8888);
 		tmptext = new Texture(pixmap);
-		DrawSmiley();
-		coin9.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		//DrawSmiley();
+		tubo.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		coin10.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		coin11.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		portaproj.setFilter(TextureFilter.Linear, TextureFilter.Linear);
@@ -236,7 +233,7 @@ public class Assets {
 			new TextureRegion(backgroundmain5, 0, 0, 1024, 1024));
 		staranim = new Animation(0.2f, new TextureRegion(star1, 0, 0, 128, 128), new TextureRegion(star2, 0, 0, 128, 128));
 		portagadget = new Animation(0.12f, new TextureRegion(portaproj, 0, 0, 256, 256), new TextureRegion(portalife, 0, 0, 256, 256), new TextureRegion(portanos, 0, 0, 256, 256),new TextureRegion(bubblesstart, 0, 0, 256, 256));
-		breakanim = new Animation(3.9f, new TextureRegion(coin9, 0, 0, 512,512),new TextureRegion(coin10, 0, 0, 512,512),new TextureRegion(coin9, 0, 0, 512,512));
+		breakanim = new Animation(3.9f, new TextureRegion(tubo, 0, 0, 512,512),new TextureRegion(coin10, 0, 0, 512,512),new TextureRegion(tubo, 0, 0, 512,512));
 		lifeAnim = new Animation(0.5f, new TextureRegion(life, 0, 0, 120, 128), new TextureRegion(life1, 0, 0, 120, 128));
 		projAnim = new Animation(0.2f, new TextureRegion(projectile, 0, 0, 64, 64), new TextureRegion(projectile, 1, 0, 64, 64));
 		bobJump = new Animation(0.2f, new TextureRegion(shuttle, 0, 0, 512, 512), new TextureRegion(shuttle1, 0, 0, 512, 512));
@@ -249,6 +246,8 @@ public class Assets {
 		brakingPlatform = new Animation(0.2f, new TextureRegion(coin6, 0, 0, 512, 512),new TextureRegion(coin7, 0, 0, 512, 512),new TextureRegion(coin8, 0, 0, 512, 512));
 		font = new BitmapFont(Gdx.files.internal("data/font.fnt"), Gdx.files.internal("data/font.png"), false);
 		font.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		fontsmall = new BitmapFont(Gdx.files.internal("data/font1.fnt"), Gdx.files.internal("data/font1.png"), false);
+		fontsmall.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		music = Gdx.audio.newMusic(Gdx.files.internal("data/music.mp3"));
 		music.setLooping(true);
 		music.setVolume(0.5f);
