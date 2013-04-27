@@ -17,8 +17,8 @@
 package com.badlogicgames.superjumper;
 
 public class Squirrel extends DynamicGameObject {
-	public static final float SQUIRREL_WIDTH = 1.1f;
-	public static final float SQUIRREL_HEIGHT = 1.1f;
+	public static final float SQUIRREL_WIDTH = 1.5f;
+	public static final float SQUIRREL_HEIGHT = 1.5f;
 	public static final float SQUIRREL_VELOCITY = 3f;
 	public static final float BUBBLE_CLISION=3;
 	public static final float NOS_CLISION=2;

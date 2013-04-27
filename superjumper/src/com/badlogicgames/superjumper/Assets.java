@@ -17,7 +17,6 @@ import com.badlogic.gdx.utils.Array;
 public class Assets {
 	public static ParticleEffect particleEffect;
 	public static ParticleEffect particleClouds;
-	public static Array laserPEmitters;
 	public static Texture star;
 	public static Texture star1;
 	public static Texture star2;
@@ -56,11 +55,15 @@ public class Assets {
 	public static Texture backgroundmain7;
 	public static Texture projectile;
 	public static Texture items;
+	public static Texture icontext;
+	public static Texture icontextback;
 	public static Texture life;
 	public static Texture life1;
 	public static Texture mainmenu;
 	public static Texture SoundOn;
 	public static Texture SoundOff;
+	public static Texture tmptext;
+	public static Texture tmptext1;
 	public static TextureRegion starRegion;
 	public static TextureRegion bubbles;
 	public static TextureRegion nos;
@@ -87,6 +90,8 @@ public class Assets {
 	public static TextureRegion pause;
 	public static TextureRegion spring;
 	public static TextureRegion castle;
+	public static TextureRegion bobHit;
+	public static TextureRegion  rect;
 	public static Animation coinAnim;
 	public static Animation backAnim;
 	public static Animation lifeAnim;
@@ -95,7 +100,6 @@ public class Assets {
 	public static Animation bobfJump;
 	public static Animation breakanim;
 	public static Animation bobFall;
-	public static TextureRegion bobHit;
 	public static Animation squirrelFly;
 	public static Animation platform;
 	public static Animation brakingPlatform;
@@ -104,32 +108,21 @@ public class Assets {
 	public static BitmapFont font;
 	public static BitmapFont fontsmall;
 	public static Pixmap pixmap;
-	public static Texture tmptext;
-	public static TextureRegion  rect;
-	public static Texture tmptext1;
 	public static Pixmap pixmap1;
-	public static Color colore;
-	public static Music music;
 	public static Sound jumpSound;
 	public static Sound highJumpSound;
 	public static Sound hitSound;
 	public static Sound coinSound;
 	public static Sound clickSound;
+	public static Music music;
+	public static Color colore;
 
 	public static Texture loadTexture (String file) {
 		return new Texture(Gdx.files.internal(file));
 	}
 
 	public static void load () {
-		pixmap1=new Pixmap(512, 512, Pixmap.Format.RGBA8888);
-		tmptext1 = new Texture(pixmap1);
-		colore=new Color();
-		colore.set(0, 0, 1, 1);
-		colore.mul(4.7f);
-		pixmap1.setColor(colore);
-		pixmap1.fillRectangle(0, 0, 512, 512);
-		tmptext1.draw(pixmap1, 0, 0);
-		rect = new TextureRegion(tmptext1, 0, 0, 10, 15);
+	CreateRect4Gradient();
 		//particelle effetto fuoco
 		particleEffect = new ParticleEffect();
 		particleClouds = new ParticleEffect();
@@ -139,6 +132,7 @@ public class Assets {
 		particleEffect.getEmitters();
 		particleClouds.allowCompletion();
 		particleEffect.allowCompletion();
+		//fine particelle effetto fuoco
 		star = loadTexture("data/particle.png");
 		bubble = loadTexture("data/bubble.png");
 		bubblestart = loadTexture("data/bubblestart.png");
@@ -177,9 +171,69 @@ public class Assets {
 		portaproj= loadTexture("data/portaproj.png");
 		portalife=loadTexture("data/portalife.png");
 		portanos=loadTexture("data/portanos.png");
-		pixmap = new Pixmap(2048, 2048, Pixmap.Format.RGBA8888);
-		tmptext = new Texture(pixmap);
-		//DrawSmiley();
+		icontext=loadTexture("data/icontext1.png");
+		icontextback=loadTexture("data/icontextback.png");
+	SetFilter();//setto i filtri sulle texture
+		//load texture region,animation & sound
+		items = loadTexture("data/items.png");
+		//pauseMenu = new TextureRegion(items, 224, 128, 192, 96);
+		//gameOver = new TextureRegion(items, 352, 256, 160, 96);
+		//highScoresRegion = new TextureRegion(Assets.items, 0, 257, 300, 110 / 3);
+		//logo = new TextureRegion(items, 0, 352, 274, 142);
+		//bobHit = new TextureRegion(items, 128, 128, 32, 32);
+		//	squirrelFly = new Animation(0.2f, new TextureRegion(items, 0, 160, 32, 32), new TextureRegion(items, 32, 160, 32, 32));
+		ready = new TextureRegion(items, 320, 224, 192, 32);		
+		spring = new TextureRegion(items, 128, 0, 32, 32);
+		castle = new TextureRegion(items, 128, 64, 64, 64);
+		starRegion= new TextureRegion(star, 0, 0, 128, 128);
+		bubbles= new TextureRegion(bubble, 0, 0, 256, 256);
+		nos= new TextureRegion(portanos, 0, 0, 256, 256);
+		bubblesstart= new TextureRegion(bubblestart, 0, 0, 256, 256);
+		backgroundRegion = new TextureRegion(shuttle, 0, 0, 512, 512);
+		backgroundRegion10=new TextureRegion(shuttlef,0,0,512,512);
+		backgroundRegion1 = new TextureRegion(background, 2, 4, 1024, 1024);
+		backgroundRegionmain = new TextureRegion(backgroundmain4, 3,0, 1024, 1024);
+		soundOff = new TextureRegion(SoundOff, 0, 0, 128, 128);
+		star1Region = new TextureRegion(star2, 0, 0, 128, 128);
+		soundOn = new TextureRegion(SoundOn, 0, 0, 128, 128);
+		arrow = new TextureRegion(items, 0, 64, 64, 64);
+		pause = new TextureRegion(Pause, 0, 0, 128, 128);
+		coinAnim = new Animation(0.2f, new TextureRegion(coin1, 0, 0, 128, 128), new TextureRegion(coin2, 0, 0, 128, 128),
+			new TextureRegion(coin3, 0, 0, 128, 128), new TextureRegion(coin4, 0, 0, 128, 128));
+		backAnim = new Animation(0.25f, new TextureRegion(backgroundmain4, 0, 0, 1024, 1024), new TextureRegion(backgroundmain5, 0, 0, 1024, 1024), new TextureRegion(backgroundmain6, 0, 0, 1024, 1024),
+			new TextureRegion(backgroundmain5, 0, 0, 1024, 1024), new TextureRegion(backgroundmain4, 0, 0, 1024, 1024),
+			new TextureRegion(backgroundmain5, 0, 0, 1024, 1024), new TextureRegion(backgroundmain6, 0, 0, 1024, 1024),
+			new TextureRegion(backgroundmain5, 0, 0, 1024, 1024));
+		staranim = new Animation(0.2f, new TextureRegion(star1, 0, 0, 128, 128), new TextureRegion(star2, 0, 0, 128, 128));
+		portagadget = new Animation(0.12f, new TextureRegion(portaproj, 0, 0, 256, 256), new TextureRegion(portalife, 0, 0, 256, 256), new TextureRegion(portanos, 0, 0, 256, 256),new TextureRegion(bubblesstart, 0, 0, 256, 256));
+		breakanim = new Animation(3.9f, new TextureRegion(tubo, 0, 0, 512,512),new TextureRegion(coin10, 0, 0, 512,512),new TextureRegion(tubo, 0, 0, 512,512));
+		lifeAnim = new Animation(0.5f, new TextureRegion(life, 0, 0, 120, 128), new TextureRegion(life1, 0, 0, 120, 128));
+		projAnim = new Animation(0.2f, new TextureRegion(projectile, 0, 0, 64, 64), new TextureRegion(projectile, 1, 0, 64, 64));
+		bobJump = new Animation(0.2f, new TextureRegion(shuttle, 0, 0, 512, 512), new TextureRegion(shuttle1, 0, 0, 512, 512));
+		bobfJump = new Animation(0.2f, new TextureRegion(shuttlef, 0, 0, 512, 512), new TextureRegion(shuttlef1, 0, 0, 512, 512));
+		bobFall = new Animation(0.2f, new TextureRegion(shuttle, 0, 0, 512, 512), new TextureRegion(shuttle1, 0, 0, 512, 512));
+		platform = new Animation(0.1f, new TextureRegion(nuvole, 0, 0, 250, 250), new TextureRegion(nuvole1, 0, 0, 250, 250),
+			new TextureRegion(nuvole2, -1, -3, 250, 250), new TextureRegion(nuvole3, 0, 0, 250, 250),new TextureRegion(nuvole4, 0, 0, 250, 250));
+		brakingPlatform = new Animation(0.2f, new TextureRegion(coin6, 0, 0, 512, 512),new TextureRegion(coin7, 0, 0, 512, 512),new TextureRegion(coin8, 0, 0, 512, 512));
+		font = new BitmapFont(Gdx.files.internal("data/font.fnt"), Gdx.files.internal("data/font.png"), false);
+		font.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		fontsmall = new BitmapFont(Gdx.files.internal("data/font1.fnt"), Gdx.files.internal("data/font1.png"), false);
+		fontsmall.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		music = Gdx.audio.newMusic(Gdx.files.internal("data/music.mp3"));
+		music.setLooping(true);
+		music.setVolume(0.5f);
+		if (Settings.soundEnabled) music.play();
+		jumpSound = Gdx.audio.newSound(Gdx.files.internal("data/jump.wav"));
+		highJumpSound = Gdx.audio.newSound(Gdx.files.internal("data/highjump.wav"));
+		hitSound = Gdx.audio.newSound(Gdx.files.internal("data/hit.wav"));
+		coinSound = Gdx.audio.newSound(Gdx.files.internal("data/coin.wav"));
+		clickSound = Gdx.audio.newSound(Gdx.files.internal("data/click.wav"));
+	}
+
+
+	private static void SetFilter(){
+		icontextback.setFilter(TextureFilter.Linear, TextureFilter.Nearest);
+		icontext.setFilter(TextureFilter.Linear, TextureFilter.Nearest);
 		tubo.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		coin10.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		coin11.setFilter(TextureFilter.Linear, TextureFilter.Linear);
@@ -203,83 +257,19 @@ public class Assets {
 		Pause.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		life.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		life1.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		//load texture region,animation & sound
-		starRegion= new TextureRegion(star, 0, 0, 128, 128);
-		bubbles= new TextureRegion(bubble, 0, 0, 256, 256);
-		nos= new TextureRegion(portanos, 0, 0, 256, 256);
-		bubblesstart= new TextureRegion(bubblestart, 0, 0, 256, 256);
-		backgroundRegion = new TextureRegion(shuttle, 0, 0, 512, 512);
-		backgroundRegion10=new TextureRegion(shuttlef,0,0,512,512);
-		backgroundRegion1 = new TextureRegion(background, 2, 4, 1024, 1024);
-		backgroundRegionmain = new TextureRegion(backgroundmain4, 3,0, 1024, 1024);
-		items = loadTexture("data/items.png");
-		pauseMenu = new TextureRegion(items, 224, 128, 192, 96);
-		ready = new TextureRegion(items, 320, 224, 192, 32);
-		gameOver = new TextureRegion(items, 352, 256, 160, 96);
-		highScoresRegion = new TextureRegion(Assets.items, 0, 257, 300, 110 / 3);
-		logo = new TextureRegion(items, 0, 352, 274, 142);
-		soundOff = new TextureRegion(SoundOff, 0, 0, 128, 128);
-		star1Region = new TextureRegion(star2, 0, 0, 128, 128);
-		soundOn = new TextureRegion(SoundOn, 0, 0, 128, 128);
-		arrow = new TextureRegion(items, 0, 64, 64, 64);
-		pause = new TextureRegion(Pause, 0, 0, 128, 128);
-		spring = new TextureRegion(items, 128, 0, 32, 32);
-		castle = new TextureRegion(items, 128, 64, 64, 64);
-		coinAnim = new Animation(0.2f, new TextureRegion(coin1, 0, 0, 128, 128), new TextureRegion(coin2, 0, 0, 128, 128),
-			new TextureRegion(coin3, 0, 0, 128, 128), new TextureRegion(coin4, 0, 0, 128, 128));
-		backAnim = new Animation(0.25f, new TextureRegion(backgroundmain4, 0, 0, 1024, 1024), new TextureRegion(backgroundmain5, 0, 0, 1024, 1024), new TextureRegion(backgroundmain6, 0, 0, 1024, 1024),
-			new TextureRegion(backgroundmain5, 0, 0, 1024, 1024), new TextureRegion(backgroundmain4, 0, 0, 1024, 1024),
-			new TextureRegion(backgroundmain5, 0, 0, 1024, 1024), new TextureRegion(backgroundmain6, 0, 0, 1024, 1024),
-			new TextureRegion(backgroundmain5, 0, 0, 1024, 1024));
-		staranim = new Animation(0.2f, new TextureRegion(star1, 0, 0, 128, 128), new TextureRegion(star2, 0, 0, 128, 128));
-		portagadget = new Animation(0.12f, new TextureRegion(portaproj, 0, 0, 256, 256), new TextureRegion(portalife, 0, 0, 256, 256), new TextureRegion(portanos, 0, 0, 256, 256),new TextureRegion(bubblesstart, 0, 0, 256, 256));
-		breakanim = new Animation(3.9f, new TextureRegion(tubo, 0, 0, 512,512),new TextureRegion(coin10, 0, 0, 512,512),new TextureRegion(tubo, 0, 0, 512,512));
-		lifeAnim = new Animation(0.5f, new TextureRegion(life, 0, 0, 120, 128), new TextureRegion(life1, 0, 0, 120, 128));
-		projAnim = new Animation(0.2f, new TextureRegion(projectile, 0, 0, 64, 64), new TextureRegion(projectile, 1, 0, 64, 64));
-		bobJump = new Animation(0.2f, new TextureRegion(shuttle, 0, 0, 512, 512), new TextureRegion(shuttle1, 0, 0, 512, 512));
-		bobfJump = new Animation(0.2f, new TextureRegion(shuttlef, 0, 0, 512, 512), new TextureRegion(shuttlef1, 0, 0, 512, 512));
-		bobFall = new Animation(0.2f, new TextureRegion(shuttle, 0, 0, 512, 512), new TextureRegion(shuttle1, 0, 0, 512, 512));
-		bobHit = new TextureRegion(items, 128, 128, 32, 32);
-		squirrelFly = new Animation(0.2f, new TextureRegion(items, 0, 160, 32, 32), new TextureRegion(items, 32, 160, 32, 32));
-		platform = new Animation(0.1f, new TextureRegion(nuvole, 0, 0, 250, 250), new TextureRegion(nuvole1, 0, 0, 250, 250),
-			new TextureRegion(nuvole2, -1, -3, 250, 250), new TextureRegion(nuvole3, 0, 0, 250, 250),new TextureRegion(nuvole4, 0, 0, 250, 250));
-		brakingPlatform = new Animation(0.2f, new TextureRegion(coin6, 0, 0, 512, 512),new TextureRegion(coin7, 0, 0, 512, 512),new TextureRegion(coin8, 0, 0, 512, 512));
-		font = new BitmapFont(Gdx.files.internal("data/font.fnt"), Gdx.files.internal("data/font.png"), false);
-		font.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		fontsmall = new BitmapFont(Gdx.files.internal("data/font1.fnt"), Gdx.files.internal("data/font1.png"), false);
-		fontsmall.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		music = Gdx.audio.newMusic(Gdx.files.internal("data/music.mp3"));
-		music.setLooping(true);
-		music.setVolume(0.5f);
-		if (Settings.soundEnabled) music.play();
-		jumpSound = Gdx.audio.newSound(Gdx.files.internal("data/jump.wav"));
-		highJumpSound = Gdx.audio.newSound(Gdx.files.internal("data/highjump.wav"));
-		hitSound = Gdx.audio.newSound(Gdx.files.internal("data/hit.wav"));
-		coinSound = Gdx.audio.newSound(Gdx.files.internal("data/coin.wav"));
-		clickSound = Gdx.audio.newSound(Gdx.files.internal("data/click.wav"));
+
 	}
-	private static void DrawSmiley(){
-		Gdx.app.log("MyLibGDXGame", "Game.DrawSmiley()");
 
-		pixmap.setColor(1, 1, 0, 1);
-		pixmap.fillCircle(512/2, 512/2, 512/2);
-
-		//first draw a black circle for the smile
-		pixmap.setColor(0, 0, 0,1);
-		pixmap.fillCircle(512/2, 280, 160);
-
-		//then a yellow larger over it, to make it look like a partial circle/ a smile
-		pixmap.setColor(1, 1, 0, 1);
-		pixmap.fillCircle(512/2, 200, 200);
-
-		//now draw the two eyes
-		pixmap.setColor(0, 0, 0,1);
-		pixmap.fillCircle(512/3, 200, 60);
-		pixmap.fillCircle(512-512/3, 200, 60);
-
-		tmptext.draw(pixmap, 0, 0);
-
-		//tmptext.bind();
+	private static void CreateRect4Gradient(){
+		pixmap1=new Pixmap(512, 512, Pixmap.Format.RGBA8888);
+		tmptext1 = new Texture(pixmap1);
+		colore=new Color();
+		colore.set(0, 0, 1, 1);
+		colore.mul(4.7f);
+		pixmap1.setColor(colore);
+		pixmap1.fillRectangle(0, 0, 512, 512);
+		tmptext1.draw(pixmap1, 0, 0);
+		rect = new TextureRegion(tmptext1, 0, 0, 10, 15);
 	}
 	public static void playSound (Sound sound) {
 		if (Settings.soundEnabled) sound.play(1);

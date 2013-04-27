@@ -197,9 +197,11 @@ public class CharScreen implements Screen {
 
 		batcher.enableBlending();
 		batcher.begin();
+		batcher.draw(Assets.icontext,275,10,45,45);
+		batcher.draw(Assets.icontextback,0,10,45,45);
 		Assets.font.draw(batcher, "Choose Character", 29,440);
-		Assets.font.draw(batcher, "GO", 280,35);
-		Assets.font.draw(batcher, "BACK", 3,35);
+		Assets.fontsmall.draw(batcher, "GO", 285,40);
+		//Assets.fontsmall.draw(batcher, "BACK", 15,40);
 	
 			batcher.draw(Assets.backgroundRegion,bob.position.x ,bob.position.y ,130,130);
 			batcher.draw(Assets.backgroundRegion10,bobfem.position.x ,bobfem.position.y ,130,130);

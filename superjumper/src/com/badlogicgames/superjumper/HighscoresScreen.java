@@ -86,7 +86,7 @@ public class HighscoresScreen implements Screen {
 			y += Assets.font.getLineHeight();
 		}
 
-		batcher.draw(Assets.arrow, 0, 0, 64, 64);
+		batcher.draw(Assets.icontextback, 0, 0, 54, 54);
 		batcher.end();
 	}
 
