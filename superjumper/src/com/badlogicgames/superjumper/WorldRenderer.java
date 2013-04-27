@@ -81,7 +81,6 @@ public class WorldRenderer {
 		batch.begin();
 		renderStars();
 		renderBob();
-		renderBubbles ();
 		renderPlatforms();
 		renderItems();
 		renderLifes();
@@ -90,22 +89,7 @@ public class WorldRenderer {
 		renderProjectiles();
 		batch.end();
 	}
-	private void renderBubbles () {
-		int len = world.bubbles.size();
-		for (int i = 0; i < len; i++) {
-			Bubble bubble = world.bubbles.get(i);
-			TextureRegion keyFrame = Assets.bubbles;
-			if (bubble.state == Bubble.BUBBLE_STATE_BOB ) {
-				keyFrame = Assets.bubbles;
-				batch.draw(keyFrame,world.bob.position.x-1.2f , world.bob.position.y-2.3f , 2.5f, 3f);
-			}
 
-			else {
-				keyFrame = Assets.bubblesstart;
-				batch.draw(keyFrame,bubble.position.x , bubble.position.y , 1f, 1f);
-			}
-		}
-	}
 	
 	
 	private void renderBob () {

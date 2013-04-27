@@ -26,7 +26,6 @@ public class World {
 	public final int PLATFORMS_DISTANCE = 10;
 	public final int STARS_DISTANCE = 1;
 	public final Bob bob;
-	public final List<Bubble> bubbles;
 	public final List<Platform> platforms;
 	public final List<Star> stars;
 	public final List<Spring> springs;
@@ -48,7 +47,6 @@ public class World {
 
 	public World (WorldListener listener) {
 		this.bob = new Bob(4, 2);
-		this.bubbles=new ArrayList<Bubble>();
 		this.platforms = new ArrayList<Platform>();
 		this.stars = new ArrayList<Star>();
 		this.projectiles = new ArrayList<Projectile>();
@@ -103,9 +101,7 @@ public class World {
 				/*Coin coin = new Coin(platform.position.x + (platform.position.x < WORLD_WIDTH /2 ? 5*rand.nextFloat() : -k*rand.nextFloat()), 
 					platform.position.y + (rand.nextFloat() > 0.5f ? k*rand.nextFloat() : -k*rand.nextFloat()));
 				coins.add(coin);*/
-				//	Bubble bubble = new Bubble(platform.position.x + (platform.position.x < WORLD_WIDTH /2 ? 5*rand.nextFloat() : -k*rand.nextFloat()), 
-				//		platform.position.y + (rand.nextFloat() > 0.5f ? k*rand.nextFloat() : -k*rand.nextFloat()));
-				//	bubbles.add(bubble);
+				
 			}
 			y += (maxJumpHeight - 0.5f);
 			//y -= rand.nextFloat() * (maxJumpHeight / 3);
@@ -183,7 +179,6 @@ public class World {
 
 		updateBob(deltaTime, accelX);
 		updatePlatforms(deltaTime);
-		updateBubbles(deltaTime);
 		updateSquirrels(deltaTime);
 		updateCoins(deltaTime);
 		//updateGravityPlanet(deltaTime);
@@ -200,7 +195,8 @@ public class World {
 		checkRemoveCoin();
 		checkGameOver();
 		checkRemoveStars();
-		/* checkRemoveBubble();*/
+		/* checkRemoveSquirrel();
+		checkRemoveBubble();*/
 
 	}
 
@@ -257,17 +253,6 @@ public class World {
 		}
 	}
 
-	private void updateBubbles (float deltaTime) {
-		int len = bubbles.size();
-		for (int i = 0; i < len; i++) {
-			Bubble bubble = bubbles.get(i);
-			bubble.update(deltaTime);
-			if(bubble.crashtime != 0 && bubble.crashtime<bubble.stateTime-6){
-				bubbles.remove(bubble);
-			}
-			len = bubbles.size();
-		}
-	}
 
 	public void nosActivate(){
 		int len = squirrels.size();
@@ -302,7 +287,6 @@ public class World {
 				squirrels.remove(squirrel);
 				squirrel.inuse=0;
 			}
-			//if(squirrel.state!=Squirrel.BUBBLE_CLISION)squirrels.remove(squirrel);
 			len = squirrels.size();
 		}
 	}
@@ -350,11 +334,6 @@ public class World {
 		}
 	}
 
-	private void checkRemoveBubble() {
-		if (!bubbles.isEmpty()) { 
-			if (bob.position.y > bubbles.get(0).position.y+8  && bubbles.get(0).state!=Bubble.BUBBLE_STATE_BOB) bubbles.remove(0);
-		}
-	}
 
 	private void checkRemoveStars() {
 		if (!stars.isEmpty()) { 
@@ -367,9 +346,14 @@ public class World {
 			if (bob.position.y > coins.get(0).position.y+5  ) coins.remove(0);
 		}
 	}
+	
+	private void checkRemoveSquirrel() {
+		if (!squirrels.isEmpty()) { 
+			if (bob.position.y > squirrels.get(0).position.y+5  ) squirrels.remove(0);
+		}
+	}
 	private void checkCollisions () {
 		checkPlatformCollisions();
-		checkBubbleCollisions ();
 		checkDoubleJump();
 		checkSquirrelCollisions();
 		checkItemCollisions();
@@ -495,20 +479,6 @@ public class World {
 		}
 	}
 
-	private void checkBubbleCollisions () {
-		int len = bubbles.size();
-		for (int i = 0; i < len; i++) {
-			Bubble bubble=bubbles.get(i);
-			if (OverlapTester.overlapRectangles(bubble.bounds, bob.bounds)) {
-				Gdx.input.vibrate(new long[] { 1, 10, 6, 10}, -1);
-
-				bubble.state=Bubble.BUBBLE_STATE_BOB;
-				bubble.crashtime=bubble.stateTime;
-				len = bubbles.size();
-				break;
-			}
-		}
-	}
 
 	private void checkSquirrelCollisions () {
 		int len = squirrels.size();
@@ -518,7 +488,6 @@ public class World {
 			Squirrel squirrel = squirrels.get(i);
 			if (OverlapTester.overlapRectangles(squirrel.bounds, bob.bounds)) {
 				Gdx.input.vibrate(new long[] { 1, 10, 6, 10}, -1);
-
 				if(random<0.2f && squirrel.inuse<1 && lenlife<4)
 				{
 					squirrel.state=Squirrel.LIFE_CLISION;

@@ -120,34 +120,38 @@ public class GameScreen implements Screen {
 	}
 
 	private void updateRunning (float deltaTime) {
-		if (Gdx.input.justTouched()) {
+		if (Gdx.input.justTouched()) 
+		{
 
 			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
 			if ((!(OverlapTester.pointInRectangle(pauseBounds, touchPoint.x, touchPoint.y)))&&
 				(!(OverlapTester.pointInRectangle(nosBounds, touchPoint.x, touchPoint.y))))
-					world.ShotProjectile();
-			if (OverlapTester.pointInRectangle(pauseBounds, touchPoint.x, touchPoint.y)) {
+				world.ShotProjectile();
+			else if (OverlapTester.pointInRectangle(pauseBounds, touchPoint.x, touchPoint.y)) 
+			{
 				Assets.playSound(Assets.clickSound);
 				state = GAME_PAUSED;
 				return;
-			}//controllo sul click del nos
-		
-					if (OverlapTester.pointInRectangle(nosBounds, touchPoint.x, touchPoint.y)) {
-						//Gdx.app.debug("UPDATEGRAVITY", "sto cliccando");
-						world.nosActivate();
-						return;
-					}}
-				//es: world.Squirrels(); si può creare una funzione in game tale e quale a questa di modo 
-				//da non disperdere il principio dell MVC
-				//float len = world.squirrels.size();
-				//for (int i = 0; i < len; i++) {
-				//Squirrel squirrel = world.squirrels.get(i);
-				//if(squirrel.nosuse==1)
-				//	if(world.squirrels.get(i).nostime==0)world.squirrels.get(i).nostime=world.squirrels.get(i).stateTime;
-				//	world.Turbo();
-				//	world.turbo=world.turbo+1;
-				//}
-						
+			}
+
+			else 	if (OverlapTester.pointInRectangle(nosBounds, touchPoint.x, touchPoint.y)) 
+			{
+				//Gdx.app.debug("UPDATEGRAVITY", "sto cliccando");
+				world.nosActivate();
+				return;
+			}
+		}
+		//es: world.Squirrels(); si può creare una funzione in game tale e quale a questa di modo 
+		//da non disperdere il principio dell MVC
+		//float len = world.squirrels.size();
+		//for (int i = 0; i < len; i++) {
+		//Squirrel squirrel = world.squirrels.get(i);
+		//if(squirrel.nosuse==1)
+		//	if(world.squirrels.get(i).nostime==0)world.squirrels.get(i).nostime=world.squirrels.get(i).stateTime;
+		//	world.Turbo();
+		//	world.turbo=world.turbo+1;
+		//}
+
 
 		ApplicationType appType = Gdx.app.getType();
 		// should work also with Gdx.input.isPeripheralAvailable(Peripheral.Accelerometer)
@@ -246,9 +250,9 @@ public class GameScreen implements Screen {
 
 	private void presentRunning () {
 		batcher.draw(Assets.pause, 320 - 47, 480 - 59, 44, 44);
-	//	Assets.font.getRegion().getTexture().setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+		//	Assets.font.getRegion().getTexture().setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 		Assets.font.draw(batcher, scoreString, 60, 480 - 28);
-		
+
 		batcher.draw(Assets.coin9, 0, 220, 270, 280);
 
 		String scoret;
