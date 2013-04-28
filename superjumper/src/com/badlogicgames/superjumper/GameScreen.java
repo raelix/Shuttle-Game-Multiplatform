@@ -353,10 +353,13 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void hide () {
+		//Settings.addScore(world.score);
+		//Settings.save();
 	}
 
 	@Override
 	public void pause () {
+		Settings.addScore(world.score);
 		Settings.save();
 		if (state == GAME_RUNNING) state = GAME_PAUSED;
 	}

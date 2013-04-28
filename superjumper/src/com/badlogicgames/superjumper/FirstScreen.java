@@ -71,8 +71,8 @@ public class FirstScreen implements Screen {
 		batcher.setProjectionMatrix(guiCam.combined);
 		batcher.disableBlending();
 		batcher.begin();
-		//batcher.draw(helpRegion, 0, 0, 320, 480);
-		MainMenuScreen.drawGradient(batcher, Assets.rect, 0, 0, 320, 480,Color.BLACK,Assets.colore, false);
+		batcher.draw(Assets.welcome, 0, 0, 512,512);
+		//MainMenuScreen.drawGradient(batcher, Assets.rect, 0, 0, 320, 480,Color.BLACK,Assets.colore, false);
 		
 		batcher.end();
 
@@ -107,7 +107,6 @@ public class FirstScreen implements Screen {
 
 	@Override
 	public void pause () {
-		helpImage.dispose();
 	}
 
 	@Override

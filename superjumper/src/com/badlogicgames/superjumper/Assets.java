@@ -64,6 +64,8 @@ public class Assets {
 	public static Texture SoundOff;
 	public static Texture tmptext;
 	public static Texture tmptext1;
+	public static Texture lock,locked;
+	public static Texture welcome;
 	public static Texture swipetext,swipe,swipe1,swipe2;
 	public static TextureRegion starRegion;
 	public static TextureRegion bubbles;
@@ -179,6 +181,9 @@ public class Assets {
 		swipe1=loadTexture("data/swipe1.png");
 		swipe2=loadTexture("data/swipe2.png");
 		swipetext=loadTexture("data/swipetext.png");
+		lock=loadTexture("data/lock.png");
+		locked=loadTexture("data/locked.png");
+		welcome=loadTexture("data/welcome.png");
 	SetFilter();//setto i filtri sulle texture
 		//load texture region,animation & sound
 		items = loadTexture("data/items.png");
@@ -239,6 +244,8 @@ public class Assets {
 
 
 	private static void SetFilter(){
+		lock.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		locked.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		swipe.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		swipe1.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		swipe2.setFilter(TextureFilter.Linear, TextureFilter.Linear);

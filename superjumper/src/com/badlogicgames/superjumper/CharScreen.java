@@ -158,7 +158,7 @@ public class CharScreen implements Screen {
 				return;
 			}
 			else if (OverlapTester.pointInRectangle(character, touchPoint.x, touchPoint.y)) {
-				Assets.playSound(Assets.clickSound);
+				//Assets.playSound(Assets.clickSound);
 			if(state==0)state=1;
 			else state=0;
 				return;
@@ -207,9 +207,9 @@ public class CharScreen implements Screen {
 		batcher.draw(Assets.icontextback,0,10,45,45);
 		Assets.font.draw(batcher, "Choose Character", 29,440);
 		Assets.fontsmall.draw(batcher, "GO", 285,40);
-		stateTime=stateTime+0.015f;
+		stateTime=stateTime+0.020f;
 	  TextureRegion keyFrame1 = Assets.swipeAnim.getKeyFrame(stateTime, Animation.ANIMATION_LOOPING);
-		if(stateTime>3)stateTime=0;
+		if(stateTime>4)stateTime=0;
 		if(swipedeactive==0)
 		{
 			batcher.draw(Assets.swipetext,10,0,320,256);
@@ -220,8 +220,9 @@ public class CharScreen implements Screen {
 		batcher.draw(Assets.backgroundRegion10,bobfem.position.x ,bobfem.position.y ,130,130);
 		if(punteggio<1000 && state==0)
 		{
-			Assets.fontsmall.draw(batcher, "non puoi scegliere questo personaggio", guiCam.position.x-150,guiCam.position.y);
-			Assets.fontsmall.draw(batcher, "devi guadagnare almeno 1000 punti", guiCam.position.x-150,guiCam.position.y-150);
+			batcher.draw(Assets.lock,bobfem.position.x-10 ,bobfem.position.y+30 ,100,100);
+			batcher.draw(Assets.locked,bobfem.position.x-45,bobfem.position.y-70 ,170,150);
+			Assets.fontsmall.draw(batcher, "need 1000 scores", guiCam.position.x-100,guiCam.position.y-200);
 		}
 	
 		

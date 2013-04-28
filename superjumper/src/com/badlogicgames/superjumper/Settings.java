@@ -67,6 +67,46 @@ public class Settings {
 			}
 		}
 	}
+	
+	
+	public static void saveFloat (float i) {
+		BufferedWriter out = null;
+		try {
+			out = new BufferedWriter(new OutputStreamWriter(Gdx.files.external(file).write(false)));
+			
+				out.write(Float.toString(i));
+				out.write("\n");
+			
+
+		} catch (Throwable e) {
+		} finally {
+			try {
+				if (out != null) out.close();
+			} catch (IOException e) {
+			}
+		}
+	}
+	
+	
+
+	public static float readFloat () {
+		BufferedReader in = null;
+		float h = 0 ;
+		try {
+			in = new BufferedReader(new InputStreamReader(Gdx.files.external(file).read()));
+			
+				h = Float.parseFloat(in.readLine());
+			
+		} catch (Throwable e) {
+			// :( It's ok we have defaults
+		} finally {
+			try {
+				if (in != null) in.close();
+			} catch (IOException e) {
+			}
+		}
+		return h;
+	}
 
 	public static void addScore (int score) {
 		for (int i = 0; i < 5; i++) {

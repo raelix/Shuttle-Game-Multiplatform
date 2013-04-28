@@ -147,7 +147,6 @@ public class MainMenuScreen implements Screen {
 
 	@Override
 	public void render (float delta) {
-
 		update(delta);
 		draw(delta);
 	}
