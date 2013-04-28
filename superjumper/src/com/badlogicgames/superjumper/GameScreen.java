@@ -318,6 +318,7 @@ public class GameScreen implements Screen {
 		//batcher.draw(Assets.pauseMenu, 160 - 192 / 2, 240 - 96 / 2, 192, 96);
 		Assets.font.getRegion().getTexture().setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 		Assets.font.draw(batcher, scoreString, 18, 480 - 10);
+		
 	}
 
 	private void presentLevelEnd () {
@@ -356,6 +357,7 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void pause () {
+		Settings.save();
 		if (state == GAME_RUNNING) state = GAME_PAUSED;
 	}
 

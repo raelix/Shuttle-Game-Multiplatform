@@ -178,6 +178,7 @@ public class MainMenuScreen implements Screen {
 
 	@Override
 	public void resume () {
+		Settings.load();
 	}
 
 	@Override

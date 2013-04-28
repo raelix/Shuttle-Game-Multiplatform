@@ -94,6 +94,7 @@ public class HighscoresScreen implements Screen {
 
 	@Override
 	public void render (float delta) {
+		Settings.load();
 		update(delta);
 		draw(delta);
 	}

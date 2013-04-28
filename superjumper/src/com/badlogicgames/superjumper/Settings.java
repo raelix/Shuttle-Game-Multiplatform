@@ -53,8 +53,10 @@ public class Settings {
 		try {
 			out = new BufferedWriter(new OutputStreamWriter(Gdx.files.external(file).write(false)));
 			out.write(Boolean.toString(soundEnabled));
+			out.write("\n");
 			for (int i = 0; i < 5; i++) {
 				out.write(Integer.toString(highscores[i]));
+				out.write("\n");
 			}
 
 		} catch (Throwable e) {
