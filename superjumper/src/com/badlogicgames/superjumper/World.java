@@ -42,7 +42,8 @@ public class World {
 	public int shot=10;
 	public int nosinuse=0;
 	public int turbo=1;
-	public float incrementoproj=0;
+	public float signal2screen=0;
+	public float signal1times=0;
 	public float bubbletimes;
 	private Vector2 gravity = new Vector2(0,15);
 
@@ -187,6 +188,7 @@ public class World {
 		addStarDynamic();
 		updateStar( deltaTime);
 		updateProjectiles(deltaTime);
+		 updateunlockcharacter ();
 		if (rand.nextFloat() > 0.5f) 
 			score += (int)bob.velocity.y;
 		if (bob.state != Bob.BOB_STATE_HIT) 
@@ -208,10 +210,28 @@ public class World {
 			}
 		}
 	}
+	
+	private void updateunlockcharacter () 
+	{
+		
+		 if(signal1times==0)
+		 {
+			if(score>1000)signal2screen=2;
+			
+		 }
+		 else if(signal1times==1)
+		 {
+			if(score>3000)signal2screen=3;
+			
+		 }
+	}
+			
+		
+	
 
 	private void updateBob (float deltaTime, float accelX) {
 		if (bob.state != Bob.BOB_STATE_HIT && bob.position.y <= 0.5f) bob.hitPlatform();
-		if (bob.state != Bob.BOB_STATE_HIT) bob.velocity.x = -accelX / 5 * Bob.BOB_MOVE_VELOCITY;
+		if (bob.state != Bob.BOB_STATE_HIT) bob.velocity.x = -accelX / 3 * Bob.BOB_MOVE_VELOCITY;
 		bob.update(deltaTime);
 		heightSoFar = Math.max(bob.position.y, heightSoFar);
 	}
@@ -464,6 +484,8 @@ public class World {
 					//shot=shot+5;
 					platform.pulverize();
 					//score += 100;
+					LifeLess();
+					listener.hit();
 					listener.jump();
 					len = platforms.size();
 					break;
@@ -494,7 +516,7 @@ public class World {
 					squirrel.state=Squirrel.LIFE_CLISION;
 					LifeMore();
 					squirrel.inuse=1;
-					incrementoproj=1;
+					signal2screen=1;
 				}
 				else if(random>0.3f && random < 0.5f && squirrel.inuse<1)
 				{    
@@ -516,7 +538,7 @@ public class World {
 					squirrel.state=Squirrel.PROJ_CLISION;
 					shot=shot+5;
 					squirrel.inuse=1;
-					incrementoproj=1;
+					signal2screen=1;
 				}
 				listener.hit(); 
 				//squirrels.remove(squirrel);

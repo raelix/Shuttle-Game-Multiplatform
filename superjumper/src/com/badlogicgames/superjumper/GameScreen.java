@@ -1,5 +1,7 @@
 package com.badlogicgames.superjumper;
 /*CONTROLLER*/
+import sun.invoke.util.Wrapper;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Application.ApplicationType;
@@ -260,22 +262,53 @@ public class GameScreen implements Screen {
 		scoreproj = world.shot+"x ";
 		Assets.fontsmall.draw(batcher, scoreproj, 4, 480 - 250);
 		batcher.draw(Assets.portaproj, 320 - 318, 480 - 250, 35, 35);
-	if (world.incrementoproj==1){
+		controlLockCharacter();
 			
+}
+	private void controlLockCharacter()
+	{
+		if (world.signal2screen==1)
+		{
 			Assets.font.scale(0.2f);
-			
-		Assets.font.draw(batcher, "X2", guiCam.position.x,guiCam.position.y);
-		statet+=1f;
-			if(statet==23 ){
-				
+			Assets.font.draw(batcher, "X2", guiCam.position.x,guiCam.position.y);
+			//batcher.draw(Assets.background1, guiCam.position.x, guiCam.position.y, statet+2,statet+2);
+			statet+=1f;
+				if(statet==23 )
+				{
 					Assets.font.scale(-0.2f*23);
-				
-				statet=0;
-				world.incrementoproj=0;
+					statet=0;
+					world.signal2screen=0;
 				}
-								}
+		 }
+		if (world.signal2screen==2)
+		{
+			Assets.font.scale(0.02f);
+			Assets.font.draw(batcher, "unlock Alien", guiCam.position.x-160,guiCam.position.y);
+			world.signal1times=1;
+			statet+=1f;
+				if(statet==48 )
+				{
+					Assets.font.scale(-0.02f*48);
+					statet=0;
+					world.signal2screen=0;
+				}
+		 }
+		if (world.signal2screen==3)
+		{
+			world.signal1times=2;
+			Assets.font.scale(0.02f);
+			Assets.font.draw(batcher, "unlock Alien1", guiCam.position.x-160,guiCam.position.y);
 			
+			statet+=1f;
+				if(statet==48 )
+				{
+					Assets.font.scale(-0.02f*48);
+					statet=0;
+					world.signal2screen=0;
+				}
+		 }
 	}
+	
 	private void presentPaused () {
 		batcher.disableBlending();
 		MainMenuScreen.drawGradient(batcher, Assets.rect, 0, 0, 320, 480,Color.BLACK,Assets.colore, false);

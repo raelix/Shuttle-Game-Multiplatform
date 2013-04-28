@@ -55,11 +55,14 @@ public class WorldRenderer {
 
 	public void renderObjects () {
 		batch.enableBlending();
+		
 		batch.begin();
 		renderStars();
+		
 		renderBob();
 		renderPlatforms();
 		renderItems();
+		
 		renderLifes();
 		renderSquirrels();
 		renderCastle();
@@ -73,7 +76,10 @@ public class WorldRenderer {
 		TextureRegion keyFrame;
 		int i;
 //render world terra
+		//Color c = new Color(batch.getColor()); 
+		//batch.setColor(0,1,0,1);
 		batch.draw(Assets.backgroundRegion1, 0, -1, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
+		 //batch.setColor(c);
 		switch (world.bob.state) {
 		case Bob.BOB_STATE_FALL:
 			keyFrame = Assets.bobFall.getKeyFrame(world.bob.stateTime, Animation.ANIMATION_LOOPING);
@@ -100,7 +106,7 @@ public class WorldRenderer {
       	Assets.particleEffect.setPosition(world.bob.position.x,world.bob.position.y-1);
       	Assets.particleEffect.draw(batch, Gdx.graphics.getDeltaTime());
        }
-		if(CharScreen.state==1)
+		if(CharScreen.state==1 )
 		batch.draw(keyFrame, world.bob.position.x -0.65f, world.bob.position.y -2.5f, 2.3f, 3f);
 		else {
 			keyFrame = Assets.bobfJump.getKeyFrame(world.bob.stateTime, Animation.ANIMATION_LOOPING);

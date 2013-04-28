@@ -37,6 +37,7 @@ public class HighscoresScreen implements Screen {
 	String[] highScores;
 	float xOffset = 0;
 
+
 	public HighscoresScreen (Game game) {
 		this.game = game;
 
@@ -49,6 +50,7 @@ public class HighscoresScreen implements Screen {
 		for (int i = 0; i < 5; i++) {
 			highScores[i] = i + 1 + ". " + Settings.highscores[i];
 			xOffset = Math.max(Assets.font.getBounds(highScores[i]).width, xOffset);
+			
 		}
 		xOffset = 160 - xOffset / 2 + Assets.font.getSpaceWidth() / 2;
 	}

@@ -29,6 +29,7 @@ public class Settings {
 	public final static int[] highscores = new int[] {100, 80, 50, 30, 10};
 	public final static String file = ".superjumper";
 
+
 	public static void load () {
 		BufferedReader in = null;
 		try {

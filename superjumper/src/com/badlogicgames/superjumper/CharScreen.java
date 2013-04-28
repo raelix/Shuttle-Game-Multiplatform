@@ -50,6 +50,7 @@ public class CharScreen implements Screen {
 	public  int choose=0;
 	public  int swipedeactive=0;
 	private	float stateTime=0;
+	public static float punteggio=0;
 	
 	public CharScreen (Game game) {
 		this.game = game;
@@ -145,7 +146,8 @@ public class CharScreen implements Screen {
 		if (Gdx.input.justTouched()) {
 			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
 			
-			if (OverlapTester.pointInRectangle(nextBounds, touchPoint.x, touchPoint.y)) {
+			if (OverlapTester.pointInRectangle(nextBounds, touchPoint.x, touchPoint.y) && state==0 && punteggio>1000 
+				|| (OverlapTester.pointInRectangle(nextBounds, touchPoint.x, touchPoint.y) && state==1)) {
 				Assets.playSound(Assets.clickSound);
 				game.setScreen(new GameScreen(game));
 				return;
@@ -164,6 +166,7 @@ public class CharScreen implements Screen {
 		}
 		bob.update(deltaTime);
 		bobfem.update(deltaTime);
+		updateScore();//controllo quanti punti sono stati conquistati
 		if(bob.position.x<320&&bob.position.x>0)state=1;
 		else if(bobfem.position.x<320&&bobfem.position.x>0)state=0;
 		//Gdx.app.debug("x"+bob.position.x, "y"+bob.position.y);
@@ -213,9 +216,14 @@ public class CharScreen implements Screen {
 			batcher.draw(keyFrame1,10,0,320,256);
 			}
 		//Assets.fontsmall.draw(batcher, "BACK", 15,40);
+		batcher.draw(Assets.backgroundRegion,bob.position.x ,bob.position.y ,130,130);
+		batcher.draw(Assets.backgroundRegion10,bobfem.position.x ,bobfem.position.y ,130,130);
+		if(punteggio<1000 && state==0)
+		{
+			Assets.fontsmall.draw(batcher, "non puoi scegliere questo personaggio", guiCam.position.x-150,guiCam.position.y);
+			Assets.fontsmall.draw(batcher, "devi guadagnare almeno 1000 punti", guiCam.position.x-150,guiCam.position.y-150);
+		}
 	
-			batcher.draw(Assets.backgroundRegion,bob.position.x ,bob.position.y ,130,130);
-			batcher.draw(Assets.backgroundRegion10,bobfem.position.x ,bobfem.position.y ,130,130);
 		
 			//batcher.draw(Assets.backgroundRegion,bob.position.x ,bob.position.y ,25, 35, 120, 150, 1, 1, 180);
 			//batcher.draw(Assets.backgroundRegion10,bobfem.position.x ,bobfem.position.y ,25, 35, 120, 150, 1, 1, 180);
@@ -257,6 +265,11 @@ public class CharScreen implements Screen {
 
 	@Override
 	public void dispose () {
+	}
+	private void updateScore(){
+		for (int i = 0; i < 5; i++) {
+			if (punteggio<Settings.highscores[i])punteggio=Settings.highscores[i];
+		}
 	}
 
 	
