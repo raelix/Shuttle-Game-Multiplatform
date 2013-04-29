@@ -66,6 +66,10 @@ public class Assets {
 	public static Texture tmptext1;
 	public static Texture lock,locked;
 	public static Texture welcome;
+	public static Texture choose;
+	public static Texture welcomemulti;
+	public static Texture welcomehigh;
+	public static Texture welcomepaused;
 	public static Texture swipetext,swipe,swipe1,swipe2;
 	public static TextureRegion starRegion;
 	public static TextureRegion bubbles;
@@ -184,6 +188,10 @@ public class Assets {
 		lock=loadTexture("data/lock.png");
 		locked=loadTexture("data/locked.png");
 		welcome=loadTexture("data/welcome.png");
+		choose=loadTexture("data/choosen.png");
+		welcomemulti=loadTexture("data/multi.png");
+		welcomehigh=loadTexture("data/high.png");
+		welcomepaused=loadTexture("data/paused.png");
 	SetFilter();//setto i filtri sulle texture
 		//load texture region,animation & sound
 		items = loadTexture("data/items.png");
@@ -244,6 +252,11 @@ public class Assets {
 
 
 	private static void SetFilter(){
+		welcomepaused.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		welcomehigh.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		welcomemulti.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		welcome.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		choose.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		lock.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		locked.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		swipe.setFilter(TextureFilter.Linear, TextureFilter.Linear);

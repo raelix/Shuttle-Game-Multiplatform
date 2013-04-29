@@ -198,14 +198,17 @@ public class CharScreen implements Screen {
 		batcher.setProjectionMatrix(guiCam.combined);
 		batcher.disableBlending();
 		batcher.begin();
-		MainMenuScreen.drawGradient(batcher, Assets.rect, 0, 0, 320, 480,Color.BLACK,Color.BLUE, false);
+		batcher.draw(Assets.choose,0,0,512,512);
+		//MainMenuScreen.drawGradient(batcher, Assets.rect, 0, 0, 320, 480,Color.BLACK,Color.BLUE, false);
 		batcher.end();
 
 		batcher.enableBlending();
 		batcher.begin();
+	
 		batcher.draw(Assets.icontext,275,10,45,45);
 		batcher.draw(Assets.icontextback,0,10,45,45);
-		Assets.font.draw(batcher, "Choose Character", 29,440);
+		//Assets.font.draw(batcher, "Choose Character", 29,440);
+		
 		Assets.fontsmall.draw(batcher, "GO", 285,40);
 		stateTime=stateTime+0.020f;
 	  TextureRegion keyFrame1 = Assets.swipeAnim.getKeyFrame(stateTime, Animation.ANIMATION_LOOPING);
@@ -215,9 +218,9 @@ public class CharScreen implements Screen {
 			batcher.draw(Assets.swipetext,10,0,320,256);
 			batcher.draw(keyFrame1,10,0,320,256);
 			}
-		//Assets.fontsmall.draw(batcher, "BACK", 15,40);
 		batcher.draw(Assets.backgroundRegion,bob.position.x ,bob.position.y ,130,130);
 		batcher.draw(Assets.backgroundRegion10,bobfem.position.x ,bobfem.position.y ,130,130);
+		
 		if(punteggio<1000 && state==0)
 		{
 			batcher.draw(Assets.lock,bobfem.position.x-10 ,bobfem.position.y+30 ,100,100);

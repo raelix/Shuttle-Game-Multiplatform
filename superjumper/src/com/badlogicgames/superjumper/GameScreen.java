@@ -280,29 +280,29 @@ public class GameScreen implements Screen {
 					world.signal2screen=0;
 				}
 		 }
-		if (world.signal2screen==2)
+		if (world.signal2screen==2 )
 		{
 			Assets.font.scale(0.02f);
 			Assets.font.draw(batcher, "unlock Alien", guiCam.position.x-160,guiCam.position.y);
 			world.signal1times=1;
 			statet+=1f;
-				if(statet==48 )
+				if(statet==23 )
 				{
-					Assets.font.scale(-0.02f*48);
+					Assets.font.scale(-0.02f*23);
 					statet=0;
 					world.signal2screen=0;
 				}
 		 }
-		if (world.signal2screen==3)
+		if (world.signal2screen==3 )
 		{
 			world.signal1times=2;
 			Assets.font.scale(0.02f);
 			Assets.font.draw(batcher, "unlock Alien1", guiCam.position.x-160,guiCam.position.y);
 			
 			statet+=1f;
-				if(statet==48 )
+				if(statet==23 )
 				{
-					Assets.font.scale(-0.02f*48);
+					Assets.font.scale(-0.02f*23);
 					statet=0;
 					world.signal2screen=0;
 				}
@@ -311,13 +311,15 @@ public class GameScreen implements Screen {
 	
 	private void presentPaused () {
 		batcher.disableBlending();
-		MainMenuScreen.drawGradient(batcher, Assets.rect, 0, 0, 320, 480,Color.BLACK,Assets.colore, false);
+		//MainMenuScreen.drawGradient(batcher, Assets.rect, 0, 0, 320, 480,Color.BLACK,Assets.colore, false);
+		batcher.draw(Assets.welcomepaused,0,0,512,512);
 		batcher.enableBlending();
 		Assets.font.draw(batcher, "R e s u m e",160 - 85, 265);
 		Assets.font.draw(batcher, "Q u i t",160 - 45, 230 );
 		//batcher.draw(Assets.pauseMenu, 160 - 192 / 2, 240 - 96 / 2, 192, 96);
 		Assets.font.getRegion().getTexture().setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
-		Assets.font.draw(batcher, scoreString, 18, 480 - 10);
+		//Assets.font.draw(batcher, scoreString, 18, 480 - 10);
+		Assets.font.draw(batcher, scoreString, 150, 480 - 5);
 		
 	}
 

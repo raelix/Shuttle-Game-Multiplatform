@@ -75,13 +75,14 @@ public class HighscoresScreen implements Screen {
 		batcher.setProjectionMatrix(guiCam.combined);
 		batcher.disableBlending();
 		batcher.begin();
-		MainMenuScreen.drawGradient(batcher, Assets.rect, 0, 0, 320, 480,Color.BLACK,Color.BLUE, false);
+		batcher.draw(Assets.welcomehigh,0,0,512,512);
+		//MainMenuScreen.drawGradient(batcher, Assets.rect, 0, 0, 320, 480,Color.BLACK,Color.BLUE, false);
 		//batcher.draw(Assets.backgroundRegion, 0, 0, 320, 480);
 		batcher.end();
 		batcher.enableBlending();
 		batcher.begin();
 		//batcher.draw(Assets.highScoresRegion, 10, 360 - 16, 300, 33);
-		Assets.font.draw(batcher, "HighScores", 100,460);
+		//Assets.font.draw(batcher, "HighScores", 100,460);
 		float y = 230;
 		for (int i = 4; i >= 0; i--) {
 			Assets.font.draw(batcher, highScores[i], xOffset, y);
