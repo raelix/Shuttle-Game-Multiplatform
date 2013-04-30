@@ -70,6 +70,7 @@ public class Assets {
 	public static Texture welcomemulti;
 	public static Texture welcomehigh;
 	public static Texture welcomepaused;
+	public static Texture resume,quit,ospita,partecipa;
 	public static Texture swipetext,swipe,swipe1,swipe2;
 	public static TextureRegion starRegion;
 	public static TextureRegion bubbles;
@@ -192,6 +193,10 @@ public class Assets {
 		welcomemulti=loadTexture("data/multi.png");
 		welcomehigh=loadTexture("data/high.png");
 		welcomepaused=loadTexture("data/paused.png");
+		resume=loadTexture("data/resume.png");
+		quit=loadTexture("data/quit.png");
+		ospita=loadTexture("data/ospita.png");
+		partecipa=loadTexture("data/partecipa.png");
 	SetFilter();//setto i filtri sulle texture
 		//load texture region,animation & sound
 		items = loadTexture("data/items.png");
@@ -252,6 +257,10 @@ public class Assets {
 
 
 	private static void SetFilter(){
+		ospita.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		partecipa.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		quit.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		resume.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		welcomepaused.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		welcomehigh.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		welcomemulti.setFilter(TextureFilter.Linear, TextureFilter.Linear);

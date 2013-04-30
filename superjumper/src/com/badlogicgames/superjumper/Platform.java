@@ -52,7 +52,6 @@ public class Platform extends DynamicGameObject {
 			position.add(velocity.x*deltaTime,velocity.y*deltaTime);
 			bounds.x = position.x - PLATFORM_WIDTH / 2;
 			bounds.y = position.y - PLATFORM_HEIGHT / 2;
-
 			//if (position.x < PLATFORM_HEIGHT / 2) {
 			//	velocity.y = -velocity.y;
 			//	position.y = PLATFORM_HEIGHT / 2;

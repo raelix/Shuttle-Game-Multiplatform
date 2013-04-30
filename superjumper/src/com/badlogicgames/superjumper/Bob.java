@@ -11,7 +11,7 @@ public class Bob extends DynamicGameObject {
 	public static final float BOB_WIDTH = 0.8f;
 	public static final float BOB_HEIGHT = 0.8f;
 	public  float CHARSCREENUSE = 0;
-	public final float MAXVELOCITY = 10f;
+	public final float MAXVELOCITY = 12f;
 	public Vector2 gravity = new Vector2();
 
 	public static boolean BOB_DOUBLE_JUMP = false;

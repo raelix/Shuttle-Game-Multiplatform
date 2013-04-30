@@ -1,5 +1,8 @@
 package com.badlogicgames.superjumper;
 /*CONTROLLER*/
+import java.util.ArrayList;
+import java.util.List;
+
 import sun.invoke.util.Wrapper;
 
 import com.badlogic.gdx.Game;
@@ -11,6 +14,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.GLCommon;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -24,7 +28,7 @@ public class GameScreen implements Screen {
 	static final int GAME_PAUSED = 2;
 	static final int GAME_LEVEL_END = 3;
 	static final int GAME_OVER = 4;
-
+	public final List<Button> buttons;
 	Game game;
 	int state;
 	OrthographicCamera guiCam;
@@ -44,6 +48,7 @@ public class GameScreen implements Screen {
 
 	public GameScreen (Game game) {
 		this.game = game;
+		this.buttons = new ArrayList<Button>();
 		state = GAME_READY;
 		guiCam = new OrthographicCamera(320, 480);
 		guiCam.position.set(320 / 2, 480 / 2, 0);
@@ -96,7 +101,6 @@ public class GameScreen implements Screen {
 
 	public void update (float deltaTime) {
 		if (deltaTime > 0.1f) deltaTime = 0.1f;
-
 		switch (state) {
 		case GAME_READY:
 			updateReady();
@@ -105,7 +109,7 @@ public class GameScreen implements Screen {
 			updateRunning(deltaTime);
 			break;
 		case GAME_PAUSED:
-			updatePaused();
+			updatePaused(deltaTime);
 			break;
 		case GAME_LEVEL_END:
 			updateLevelEnd();
@@ -134,7 +138,12 @@ public class GameScreen implements Screen {
 			else if (OverlapTester.pointInRectangle(pauseBounds, touchPoint.x, touchPoint.y)) 
 			{
 				Assets.playSound(Assets.clickSound);
+				Button button = new Button(90,230);
+				buttons.add(button);
+				Button buttones = new Button(88,180);
+				buttons.add(buttones);
 				state = GAME_PAUSED;
+				
 				return;
 			}
 
@@ -145,16 +154,7 @@ public class GameScreen implements Screen {
 				return;
 			}
 		}
-		//es: world.Squirrels(); si può creare una funzione in game tale e quale a questa di modo 
-		//da non disperdere il principio dell MVC
-		//float len = world.squirrels.size();
-		//for (int i = 0; i < len; i++) {
-		//Squirrel squirrel = world.squirrels.get(i);
-		//if(squirrel.nosuse==1)
-		//	if(world.squirrels.get(i).nostime==0)world.squirrels.get(i).nostime=world.squirrels.get(i).stateTime;
-		//	world.Turbo();
-		//	world.turbo=world.turbo+1;
-		//}
+		
 
 
 		ApplicationType appType = Gdx.app.getType();
@@ -186,7 +186,13 @@ public class GameScreen implements Screen {
 		}
 	}
 
-	private void updatePaused () {
+	private void updatePaused (float deltaTime) {
+		
+		int len = buttons.size();
+		for (int i = 0; i < len; i++) {
+			Button button=buttons.get(i);
+			button.update(deltaTime);
+		}
 		if (Gdx.input.justTouched()) {
 			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
 
@@ -253,6 +259,12 @@ public class GameScreen implements Screen {
 	}
 
 	private void presentRunning () {
+		int len = buttons.size();
+		for (int i = 0; i < len; i++) {
+			Button button=buttons.get(i);
+			buttons.remove(button);
+			len = buttons.size();
+		}
 		batcher.draw(Assets.pause, 320 - 49, 480 - 53, 44, 44);
 		//Assets.fontsmall.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		//Assets.fontsmall.scale(3f);explosion text 
@@ -266,7 +278,7 @@ public class GameScreen implements Screen {
 			
 }
 	private void controlLockCharacter()
-	{
+	{ 
 		if (world.signal2screen==1)
 		{
 			Assets.font.scale(0.2f);
@@ -314,12 +326,19 @@ public class GameScreen implements Screen {
 		//MainMenuScreen.drawGradient(batcher, Assets.rect, 0, 0, 320, 480,Color.BLACK,Assets.colore, false);
 		batcher.draw(Assets.welcomepaused,0,0,512,512);
 		batcher.enableBlending();
-		Assets.font.draw(batcher, "R e s u m e",160 - 85, 265);
-		Assets.font.draw(batcher, "Q u i t",160 - 45, 230 );
+		//Assets.font.draw(batcher, "R e s u m e",160 - 85, 265);
+		//Assets.font.draw(batcher, "Q u i t",160 - 45, 230 );
 		//batcher.draw(Assets.pauseMenu, 160 - 192 / 2, 240 - 96 / 2, 192, 96);
 		Assets.font.getRegion().getTexture().setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 		//Assets.font.draw(batcher, scoreString, 18, 480 - 10);
 		Assets.font.draw(batcher, scoreString, 150, 480 - 5);
+		int len = buttons.size();
+		for (int i = 0; i < len; i++) {
+			Button button = buttons.get(i);
+			Texture keyFrame =Assets.resume;
+			if(i==1)keyFrame=Assets.quit;
+			batcher.draw(keyFrame,button.position.x,button.position.y,145,145);
+			}
 		
 	}
 

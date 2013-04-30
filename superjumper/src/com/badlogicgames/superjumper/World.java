@@ -166,14 +166,14 @@ public class World {
 
 	public void Turbo(){
 		if(turbo>=1){
-			bob.velocity.y=16;
+			bob.velocity.y=18;
 			turbo-=1;
 
 		}
 	}
 	public void TurboLess()
 	{
-		bob.velocity.y=10;
+		bob.velocity.y=12;
 	}
 
 
@@ -214,12 +214,12 @@ public class World {
 	private void updateunlockcharacter () 
 	{
 		
-		 if(signal1times==0)
+		 if(signal1times==0 && Settings.highscores[0]<1000)
 		 {
 			if(score>1000)signal2screen=2;
 			
 		 }
-		 else if(signal1times==1)
+		 else if(signal1times==1 && Settings.highscores[0]<3000)
 		 {
 			if(score>3000)signal2screen=3;
 			
@@ -464,7 +464,7 @@ public class World {
 	}
 
 	private void checkVelocity () {
-		if (bob.velocity.y > bob.MAXVELOCITY){
+		if (bob.velocity.y > bob.MAXVELOCITY && nosinuse==0){
 			bob.setGravityBob(0, 0);
 
 		}
