@@ -58,7 +58,6 @@ public class WorldRenderer {
 		
 		batch.begin();
 		renderStars();
-		
 		renderBob();
 		renderPlatforms();
 		renderItems();
@@ -91,6 +90,7 @@ public class WorldRenderer {
 		default:
 			keyFrame = Assets.bobHit;
 		}
+		
 		/*	float side = world.bob.velocity.x < 0 ? -1 : 1;*/
 		//Particelle di fuoco dietro Bob
 		
@@ -174,18 +174,24 @@ public class WorldRenderer {
 		for (int i = 0; i < len; i++) {
 			Squirrel squirrel = world.squirrels.get(i);
 			
-			if (squirrel.state == Squirrel.BUBBLE_CLISION ) {
+			if(squirrel.bubbleuse == 2 ){
 				TextureRegion keyFrame = Assets.bubbles;
 				batch.draw(keyFrame,world.bob.position.x-1.2f , world.bob.position.y-2.3f , 2.5f, 3f);
 			}
 			else {
 				TextureRegion keyFrame = Assets.portagadget.getKeyFrame(squirrel.stateTime, Animation.ANIMATION_LOOPING);
-				batch.draw(keyFrame, squirrel.position.x - 0.6f, squirrel.position.y - 0.6f, 1.3f, 1.3f);
+				batch.draw(keyFrame, squirrel.position.x - 0.9f, squirrel.position.y - 0.4f, 1.3f, 1.3f);
 		}
 			if(squirrel.nosuse == 1 ){
 				TextureRegion keyFrame = Assets.nos;
-				batch.draw(keyFrame,cam.position.x + 3.4f, cam.position.y - 5.8f , 1.5f, 1.5f);
+				batch.draw(keyFrame,cam.position.x + 3.4f, cam.position.y - 4.8f , 1.5f, 1.5f);
 			}
+			 if(squirrel.bubbleuse == 1 ){
+				TextureRegion keyFrame = Assets.bubblesstart;
+				batch.draw(keyFrame,cam.position.x + 3.4f, cam.position.y - 6.8f , 1.5f, 1.5f);
+			}
+			
+			
 			}
 	}
 	
@@ -242,6 +248,9 @@ public class WorldRenderer {
 
 		batch.draw(tex.getTexture(), verts, 0, verts.length);
 	}
+	
+
+	
 }
 
 

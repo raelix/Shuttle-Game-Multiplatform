@@ -116,6 +116,7 @@ public class Assets {
 	public static Animation staranim;
 	public static BitmapFont font;
 	public static BitmapFont fontsmall;
+	public static BitmapFont handfontsmall;
 	public static Pixmap pixmap;
 	public static Pixmap pixmap1;
 	public static Sound jumpSound;
@@ -244,6 +245,7 @@ public class Assets {
 		font.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		fontsmall = new BitmapFont(Gdx.files.internal("data/font1.fnt"), Gdx.files.internal("data/font1.png"), false);
 		fontsmall.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		handfontsmall = new BitmapFont(Gdx.files.internal("data/handfontsmall.fnt"), Gdx.files.internal("data/handfontsmall.png"), false);
 		music = Gdx.audio.newMusic(Gdx.files.internal("data/music.mp3"));
 		music.setLooping(true);
 		music.setVolume(0.5f);

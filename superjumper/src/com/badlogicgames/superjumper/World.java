@@ -7,7 +7,9 @@ import java.util.Random;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.sun.xml.internal.ws.api.pipe.NextAction;
 
 public class World {
 	public interface WorldListener {
@@ -43,10 +45,9 @@ public class World {
 	public int nosinuse=0;
 	public int turbo=1;
 	public float signal2screen=0;
-	public float signal1times=0;
 	public float bubbletimes;
 	private Vector2 gravity = new Vector2(0,15);
-
+	float random=MathUtils.random(0.1f, 0.9f);
 	public World (WorldListener listener) {
 		this.bob = new Bob(4, 2);
 		this.platforms = new ArrayList<Platform>();
@@ -69,6 +70,7 @@ public class World {
 		lifes.add(life);
 		lifes.add(life);
 		lifes.add(life);
+		
 	}
 
 	private void generateLevel () {
@@ -214,12 +216,12 @@ public class World {
 	private void updateunlockcharacter () 
 	{
 		
-		 if(signal1times==0 && Settings.highscores[0]<1000)
+		 if(Settings.highscores[0]<1000)
 		 {
 			if(score>1000)signal2screen=2;
 			
 		 }
-		 else if(signal1times==1 && Settings.highscores[0]<3000)
+		 else if(Settings.highscores[0]<3000)
 		 {
 			if(score>3000)signal2screen=3;
 			
@@ -274,7 +276,18 @@ public class World {
 		}
 	}
 
+	public void bubbleActivate(){
+		int len = squirrels.size();
+		for (int i = 0; i < len; i++) {
+			Squirrel squirrel = squirrels.get(i);
+			if(squirrel.bubbleuse==1){
+				if(squirrels.get(i).crashtime==0)squirrels.get(i).crashtime=squirrels.get(i).stateTime;
+				squirrel.bubbleuse=2;
+			}
+		}
+	}
 
+	
 	public void nosActivate(){
 		int len = squirrels.size();
 		for (int i = 0; i < len; i++) {
@@ -283,6 +296,7 @@ public class World {
 				if(squirrels.get(i).nostime==0)squirrels.get(i).nostime=squirrels.get(i).stateTime;
 				Turbo();
 				turbo=turbo+1;
+				squirrel.nosuse=0;
 				nosinuse=1;
 			}
 		}
@@ -294,19 +308,18 @@ public class World {
 		for (int i = 0; i < len; i++) {
 			Squirrel squirrel = squirrels.get(i);
 			squirrel.update(deltaTime);
-			if(squirrel.state==Squirrel.BUBBLE_CLISION && squirrel.crashtime != 0 && squirrel.crashtime<squirrel.stateTime-6){
+			if(squirrel.state==Squirrel.BUBBLE_CLISION && squirrel.remove==1){
 				squirrels.remove(squirrel);
-				squirrel.inuse=0;
 			}
-			else if(squirrel.state==Squirrel.NOS_CLISION && squirrel.nostime != 0 && squirrel.nostime<squirrel.stateTime-6){
+			else if(squirrel.state==Squirrel.NOS_CLISION && squirrel.remove==1){
 				TurboLess();
 				nosinuse=0;
 				squirrels.remove(squirrel);
-				squirrel.inuse=0;
 			}
-			else if(squirrel.state==Squirrel.LIFE_CLISION || squirrel.state==Squirrel.PROJ_CLISION){
+			else if(squirrel.state==Squirrel.LIFE_CLISION && squirrel.remove==1||
+						squirrel.state==Squirrel.PROJ_CLISION && squirrel.remove==1)
+			{
 				squirrels.remove(squirrel);
-				squirrel.inuse=0;
 			}
 			len = squirrels.size();
 		}
@@ -505,41 +518,51 @@ public class World {
 
 	private void checkSquirrelCollisions () {
 		int len = squirrels.size();
-		float random=rand.nextFloat();
 		float lenlife = lifes.size();
+		
+		
 		for (int i = 0; i < len; i++) {
+		
 			Squirrel squirrel = squirrels.get(i);
 			if (OverlapTester.overlapRectangles(squirrel.bounds, bob.bounds)) {
 				Gdx.input.vibrate(new long[] { 1, 10, 6, 10}, -1);
-				if(random<0.2f && squirrel.inuse<1 && lenlife<4)
+				
+				if(random<=0.25f &&  lenlife<4 && squirrel.state!=Squirrel.LIFE_CLISION)
 				{
 					squirrel.state=Squirrel.LIFE_CLISION;
 					LifeMore();
-					squirrel.inuse=1;
+					//squirrel.inuse=1;
 					signal2screen=1;
+				random=MathUtils.random(0.1f, 0.9f);
+				break;
 				}
-				else if(random>0.3f && random < 0.5f && squirrel.inuse<1)
+				else if(random>0.25f && random <= 0.5f && squirrel.state!=Squirrel.NOS_CLISION)
 				{    
 					//GameScreen si occupa di controllare il click sul nos x attivarlo
 					squirrel.state=Squirrel.NOS_CLISION;
-					squirrel.inuse=1;
+					//squirrel.inuse=1;
 					squirrel.nosuse=1;
-					
+					random=MathUtils.random(0.1f, 0.9f);
+					break;
 				}
-				else if(random>0.5f && random<0.8f && squirrel.inuse<1 && squirrel.state!=Squirrel.BUBBLE_CLISION)
+				else if(random>0.5f && random<=0.75f &&  squirrel.state!=Squirrel.BUBBLE_CLISION)
 				{
 					squirrel.state=Squirrel.BUBBLE_CLISION;
-					squirrel.crashtime=squirrel.stateTime;
-					squirrel.inuse=1;
-					
+					squirrel.bubbleuse=1;
+					//squirrel.inuse=1;
+				 random=MathUtils.random(0.1f, 0.9f);
+					break;
 				}
-				else if(random>0.8f && squirrel.inuse<1 )
+				else if(random>0.75f && squirrel.state!=Squirrel.PROJ_CLISION)
 				{ 
 					squirrel.state=Squirrel.PROJ_CLISION;
 					shot=shot+5;
-					squirrel.inuse=1;
+					//squirrel.inuse=1;
 					signal2screen=1;
+					random=MathUtils.random(0.1f, 0.9f);
+					break;
 				}
+			
 				listener.hit(); 
 				//squirrels.remove(squirrel);
 				len = squirrels.size();

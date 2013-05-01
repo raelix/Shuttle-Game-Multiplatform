@@ -41,9 +41,10 @@ public class GameScreen implements Screen {
 	Rectangle resumeBounds;
 	Rectangle quitBounds;
 	Rectangle nosBounds;
+	Rectangle bubbleBounds;
 	int lastScore;
 	int usataono;
-	static float statet=0;
+	float statexplosion=0;
 	String scoreString;
 
 	public GameScreen (Game game) {
@@ -94,7 +95,8 @@ public class GameScreen implements Screen {
 		pauseBounds = new Rectangle(320 - 64, 480 - 64, 64, 64);
 		resumeBounds = new Rectangle(160 - 96, 240, 192, 36);
 		quitBounds = new Rectangle(160 - 96, 240 - 36, 192, 36);
-		nosBounds = new Rectangle(320 - 64, 480 - 430, 64, 64);
+		nosBounds = new Rectangle(320 - 64, 480 - 400, 64, 64);
+		bubbleBounds = new Rectangle(320 - 64, 12, 64, 64);
 		lastScore = 0;
 		scoreString = "SCORE: 0";
 	}
@@ -133,9 +135,10 @@ public class GameScreen implements Screen {
 
 			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
 			if ((!(OverlapTester.pointInRectangle(pauseBounds, touchPoint.x, touchPoint.y)))&&
-				(!(OverlapTester.pointInRectangle(nosBounds, touchPoint.x, touchPoint.y))))
+				(!(OverlapTester.pointInRectangle(nosBounds, touchPoint.x, touchPoint.y)))&&
+				(!OverlapTester.pointInRectangle(bubbleBounds, touchPoint.x, touchPoint.y)) )
 				world.ShotProjectile();
-			else if (OverlapTester.pointInRectangle(pauseBounds, touchPoint.x, touchPoint.y)) 
+			 if (OverlapTester.pointInRectangle(pauseBounds, touchPoint.x, touchPoint.y)) 
 			{
 				Assets.playSound(Assets.clickSound);
 				Button button = new Button(90,230);
@@ -147,10 +150,16 @@ public class GameScreen implements Screen {
 				return;
 			}
 
-			else 	if (OverlapTester.pointInRectangle(nosBounds, touchPoint.x, touchPoint.y)) 
+				if (OverlapTester.pointInRectangle(nosBounds, touchPoint.x, touchPoint.y)) 
 			{
-				//Gdx.app.debug("UPDATEGRAVITY", "sto cliccando");
+				Gdx.app.debug("UPDATEGRAVITY", "sto cliccando su");
 				world.nosActivate();
+				return;
+			}
+			else 	if (OverlapTester.pointInRectangle(bubbleBounds, touchPoint.x, touchPoint.y)) 
+			{
+				Gdx.app.debug("UPDATEGRAVITY", "sto cliccando giu");
+				world.bubbleActivate();
 				return;
 			}
 		}
@@ -276,50 +285,35 @@ public class GameScreen implements Screen {
 		batcher.draw(Assets.portaproj, 320 - 318, 480 - 250, 35, 35);
 		controlLockCharacter();
 			
+}	private void stampo(String explosion)
+{
+	Assets.handfontsmall.scale(0.2f);
+	Assets.handfontsmall.draw(batcher, explosion, guiCam.position.x,guiCam.position.y);
+	statexplosion+=1f;
+	if(statexplosion==13 )
+		{
+			Assets.handfontsmall.scale(-0.2f*13);
+			statexplosion=0;
+			world.signal2screen=0;
+		}
 }
-	private void controlLockCharacter()
-	{ 
-		if (world.signal2screen==1)
-		{
-			Assets.font.scale(0.2f);
-			Assets.font.draw(batcher, "X2", guiCam.position.x,guiCam.position.y);
-			//batcher.draw(Assets.background1, guiCam.position.x, guiCam.position.y, statet+2,statet+2);
-			statet+=1f;
-				if(statet==23 )
-				{
-					Assets.font.scale(-0.2f*23);
-					statet=0;
-					world.signal2screen=0;
-				}
-		 }
-		if (world.signal2screen==2 )
-		{
-			Assets.font.scale(0.02f);
-			Assets.font.draw(batcher, "unlock Alien", guiCam.position.x-160,guiCam.position.y);
-			world.signal1times=1;
-			statet+=1f;
-				if(statet==23 )
-				{
-					Assets.font.scale(-0.02f*23);
-					statet=0;
-					world.signal2screen=0;
-				}
-		 }
-		if (world.signal2screen==3 )
-		{
-			world.signal1times=2;
-			Assets.font.scale(0.02f);
-			Assets.font.draw(batcher, "unlock Alien1", guiCam.position.x-160,guiCam.position.y);
-			
-			statet+=1f;
-				if(statet==23 )
-				{
-					Assets.font.scale(-0.02f*23);
-					statet=0;
-					world.signal2screen=0;
-				}
-		 }
-	}
+
+
+private void controlLockCharacter()
+{ 
+	if (world.signal2screen==1)
+	{
+		 stampo("x5");
+	 }
+	if (world.signal2screen==2 )
+	{
+		stampo("unlock alien");
+	 }
+	if (world.signal2screen==3 )
+	{
+		stampo("unlock alien2");	
+	 }
+}
 	
 	private void presentPaused () {
 		batcher.disableBlending();

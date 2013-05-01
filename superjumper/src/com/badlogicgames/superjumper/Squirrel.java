@@ -30,6 +30,8 @@ public class Squirrel extends DynamicGameObject {
 	public float nostime = 0;
 	public float inuse= 0;
 	public float nosuse=0;
+	public float bubbleuse=0;
+	public float remove=0;
 	public Squirrel (float x, float y) {
 		super(x, y, SQUIRREL_WIDTH, SQUIRREL_HEIGHT);
 		//velocity.set(SQUIRREL_VELOCITY, 0);
@@ -47,6 +49,22 @@ public class Squirrel extends DynamicGameObject {
 		if (position.x > World.WORLD_WIDTH - SQUIRREL_WIDTH / 2) {
 		//	position.x = World.WORLD_WIDTH - SQUIRREL_WIDTH / 2;
 		//	velocity.x = -SQUIRREL_VELOCITY;
+		}
+		
+		if(state==Squirrel.BUBBLE_CLISION && crashtime != 0 && crashtime<stateTime-6){
+			bubbleuse=0;
+			remove=1;
+			inuse=0;
+			
+		}
+		else if(state==Squirrel.NOS_CLISION && nostime != 0 && nostime<stateTime-6){
+
+			remove=1;
+			inuse=0;
+		}
+		else if(state==Squirrel.LIFE_CLISION || state==Squirrel.PROJ_CLISION){
+			remove=1;
+			inuse=0;
 		}
 		stateTime += deltaTime;
 	}
