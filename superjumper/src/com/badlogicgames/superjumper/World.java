@@ -219,14 +219,14 @@ public class World {
 		{
 			if(score>1000)
 			{
-				signal2screen=2;
+				signal2screen=3;
 
 			}
 
 		}
 		else if(Settings.highscores[0]<3000 && !(print1times>=2))
 		{
-			if(score>3000)signal2screen=3;
+			if(score>3000)signal2screen=4;
 
 		}
 	}
@@ -235,7 +235,7 @@ public class World {
 
 
 	private void updateBob (float deltaTime, float accelX) {
-		if (bob.state != Bob.BOB_STATE_HIT && bob.position.y <= 0.5f) bob.hitPlatform();
+		//if (bob.state != Bob.BOB_STATE_HIT && bob.position.y <= 0.5f) bob.hitPlatform();
 		if (bob.state != Bob.BOB_STATE_HIT) bob.velocity.x = -accelX / 3 * Bob.BOB_MOVE_VELOCITY;
 		bob.update(deltaTime);
 		heightSoFar = Math.max(bob.position.y, heightSoFar);
@@ -313,11 +313,13 @@ public class World {
 			squirrel.update(deltaTime);
 			if(squirrel.state==Squirrel.BUBBLE_CLISION && squirrel.inuse==false){
 				squirrels.remove(squirrel);
+				bob.enablebubble=0;
 			}
 			else if(squirrel.state==Squirrel.NOS_CLISION && squirrel.inuse==false){
 				TurboLess();
 				nosinuse=0;
 				squirrels.remove(squirrel);
+				bob.enablenos=0;
 			}
 			else if(squirrel.state==Squirrel.LIFE_CLISION && squirrel.inuse==false||
 				squirrel.state==Squirrel.PROJ_CLISION && squirrel.inuse==false)
@@ -527,31 +529,37 @@ public class World {
 			Squirrel squirrel = squirrels.get(i);
 			if (!squirrel.inuse && OverlapTester.overlapRectangles(squirrel.bounds, bob.bounds)) {
 				Gdx.input.vibrate(new long[] { 1, 10, 6, 10}, -1);
-				if(random<=0.30f &&  lenlife<4)
-				{Gdx.app.debug("vita", "...");
+				if(random<=0.30f &&  lenlife<5 )
+				{
+				Gdx.app.debug("vita", "...");
 				squirrel.state=Squirrel.LIFE_CLISION;
 				LifeMore();
 				squirrel.inuse=true;
-				signal2screen=1;
+				signal2screen=2;
 				break;
 				}
-				else if(random>0.25f && random <= 0.5f )
-				{    Gdx.app.debug("nos", "...");
-				//GameScreen si occupa di controllare il click sul nos x attivarlo
+				else if(random>0.25f && random <= 0.5f && bob.enablenos!=1 )
+				{    
+				Gdx.app.debug("nos", "...");
+				/*GameScreen si occupa di controllare il click sul nos x attivarlo*/
 				squirrel.state=Squirrel.NOS_CLISION;
 				squirrel.inuse=true;
 				squirrel.nosTap=true;
+				bob.enablenos=1;
 				break;
 				}
-				else if(random>0.5f && random<=0.75f )
-				{Gdx.app.debug("bolla", "...");
+				else if(random>0.5f && random<=0.75f && bob.enablebubble!=1 )
+				{
+				Gdx.app.debug("bolla", "...");
 				squirrel.state=Squirrel.BUBBLE_CLISION;
+				bob.enablebubble=1;
 				squirrel.bubbleuse=1;
 				squirrel.inuse=true;
 				break;
 				}
 				else if(random>0.75f )
-				{ Gdx.app.debug("ammo", "...");
+				{ 
+				Gdx.app.debug("ammo", "...");
 				squirrel.state=Squirrel.PROJ_CLISION;
 				shot=shot+5;
 				squirrel.inuse=true;

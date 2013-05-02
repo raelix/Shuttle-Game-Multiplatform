@@ -300,12 +300,16 @@ public class GameScreen implements Screen {
 		{
 			stampo("x5");
 		}
-		if (world.signal2screen==2 )
+		if (world.signal2screen==2)
+		{
+			stampo("+1Life");
+		}
+		if (world.signal2screen==3 )
 		{
 			stampo("new alien");
 			world.print1times=1;
 		}
-		if (world.signal2screen==3 )
+		if (world.signal2screen==4 )
 		{
 			stampo("new alien");
 			world.print1times=2;
