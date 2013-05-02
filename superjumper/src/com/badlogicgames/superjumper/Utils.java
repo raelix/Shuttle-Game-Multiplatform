@@ -59,7 +59,7 @@ public abstract class Utils {
 
 	public static void changeGravityTowards(DynamicGameObject dyn, DynamicGameObject target){
 		//dyn.velocity.lerp(new Vector2(target.position.x,target.position.y), +0.001f);
-		dyn.velocity.x = target.position.x - dyn.position.x;
-		dyn.velocity.y = target.position.y - dyn.position.y;
+		dyn.velocity.x = (target.position.x - dyn.position.x)/2;
+		dyn.velocity.y = (target.position.y - dyn.position.y)/2;
 	}
 }

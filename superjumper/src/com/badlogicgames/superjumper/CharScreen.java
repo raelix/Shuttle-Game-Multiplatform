@@ -42,6 +42,7 @@ public class CharScreen implements Screen {
 	OrthographicCamera guiCam;
 	public final Bob bob;
 	public final Bob bobfem;
+	public final Bob bobmil;
 	public final List<Button> buttons;
 	SpriteBatch batcher;
 	Rectangle nextBounds;
@@ -66,6 +67,7 @@ public class CharScreen implements Screen {
 		this.game = game;
 		this.bob = new Bob(centrox,centroy);
 		this.bobfem = new Bob(iniziox-100,inizioy);
+		this.bobmil = new Bob(iniziox-150,inizioy);
 		this.buttons = new ArrayList<Button>();
 		guiCam = new OrthographicCamera(320, 480);
 		guiCam.position.set(320 / 2, 480 / 2, 0);
@@ -76,6 +78,7 @@ public class CharScreen implements Screen {
 		batcher = new SpriteBatch();
 		this.bob.CHARSCREENUSE=1;
 		this.bobfem.CHARSCREENUSE=1;
+		this.bobmil.CHARSCREENUSE=1;
 		Button button = new Button(150,220);
 		buttons.add(button);
 		Button buttones = new Button(150,120);
@@ -127,25 +130,30 @@ public class CharScreen implements Screen {
 					if(velocityX>0)
 					{Gdx.app.debug("UPDATEGRAVITY", "x="+bob.position.x);
 					if(bob.position.x>centrox-20 && bob.position.x<centrox+20 )
-					{swipedeactive=1;
+					{
+						swipedeactive=1;
 						swipestate=1;
 					}
 					if(bob.position.x<=iniziox )
 					{
 						swipestate=2;
 					}
+					if(bob.position.x>=finex )
+					{
+						swipestate=5;
+					}
 					}
 					else if (velocityX<0)
 					{Gdx.app.debug("UPDATEGRAVITY", "x="+bob.position.x);
-					if(bob.position.x>centrox-20 && bob.position.x<centrox+20 )
-					{
-						//swipestate=3;
-					}
+
 					if(bob.position.x>=finex )
 					{
 						swipestate=4;
 					}
-
+					if(bobfem.position.x>=finex )
+					{
+						swipestate=6;
+					}
 					}
 
 					else {
@@ -168,8 +176,9 @@ public class CharScreen implements Screen {
 		if (Gdx.input.justTouched()) {
 			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
 
-			if (OverlapTester.pointInRectangle(nextBounds, touchPoint.x, touchPoint.y) && state==0 && punteggio>1000 
-				|| (OverlapTester.pointInRectangle(nextBounds, touchPoint.x, touchPoint.y) && state==1)) {
+			if (OverlapTester.pointInRectangle(nextBounds, touchPoint.x, touchPoint.y) && state==0 && punteggio>10000 
+				|| (OverlapTester.pointInRectangle(nextBounds, touchPoint.x, touchPoint.y) && state==1)||
+				(OverlapTester.pointInRectangle(nextBounds, touchPoint.x, touchPoint.y) && state==2 && punteggio>30000 )) {
 				Assets.playSound(Assets.clickSound);
 				game.setScreen(new GameScreen(game));
 				return;
@@ -179,16 +188,16 @@ public class CharScreen implements Screen {
 				game.setScreen(new MainMenuScreen(game));
 				return;
 			}
-			else if (OverlapTester.pointInRectangle(character, touchPoint.x, touchPoint.y)) {
+			/*else if (OverlapTester.pointInRectangle(character, touchPoint.x, touchPoint.y)) {
 				//Assets.playSound(Assets.clickSound);
 				if(state==0)state=1;
 				else state=0;
 				return;
-			}
+			}*/
 		}
 		bob.update(deltaTime);
 		bobfem.update(deltaTime);
-
+		bobmil.update(deltaTime);
 		int len = buttons.size();
 		for (int i = 0; i < len; i++) {
 			Button button=buttons.get(i);
@@ -197,30 +206,35 @@ public class CharScreen implements Screen {
 		updateScore();//controllo quanti punti sono stati conquistati
 		if(bob.position.x<320&&bob.position.x>0)state=1;
 		else if(bobfem.position.x<320&&bobfem.position.x>0)state=0;
+		else if(bobmil.position.x<320&&bobmil.position.x>0)state=2;
 		if(swipestate==1)
-		{
-			bob.velocity.x=(finex+100-bob.position.x)*10;
-			bob.velocity.y=(finey-bob.position.y)*10;
-			bobfem.velocity.x=(centrox-bobfem.position.x)*10;
-			bobfem.velocity.y=(centroy-bobfem.position.y)*10;
+		{  
+			sposto(bob,finex+100,finey);
+			sposto(bobfem,centrox,centroy);
 		}
 		else if(swipestate==2)
 		{
-			bob.velocity.x=(centrox-bob.position.x)*10;
-			bob.velocity.y=(centroy-bob.position.y)*10;
-		}
-		else if(swipestate==3)
-		{
-			bob.velocity.x=(iniziox-100-bob.position.x)*10;
-			bob.velocity.y=(inizioy-bob.position.y)*10;
-		}
+			sposto(bob,centrox,centroy);
+			}
 		else if(swipestate==4)
 		{
-			bob.velocity.x=(centrox-bob.position.x)*10;
-			bob.velocity.y=(centroy-bob.position.y)*10;
-			bobfem.velocity.x=(iniziox-100-bobfem.position.x)*10;
-			bobfem.velocity.y=(inizioy-bobfem.position.y)*10;
-		}
+			sposto(bob,centrox,centroy);
+			sposto(bobfem,iniziox-100,inizioy);
+			}
+		else if(swipestate==5)
+		{ 
+			sposto(bobfem,finex+100,finey);
+			sposto(bobmil,centrox-30,centroy);
+			}
+		else if(swipestate==6)
+		{
+			sposto(bobfem,centrox,centroy);
+			sposto(bobmil,iniziox-150,inizioy);
+			}
+	}
+	public void sposto(DynamicGameObject alien,float x,float y){
+		alien.velocity.x=(x-alien.position.x)*10;
+		alien.velocity.y=(y-alien.position.y)*10;
 	}
 
 	public void draw (float deltaTime) {
@@ -243,7 +257,7 @@ public class CharScreen implements Screen {
 			Texture keyFrame =Assets.lock;
 			if(i==1)keyFrame=Assets.locked;
 			//batcher.draw(keyFrame,button.position.x,button.position.y,145,145);
-			}
+		}
 
 		Assets.fontsmall.draw(batcher, "GO", 285,40);
 		stateTime=stateTime+0.020f;
@@ -256,12 +270,18 @@ public class CharScreen implements Screen {
 		}
 		batcher.draw(Assets.backgroundRegion,bob.position.x ,bob.position.y ,130,130);
 		batcher.draw(Assets.backgroundRegion10,bobfem.position.x ,bobfem.position.y ,130,130);
-
-		if(punteggio<1000 && state==0)
+		batcher.draw(Assets.backgroundRegion11,bobmil.position.x-20 ,bobmil.position.y ,170,170);
+		if(punteggio<100000 && state==0)
 		{
 			batcher.draw(Assets.lock,bobfem.position.x-10 ,bobfem.position.y+30 ,100,100);
 			batcher.draw(Assets.locked,bobfem.position.x-45,bobfem.position.y-70 ,170,150);
-			Assets.fontsmall.draw(batcher, "need 1000 scores", guiCam.position.x-100,guiCam.position.y-200);
+			Assets.fontsmall.draw(batcher, "need 1000 scores", guiCam.position.x-90,guiCam.position.y-150);
+		}
+		if(punteggio<300000 && state==2)
+		{
+			batcher.draw(Assets.lock,bobmil.position.x+26 ,bobmil.position.y+30 ,85,100);
+			batcher.draw(Assets.locked,bobmil.position.x-18,bobmil.position.y-70 ,170,150);
+			Assets.fontsmall.draw(batcher, "need 3000 scores", guiCam.position.x-90,guiCam.position.y-150);
 		}
 
 		//batcher.draw(Assets.backgroundRegion,bob.position.x ,bob.position.y ,25, 35, 120, 150, 1, 1, 180);

@@ -276,11 +276,42 @@ public class GameScreen implements Screen {
 		Assets.fontsmall.draw(batcher, scoreString, 63, 480 - 26);
 		String scoreproj;
 		scoreproj = world.shot+"x ";
-		Assets.fontsmall.draw(batcher, scoreproj, 4, 480 - 250);
-		batcher.draw(Assets.portaproj, 320 - 318, 480 - 250, 35, 35);
+		Assets.fontsmall.draw(batcher, scoreproj, 278, 480 - 150);
+		batcher.draw(Assets.portaproj, 276, 480 - 150, 35, 35);
+		String scorelife;
+		scorelife = world.life+"x ";
+		Assets.fontsmall.draw(batcher, scorelife, 282, 480 - 95);
+		batcher.draw(Assets.portalife, 276, 480 - 95, 35, 35);
 		controlLockCharacter();
 
-	}	private void stampo(String explosion)
+	}	
+	
+	private void controlLockCharacter()
+	{ 
+		if (world.signal2screen==1)
+		{
+			stampo("x5");
+		}
+		if (world.signal2screen==2)
+		{
+			stampo("+1");
+		}
+		if (world.signal2screen==3)
+		{
+			stampo("-1");
+		}
+		if (world.signal2screen==4 )
+		{
+			stampo("new alien");
+			world.print1times=1;
+		}
+		if (world.signal2screen==5 )
+		{
+			stampo("new alien");
+			world.print1times=2;
+		}
+	}
+	private void stampo(String explosion)
 	{
 		Assets.handfontsmall.scale(0.08f);
 		Assets.handfontsmall.draw(batcher, explosion, guiCam.position.x-70,guiCam.position.y);
@@ -290,29 +321,6 @@ public class GameScreen implements Screen {
 			Assets.handfontsmall.scale(-0.08f*43);
 			statexplosion=0;
 			world.signal2screen=0;
-		}
-	}
-
-
-	private void controlLockCharacter()
-	{ 
-		if (world.signal2screen==1)
-		{
-			stampo("x5");
-		}
-		if (world.signal2screen==2)
-		{
-			stampo("+1Life");
-		}
-		if (world.signal2screen==3 )
-		{
-			stampo("new alien");
-			world.print1times=1;
-		}
-		if (world.signal2screen==4 )
-		{
-			stampo("new alien");
-			world.print1times=2;
 		}
 	}
 

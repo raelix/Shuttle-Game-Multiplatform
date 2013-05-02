@@ -22,6 +22,9 @@ public class Assets {
 	public static Texture shuttle1;
 	public static Texture shuttlef;
 	public static Texture shuttlef1;
+	public static Texture shuttlemilitar;
+	public static Texture shuttlemilitar1;
+	public static Texture shuttlemilitar2;
 	public static Texture portaproj;
 	public static Texture portalife;
 	public static Texture portanos;
@@ -87,6 +90,7 @@ public class Assets {
 	public static TextureRegion backgroundRegion4;
 	public static TextureRegion backgroundRegion5;
 	public static TextureRegion backgroundRegion10;
+	public static TextureRegion backgroundRegion11;
 	public static TextureRegion backgroundRegionmain;
 	public static TextureRegion mainMenu;
 	public static TextureRegion pauseMenu;
@@ -102,6 +106,7 @@ public class Assets {
 	public static TextureRegion castle;
 	public static TextureRegion bobHit;
 	public static TextureRegion  rect;
+	public static Animation shutmilitAnim;
 	public static Animation swipeAnim;
 	public static Animation coinAnim;
 	public static Animation nosAnim;
@@ -181,6 +186,9 @@ public class Assets {
 		shuttle1 = loadTexture("data/alieno2.png");
 		shuttlef = loadTexture("data/aliena.png");
 		shuttlef1 = loadTexture("data/aliena2.png");
+		shuttlemilitar = loadTexture("data/militaralien.png");
+		shuttlemilitar1 = loadTexture("data/militaralien1.png");
+		shuttlemilitar2 = loadTexture("data/militaralien2.png");
 		SoundOn = loadTexture("data/play.png");
 		SoundOff = loadTexture("data/stop.png");
 		life = loadTexture("data/life.png");
@@ -224,6 +232,7 @@ public class Assets {
 		bubblesstart= new TextureRegion(bubblestart, 0, 0, 256, 256);
 		backgroundRegion = new TextureRegion(shuttle, 0, 0, 512, 512);
 		backgroundRegion10=new TextureRegion(shuttlef,0,0,512,512);
+		backgroundRegion11=new TextureRegion(shuttlemilitar,0,0,512,512);
 		backgroundRegion1 = new TextureRegion(background, 2, 4, 1024, 1024);
 		backgroundRegionmain = new TextureRegion(backgroundmain4, 3,0, 1024, 1024);
 		soundOff = new TextureRegion(SoundOff, 0, 0, 128, 128);
@@ -248,6 +257,7 @@ public class Assets {
 		bobJump = new Animation(0.2f, new TextureRegion(shuttle, 0, 0, 512, 512), new TextureRegion(shuttle1, 0, 0, 512, 512));
 		bobfJump = new Animation(0.2f, new TextureRegion(shuttlef, 0, 0, 512, 512), new TextureRegion(shuttlef1, 0, 0, 512, 512));
 		bobFall = new Animation(0.2f, new TextureRegion(shuttle, 0, 0, 512, 512), new TextureRegion(shuttle1, 0, 0, 512, 512));
+		shutmilitAnim=new Animation(0.2f, new TextureRegion(shuttlemilitar, 0, 0, 512, 512), new TextureRegion(shuttlemilitar1, 0, 0, 512, 512), new TextureRegion(shuttlemilitar2, 0, 0, 512, 512));
 		platform = new Animation(0.1f, new TextureRegion(nuvole, 0, 0, 250, 250), new TextureRegion(nuvole1, 0, 0, 250, 250),
 			new TextureRegion(nuvole2, -1, -3, 250, 250), new TextureRegion(nuvole3, 0, 0, 250, 250),new TextureRegion(nuvole4, 0, 0, 250, 250));
 		brakingPlatform = new Animation(0.2f, new TextureRegion(coin6, 0, 0, 512, 512),new TextureRegion(coin7, 0, 0, 512, 512),new TextureRegion(coin8, 0, 0, 512, 512));
@@ -269,6 +279,9 @@ public class Assets {
 
 
 	private static void SetFilter(){
+		shuttlemilitar.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		shuttlemilitar1.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		shuttlemilitar2.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		ospita.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		partecipa.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		quit.setFilter(TextureFilter.Linear, TextureFilter.Linear);

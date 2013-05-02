@@ -30,7 +30,7 @@ public class World {
 	public final List<Squirrel> squirrels;
 	public final List<Projectile> projectiles;
 	public final List<Coin> coins;
-	public final List<Life> lifes;
+	
 	public Castle castle;
 	public final WorldListener listener;
 	public final Random rand;
@@ -41,6 +41,7 @@ public class World {
 	public int shot=10;
 	public int nosinuse=0;
 	public int turbo=1;
+	public int life=5;
 	public float signal2screen=0;
 	public int print1times=0;
 	public float bubbletimes;
@@ -54,7 +55,7 @@ public class World {
 		this.springs = new ArrayList<Spring>();
 		this.squirrels = new ArrayList<Squirrel>();
 		this.coins = new ArrayList<Coin>();
-		this.lifes = new ArrayList<Life>();
+		
 		this.listener = listener;
 		this.rand = new Random(5000L);
 		this.generateLevel();
@@ -62,12 +63,7 @@ public class World {
 		this.heightSoFar = 0;
 		this.score = 0;
 		this.state = WORLD_STATE_RUNNING;
-		Life life = new Life(0,0);
-		lifes.add(life);
-		lifes.add(life);
-		lifes.add(life);
-		lifes.add(life);
-		lifes.add(life);
+	
 		this.randsquirrel=new Random();
 
 	}
@@ -130,22 +126,16 @@ public class World {
 	}
 
 	public void LifeLess(){
-		float len = lifes.size();
-		int i=0;
-		if(i<len && lifes.size() > 1){
-			Life life = lifes.get(i);
-			lifes.remove(life);
-			len = lifes.size();
-
+		
+		if(life>0){
+			if(life<=2)signal2screen=3;
+			life-=1;
 		}
-
 		else state = WORLD_STATE_GAME_OVER;
 	}
 
 	public void LifeMore(){
-		float len = lifes.size();
-		Life life = new Life(0,0);
-		if(len<=4)lifes.add(life);
+		if(life<=4)life+=1;
 
 
 	}
@@ -185,7 +175,6 @@ public class World {
 		updateSquirrels(deltaTime);
 		updateCoins(deltaTime);
 		//updateGravityPlanet(deltaTime);
-		updateLifes(deltaTime);
 		addStarDynamic();
 		updateStar( deltaTime);
 		updateProjectiles(deltaTime);
@@ -215,18 +204,18 @@ public class World {
 	private void updateunlockcharacter () 
 	{
 
-		if(Settings.highscores[0]<1000 && !(print1times>=1))
+		if(Settings.highscores[0]<10000 && !(print1times>=1))
 		{
-			if(score>1000)
+			if(score>10000)
 			{
-				signal2screen=3;
+				signal2screen=4;
 
 			}
 
 		}
-		else if(Settings.highscores[0]<3000 && !(print1times>=2))
+		else if(Settings.highscores[0]<30000 && !(print1times>=2))
 		{
-			if(score>3000)signal2screen=4;
+			if(score>30000)signal2screen=5;
 
 		}
 	}
@@ -236,7 +225,7 @@ public class World {
 
 	private void updateBob (float deltaTime, float accelX) {
 		//if (bob.state != Bob.BOB_STATE_HIT && bob.position.y <= 0.5f) bob.hitPlatform();
-		if (bob.state != Bob.BOB_STATE_HIT) bob.velocity.x = -accelX / 3 * Bob.BOB_MOVE_VELOCITY;
+		if (bob.state != Bob.BOB_STATE_HIT) bob.velocity.x = -accelX / 4 * Bob.BOB_MOVE_VELOCITY;
 		bob.update(deltaTime);
 		heightSoFar = Math.max(bob.position.y, heightSoFar);
 	}
@@ -351,13 +340,6 @@ public class World {
 		}
 	}
 
-	private void updateLifes (float deltaTime) {
-		int len = lifes.size();
-		for (int i = 0; i < len; i++) {
-			Life life = lifes.get(i);
-			life.update(deltaTime);
-		}
-	}
 
 	private void checkRemoveProjectile(){
 		int i = 0;
@@ -442,12 +424,13 @@ public class World {
 						bob.hitPlatform();
 						//Turbo();
 						Gdx.input.vibrate(new long[] { 1, 20,10, 5}, -1); 
+						score += 300;
 						//turbo=turbo+1;
 						//shot=shot+5;
 						projectiles.remove(i);
 						platform.pulverize();
 						//score += 100;
-						listener.jump();
+						;
 						break;
 					}
 
@@ -468,6 +451,7 @@ public class World {
 					Coin coin=coins.get(j);
 					if (coin.state != Coin.COIN_STATE_PULVERIZING && OverlapTester.overlapRectangles(coin.bounds, projectile.bounds)) {
 						Gdx.input.vibrate(new long[] { 1, 20, 40, 20}, -1); 
+						score += 300;
 						coin.pulverize(); 
 						coins.remove(j);
 						projectiles.remove(i);
@@ -496,15 +480,17 @@ public class World {
 			if (bob.position.y > platform.position.y) {
 				if (platform.state != Platform.PLATFORM_STATE_PULVERIZING && OverlapTester.overlapRectangles(bob.bounds, platform.bounds)) {
 					bob.hitPlatform();
-					//Turbo();
+					
 					Gdx.input.vibrate(new long[] { 1, 20,10, 5}, -1); 
-					//turbo=turbo+1;
-					//shot=shot+5;
+					if(bob.enablebubble!=1)
+					{	
+						LifeLess();
+						score -= 300;
+					}
+					else score += 300;
+					
 					platform.pulverize();
-					//score += 100;
-					LifeLess();
 					listener.hit();
-					listener.jump();
 					len = platforms.size();
 					break;
 				}
@@ -523,48 +509,47 @@ public class World {
 
 	private void checkSquirrelCollisions () {
 		int len = squirrels.size();
-		float lenlife = lifes.size();
 		float random=randsquirrel.nextFloat();
 		for (int i = 0; i < len; i++) {
 			Squirrel squirrel = squirrels.get(i);
 			if (!squirrel.inuse && OverlapTester.overlapRectangles(squirrel.bounds, bob.bounds)) {
 				Gdx.input.vibrate(new long[] { 1, 10, 6, 10}, -1);
-				if(random<=0.30f &&  lenlife<5 )
+				if(random<=0.30f &&  life<5 )
 				{
-				Gdx.app.debug("vita", "...");
-				squirrel.state=Squirrel.LIFE_CLISION;
-				LifeMore();
-				squirrel.inuse=true;
-				signal2screen=2;
-				break;
+					Gdx.app.debug("vita", "...");
+					squirrel.state=Squirrel.LIFE_CLISION;
+					LifeMore();
+					squirrel.inuse=true;
+					signal2screen=2;
+					break;
 				}
 				else if(random>0.25f && random <= 0.5f && bob.enablenos!=1 )
 				{    
-				Gdx.app.debug("nos", "...");
-				/*GameScreen si occupa di controllare il click sul nos x attivarlo*/
-				squirrel.state=Squirrel.NOS_CLISION;
-				squirrel.inuse=true;
-				squirrel.nosTap=true;
-				bob.enablenos=1;
-				break;
+					Gdx.app.debug("nos", "...");
+					/*GameScreen si occupa di controllare il click sul nos x attivarlo*/
+					squirrel.state=Squirrel.NOS_CLISION;
+					squirrel.inuse=true;
+					squirrel.nosTap=true;
+					bob.enablenos=1;
+					break;
 				}
 				else if(random>0.5f && random<=0.75f && bob.enablebubble!=1 )
 				{
-				Gdx.app.debug("bolla", "...");
-				squirrel.state=Squirrel.BUBBLE_CLISION;
-				bob.enablebubble=1;
-				squirrel.bubbleuse=1;
-				squirrel.inuse=true;
-				break;
+					Gdx.app.debug("bolla", "...");
+					squirrel.state=Squirrel.BUBBLE_CLISION;
+					bob.enablebubble=1;
+					squirrel.bubbleuse=1;
+					squirrel.inuse=true;
+					break;
 				}
 				else if(random>0.75f )
 				{ 
-				Gdx.app.debug("ammo", "...");
-				squirrel.state=Squirrel.PROJ_CLISION;
-				shot=shot+5;
-				squirrel.inuse=true;
-				signal2screen=1;
-				break;
+					Gdx.app.debug("ammo", "...");
+					squirrel.state=Squirrel.PROJ_CLISION;
+					shot=shot+5;
+					squirrel.inuse=true;
+					signal2screen=1;
+					break;
 				}
 
 				listener.hit(); 
@@ -583,16 +568,22 @@ public class World {
 
 			Coin coin = coins.get(i);
 			if (coin.state != Coin.COIN_STATE_PULVERIZING && OverlapTester.overlapRectangles(bob.bounds, coin.bounds)) {
-
 				Gdx.input.vibrate(new long[] { 1, 90, 40, 90},-1); 
-				bob.velocity.y=2;
-				bob.setGravityBob(0, 3);
+				if(bob.enablebubble!=1)
+				{	
+					bob.velocity.y=2;
+					bob.setGravityBob(0, 3);
+					LifeLess();
+					nosinuse=0;
+					score -= 300;
+				}
+				else
+				score += 300;
 				len = coins.size();
-				listener.coin();
 				coin.pulverize();
-				LifeLess();
-				nosinuse=0;
-				score -= 300;
+				listener.coin();
+				
+
 				coins.remove(coin);
 				break;
 			}
@@ -622,9 +613,8 @@ public class World {
 		if (heightSoFar - 7.5f > bob.position.y) {
 			state = WORLD_STATE_GAME_OVER;
 		}
-		int i = 0;
-		Life life = lifes.get(i);
-		if (i<0){ state = WORLD_STATE_GAME_OVER;}
+		
+		if (life<=0){ state = WORLD_STATE_GAME_OVER;}
 	}
 
 }

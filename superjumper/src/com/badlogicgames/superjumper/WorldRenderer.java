@@ -56,8 +56,6 @@ public class WorldRenderer {
 		renderBob();
 		renderPlatforms();
 		renderItems();
-
-		renderLifes();
 		renderSquirrels();
 		renderCastle();
 		renderProjectiles();
@@ -103,9 +101,13 @@ public class WorldRenderer {
 		}
 		if(CharScreen.state==1 )
 			batch.draw(keyFrame, world.bob.position.x -0.65f, world.bob.position.y -2.5f, 2.3f, 3f);
-		else {
+		else if(CharScreen.state==0 ){
 			keyFrame = Assets.bobfJump.getKeyFrame(world.bob.stateTime, Animation.ANIMATION_LOOPING);
 			batch.draw(keyFrame, world.bob.position.x -0.65f, world.bob.position.y -2.5f, 2.3f, 3f);
+		}
+		else if(CharScreen.state==2 ){
+			keyFrame = Assets.shutmilitAnim.getKeyFrame(world.bob.stateTime, Animation.ANIMATION_LOOPING);
+			batch.draw(keyFrame, world.bob.position.x -1.55f, world.bob.position.y -2.3f, 3f, 3.2f);
 		}
 	}
 
@@ -139,19 +141,6 @@ public class WorldRenderer {
 			if (coin.state == Coin.COIN_STATE_PULVERIZING) {
 			}
 			batch.draw(keyFrame, coin.position.x - 1, coin.position.y - 0.25f, 2.5f, 2.5f);
-		}
-	}
-
-	private void renderLifes(){
-		int len = world.lifes.size();
-		for (int i = 0; i < len; i++) {
-			Life life = world.lifes.get(i);
-			TextureRegion keyFrame = Assets.lifeAnim.getKeyFrame(life.stateTime, Animation.ANIMATION_LOOPING);	
-			batch.draw(keyFrame, cam.position.x - FRUSTUM_WIDTH/2, cam.position.y + i+1, 0.5f, 0.5f);
-			/*TextureRegion breakanim = Assets.breakanim.getKeyFrame(life.stateTime, Animation.ANIMATION_LOOPING);;	
-			batch.draw(breakanim, cam.position.x, cam.position.y , 7, 6f);
-			 */
-
 		}
 	}
 
