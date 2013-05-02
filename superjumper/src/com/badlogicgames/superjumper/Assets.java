@@ -10,9 +10,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.utils.Array;
 
 public class Assets {
 	public static ParticleEffect particleEffect;
@@ -35,6 +33,10 @@ public class Assets {
 	public static Texture nuvole4;
 	public static Texture bubblestart;
 	public static Texture bubble;
+	public static Texture bubble1;
+	public static Texture bubble2;
+	public static Texture nos1;
+	public static Texture nos2;
 	public static Texture coin1;
 	public static Texture coin2;
 	public static Texture coin3;
@@ -102,6 +104,8 @@ public class Assets {
 	public static TextureRegion  rect;
 	public static Animation swipeAnim;
 	public static Animation coinAnim;
+	public static Animation nosAnim;
+	public static Animation bubbleAnim;
 	public static Animation backAnim;
 	public static Animation lifeAnim;
 	public static Animation projAnim;
@@ -132,7 +136,7 @@ public class Assets {
 	}
 
 	public static void load () {
-	CreateRect4Gradient();
+		CreateRect4Gradient();
 		//particelle effetto fuoco
 		particleEffect = new ParticleEffect();
 		particleClouds = new ParticleEffect();
@@ -146,6 +150,10 @@ public class Assets {
 		star = loadTexture("data/particle.png");
 		bubble = loadTexture("data/bubble.png");
 		bubblestart = loadTexture("data/bubblestart.png");
+		bubble1 = loadTexture("data/bubblestart1.png");
+		bubble2 = loadTexture("data/bubblestart2.png");
+		nos1 = loadTexture("data/portanos2.png");
+		nos2 = loadTexture("data/portanos3.png");
 		star1 = loadTexture("data/particle1.png");
 		star2 = loadTexture("data/particle2.png");
 		nuvole = loadTexture("data/cloud.png");
@@ -198,7 +206,7 @@ public class Assets {
 		quit=loadTexture("data/quit.png");
 		ospita=loadTexture("data/ospita.png");
 		partecipa=loadTexture("data/partecipa.png");
-	SetFilter();//setto i filtri sulle texture
+		SetFilter();//setto i filtri sulle texture
 		//load texture region,animation & sound
 		items = loadTexture("data/items.png");
 		//pauseMenu = new TextureRegion(items, 224, 128, 192, 96);
@@ -229,6 +237,8 @@ public class Assets {
 			new TextureRegion(backgroundmain5, 0, 0, 1024, 1024), new TextureRegion(backgroundmain4, 0, 0, 1024, 1024),
 			new TextureRegion(backgroundmain5, 0, 0, 1024, 1024), new TextureRegion(backgroundmain6, 0, 0, 1024, 1024),
 			new TextureRegion(backgroundmain5, 0, 0, 1024, 1024));
+		nosAnim = new Animation(0.1f, new TextureRegion(portanos, 0, 0, 256, 256), new TextureRegion(nos1, 0, 0, 256, 256),new TextureRegion(nos2, 0, 0, 256, 256));
+		bubbleAnim = new Animation(0.1f, new TextureRegion(bubblestart, 0, 0, 256, 256), new TextureRegion(bubble1, 0, 0, 256, 256), new TextureRegion(bubble2, 0, 0, 256, 256));
 		staranim = new Animation(0.2f, new TextureRegion(star1, 0, 0, 128, 128), new TextureRegion(star2, 0, 0, 128, 128));
 		swipeAnim = new Animation(0.7f, new TextureRegion(swipe, 0, 0, 512, 512), new TextureRegion(swipe1, 0, 0, 512, 512), new TextureRegion(swipe2, 0, 0, 512, 512));
 		portagadget = new Animation(0.12f, new TextureRegion(portaproj, 0, 0, 256, 256), new TextureRegion(portalife, 0, 0, 256, 256), new TextureRegion(portanos, 0, 0, 256, 256),new TextureRegion(bubblesstart, 0, 0, 256, 256));

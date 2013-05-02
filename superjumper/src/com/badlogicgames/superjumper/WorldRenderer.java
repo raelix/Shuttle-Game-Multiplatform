@@ -5,13 +5,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.GLCommon;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.ParticleEmitter.GradientColorValue;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.FloatArray;
 
 public class WorldRenderer {
 
@@ -55,13 +50,13 @@ public class WorldRenderer {
 
 	public void renderObjects () {
 		batch.enableBlending();
-		
+
 		batch.begin();
 		renderStars();
 		renderBob();
 		renderPlatforms();
 		renderItems();
-		
+
 		renderLifes();
 		renderSquirrels();
 		renderCastle();
@@ -69,8 +64,8 @@ public class WorldRenderer {
 		batch.end();
 	}
 
-	
-	
+
+
 	private void renderBob () {
 		TextureRegion keyFrame;
 		int i;
@@ -78,7 +73,7 @@ public class WorldRenderer {
 		//Color c = new Color(batch.getColor()); 
 		//batch.setColor(0,1,0,1);
 		batch.draw(Assets.backgroundRegion1, 0, -1, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
-		 //batch.setColor(c);
+		//batch.setColor(c);
 		switch (world.bob.state) {
 		case Bob.BOB_STATE_FALL:
 			keyFrame = Assets.bobFall.getKeyFrame(world.bob.stateTime, Animation.ANIMATION_LOOPING);
@@ -90,28 +85,28 @@ public class WorldRenderer {
 		default:
 			keyFrame = Assets.bobHit;
 		}
-		
+
 		/*	float side = world.bob.velocity.x < 0 ? -1 : 1;*/
 		//Particelle di fuoco dietro Bob
-		
-      if(world.nosinuse==1)
-       {
-              Assets.particleClouds.start();
-              Assets.particleClouds.setPosition(world.bob.position.x,world.bob.position.y-1);
-              Assets.particleClouds.draw(batch, Gdx.graphics.getDeltaTime());
-       }
-      else
-       {    
-      	Assets.particleEffect.start();
-      	Assets.particleEffect.setPosition(world.bob.position.x,world.bob.position.y-1);
-      	Assets.particleEffect.draw(batch, Gdx.graphics.getDeltaTime());
-       }
+
+		if(world.nosinuse==1)
+		{
+			Assets.particleClouds.start();
+			Assets.particleClouds.setPosition(world.bob.position.x,world.bob.position.y-1);
+			Assets.particleClouds.draw(batch, Gdx.graphics.getDeltaTime());
+		}
+		else
+		{    
+			Assets.particleEffect.start();
+			Assets.particleEffect.setPosition(world.bob.position.x,world.bob.position.y-1);
+			Assets.particleEffect.draw(batch, Gdx.graphics.getDeltaTime());
+		}
 		if(CharScreen.state==1 )
-		batch.draw(keyFrame, world.bob.position.x -0.65f, world.bob.position.y -2.5f, 2.3f, 3f);
+			batch.draw(keyFrame, world.bob.position.x -0.65f, world.bob.position.y -2.5f, 2.3f, 3f);
 		else {
 			keyFrame = Assets.bobfJump.getKeyFrame(world.bob.stateTime, Animation.ANIMATION_LOOPING);
 			batch.draw(keyFrame, world.bob.position.x -0.65f, world.bob.position.y -2.5f, 2.3f, 3f);
-			}
+		}
 	}
 
 	private void renderPlatforms () {
@@ -129,7 +124,7 @@ public class WorldRenderer {
 	}
 
 
-	
+
 	private void renderItems () {
 		int len = world.springs.size();
 		for (int i = 0; i < len; i++) {
@@ -155,7 +150,7 @@ public class WorldRenderer {
 			batch.draw(keyFrame, cam.position.x - FRUSTUM_WIDTH/2, cam.position.y + i+1, 0.5f, 0.5f);
 			/*TextureRegion breakanim = Assets.breakanim.getKeyFrame(life.stateTime, Animation.ANIMATION_LOOPING);;	
 			batch.draw(breakanim, cam.position.x, cam.position.y , 7, 6f);
-*/
+			 */
 
 		}
 	}
@@ -173,29 +168,29 @@ public class WorldRenderer {
 		int len = world.squirrels.size();
 		for (int i = 0; i < len; i++) {
 			Squirrel squirrel = world.squirrels.get(i);
-			
+
 			if(squirrel.bubbleuse == 2 ){
 				TextureRegion keyFrame = Assets.bubbles;
 				batch.draw(keyFrame,world.bob.position.x-1.2f , world.bob.position.y-2.3f , 2.5f, 3f);
 			}
 			else {
 				TextureRegion keyFrame = Assets.portagadget.getKeyFrame(squirrel.stateTime, Animation.ANIMATION_LOOPING);
-				batch.draw(keyFrame, squirrel.position.x - 0.9f, squirrel.position.y - 0.4f, 1.3f, 1.3f);
-		}
-			if(squirrel.nosuse == 1 ){
-				TextureRegion keyFrame = Assets.nos;
+				batch.draw(keyFrame, squirrel.position.x - 0.7f, squirrel.position.y - 0.4f, 1.3f, 1.3f);
+			}
+			if(squirrel.nosTap == true ){
+				TextureRegion keyFrame =Assets.nosAnim.getKeyFrame(squirrel.stateTime, Animation.ANIMATION_LOOPING);
 				batch.draw(keyFrame,cam.position.x + 3.4f, cam.position.y - 4.8f , 1.5f, 1.5f);
 			}
-			 if(squirrel.bubbleuse == 1 ){
-				TextureRegion keyFrame = Assets.bubblesstart;
+			if(squirrel.bubbleuse == 1 ){
+				TextureRegion keyFrame = Assets.bubbleAnim.getKeyFrame(squirrel.stateTime, Animation.ANIMATION_LOOPING);
 				batch.draw(keyFrame,cam.position.x + 3.4f, cam.position.y - 6.8f , 1.5f, 1.5f);
 			}
-			
-			
-			}
+
+
+		}
 	}
-	
-	
+
+
 
 	private void renderCastle () {
 		Castle castle = world.castle;
@@ -213,7 +208,7 @@ public class WorldRenderer {
 			}
 			else if(star.type != Star.STAR_TYPE_MOVING ){
 				keyFrame = Assets.star1Region;
-			batch.draw(keyFrame, star.position.x , star.position.y , 0.13f, 0.1f);}
+				batch.draw(keyFrame, star.position.x , star.position.y , 0.13f, 0.1f);}
 		}
 	}
 	public static void drawGradient(SpriteBatch batch, TextureRegion tex, float x, float y,
@@ -248,9 +243,9 @@ public class WorldRenderer {
 
 		batch.draw(tex.getTexture(), verts, 0, verts.length);
 	}
-	
 
-	
+
+
 }
 
 

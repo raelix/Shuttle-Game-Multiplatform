@@ -50,10 +50,10 @@ public class Bob extends DynamicGameObject {
 				stateTime = 0;
 			}
 		}
-if(CHARSCREENUSE==0){
-		if (position.x < 0) position.x = World.WORLD_WIDTH;
-		if (position.x > World.WORLD_WIDTH) position.x = 0;
-}
+		if(CHARSCREENUSE==0){
+			if (position.x < 0) position.x = World.WORLD_WIDTH;
+			if (position.x > World.WORLD_WIDTH) position.x = 0;
+		}
 
 		stateTime += deltaTime;
 		jumpTime += deltaTime;

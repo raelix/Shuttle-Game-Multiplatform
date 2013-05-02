@@ -16,8 +16,6 @@
 
 package com.badlogicgames.superjumper;
 
-import java.util.Random;
-
 public class Platform extends DynamicGameObject {
 	public static final float PLATFORM_WIDTH = 2;
 	public static final float PLATFORM_HEIGHT = 0.5f;

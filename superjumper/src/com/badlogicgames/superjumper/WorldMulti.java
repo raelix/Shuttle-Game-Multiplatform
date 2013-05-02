@@ -58,7 +58,7 @@ public class WorldMulti implements PROTOCOL_CONSTANTS {
 		this.setGravity(0, 3);
 		this.heightSoFar = 0;
 		this.score = 0;
-		this.rand = new Random((long)seed);
+		this.rand = new Random(seed);
 		this.state = WORLD_STATE_RUNNING;
 		Life life = new Life(0,0);
 		lifes.add(life);

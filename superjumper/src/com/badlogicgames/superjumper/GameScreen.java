@@ -3,21 +3,17 @@ package com.badlogicgames.superjumper;
 import java.util.ArrayList;
 import java.util.List;
 
-import sun.invoke.util.Wrapper;
-
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.GLCommon;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogicgames.superjumper.World.WorldListener;
@@ -43,7 +39,6 @@ public class GameScreen implements Screen {
 	Rectangle nosBounds;
 	Rectangle bubbleBounds;
 	int lastScore;
-	int usataono;
 	float statexplosion=0;
 	String scoreString;
 
@@ -138,7 +133,7 @@ public class GameScreen implements Screen {
 				(!(OverlapTester.pointInRectangle(nosBounds, touchPoint.x, touchPoint.y)))&&
 				(!OverlapTester.pointInRectangle(bubbleBounds, touchPoint.x, touchPoint.y)) )
 				world.ShotProjectile();
-			 if (OverlapTester.pointInRectangle(pauseBounds, touchPoint.x, touchPoint.y)) 
+			if (OverlapTester.pointInRectangle(pauseBounds, touchPoint.x, touchPoint.y)) 
 			{
 				Assets.playSound(Assets.clickSound);
 				Button button = new Button(90,230);
@@ -146,24 +141,24 @@ public class GameScreen implements Screen {
 				Button buttones = new Button(88,180);
 				buttons.add(buttones);
 				state = GAME_PAUSED;
-				
+
 				return;
 			}
 
-				if (OverlapTester.pointInRectangle(nosBounds, touchPoint.x, touchPoint.y)) 
+			if (OverlapTester.pointInRectangle(nosBounds, touchPoint.x, touchPoint.y)) 
 			{
-				Gdx.app.debug("UPDATEGRAVITY", "sto cliccando su");
+				//Gdx.app.debug("UPDATEGRAVITY", "sto cliccando su");
 				world.nosActivate();
 				return;
 			}
 			else 	if (OverlapTester.pointInRectangle(bubbleBounds, touchPoint.x, touchPoint.y)) 
 			{
-				Gdx.app.debug("UPDATEGRAVITY", "sto cliccando giu");
+				//Gdx.app.debug("UPDATEGRAVITY", "sto cliccando giu");
 				world.bubbleActivate();
 				return;
 			}
 		}
-		
+
 
 
 		ApplicationType appType = Gdx.app.getType();
@@ -196,7 +191,7 @@ public class GameScreen implements Screen {
 	}
 
 	private void updatePaused (float deltaTime) {
-		
+
 		int len = buttons.size();
 		for (int i = 0; i < len; i++) {
 			Button button=buttons.get(i);
@@ -284,37 +279,39 @@ public class GameScreen implements Screen {
 		Assets.fontsmall.draw(batcher, scoreproj, 4, 480 - 250);
 		batcher.draw(Assets.portaproj, 320 - 318, 480 - 250, 35, 35);
 		controlLockCharacter();
-			
-}	private void stampo(String explosion)
-{
-	Assets.handfontsmall.scale(0.2f);
-	Assets.handfontsmall.draw(batcher, explosion, guiCam.position.x,guiCam.position.y);
-	statexplosion+=1f;
-	if(statexplosion==13 )
+
+	}	private void stampo(String explosion)
+	{
+		Assets.handfontsmall.scale(0.08f);
+		Assets.handfontsmall.draw(batcher, explosion, guiCam.position.x-70,guiCam.position.y);
+		statexplosion+=1f;
+		if(statexplosion==43 )
 		{
-			Assets.handfontsmall.scale(-0.2f*13);
+			Assets.handfontsmall.scale(-0.08f*43);
 			statexplosion=0;
 			world.signal2screen=0;
 		}
-}
+	}
 
 
-private void controlLockCharacter()
-{ 
-	if (world.signal2screen==1)
-	{
-		 stampo("x5");
-	 }
-	if (world.signal2screen==2 )
-	{
-		stampo("unlock alien");
-	 }
-	if (world.signal2screen==3 )
-	{
-		stampo("unlock alien2");	
-	 }
-}
-	
+	private void controlLockCharacter()
+	{ 
+		if (world.signal2screen==1)
+		{
+			stampo("x5");
+		}
+		if (world.signal2screen==2 )
+		{
+			stampo("new alien");
+			world.print1times=1;
+		}
+		if (world.signal2screen==3 )
+		{
+			stampo("new alien");
+			world.print1times=2;
+		}
+	}
+
 	private void presentPaused () {
 		batcher.disableBlending();
 		//MainMenuScreen.drawGradient(batcher, Assets.rect, 0, 0, 320, 480,Color.BLACK,Assets.colore, false);
@@ -332,8 +329,8 @@ private void controlLockCharacter()
 			Texture keyFrame =Assets.resume;
 			if(i==1)keyFrame=Assets.quit;
 			batcher.draw(keyFrame,button.position.x,button.position.y,145,145);
-			}
-		
+		}
+
 	}
 
 	private void presentLevelEnd () {

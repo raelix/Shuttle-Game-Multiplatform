@@ -1,6 +1,5 @@
 package com.badlogicgames.superjumper;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 
 public class BobMain extends DynamicGameObject {
@@ -113,8 +112,8 @@ public class BobMain extends DynamicGameObject {
 		//if (rotationcounter >= 360f) rotationcounter = 0;
 		rotationcounter += 0.987f; //da sistemare x la rotazione d BobMain
 		//Gdx.app.debug("SETCIRCULARPOSITION","rotationcounter = " + rotationcounter);
-		this.position.x = (float) ((double)x + (double)raggio*Math.cos((double)totaltime));
-		this.position.y = (float) ((double)y + (double)raggio*Math.sin((double)totaltime));
+		this.position.x = (float) (x + raggio*Math.cos(totaltime));
+		this.position.y = (float) (y + raggio*Math.sin(totaltime));
 		//this.position.add(x + raggio*(float)Math.cos(totaltime*2*Math.PI),y + raggio*(float)Math.sin(totaltime*2*Math.PI));
 		//Gdx.app.debug("SETCIRCULARPOSITION", "position.x = " + position.x + ", position.y = " + position.y + ", totaltime = " + totaltime + ", cos= " + Math.cos(totaltime*2*Math.PI) + ", sin = " + (y + raggio*Math.sin(totaltime*2*Math.PI)));
 	}

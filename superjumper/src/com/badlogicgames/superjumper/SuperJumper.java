@@ -21,8 +21,6 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.FPSLogger;
-import java.io.*;
-import java.net.*;
 
 public class SuperJumper extends Game {
 	boolean firstTimeCreate = true;
