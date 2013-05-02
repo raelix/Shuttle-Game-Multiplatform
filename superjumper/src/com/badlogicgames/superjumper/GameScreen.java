@@ -273,14 +273,14 @@ public class GameScreen implements Screen {
 		//Assets.fontsmall.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		//Assets.fontsmall.scale(3f);explosion text 
 		batcher.draw(Assets.tubo, 0, 225, 250, 280);
-		Assets.fontsmall.draw(batcher, scoreString, 63, 480 - 26);
+		Assets.handfontsmaller.draw(batcher, scoreString, 63, 480 - 22);
 		String scoreproj;
 		scoreproj = world.shot+"x ";
-		Assets.fontsmall.draw(batcher, scoreproj, 278, 480 - 150);
+		Assets.handfontsmaller.draw(batcher, scoreproj, 282, 480 - 145);
 		batcher.draw(Assets.portaproj, 276, 480 - 150, 35, 35);
 		String scorelife;
 		scorelife = world.life+"x ";
-		Assets.fontsmall.draw(batcher, scorelife, 282, 480 - 95);
+		Assets.handfontsmaller.draw(batcher, scorelife, 282, 480 - 90);
 		batcher.draw(Assets.portalife, 276, 480 - 95, 35, 35);
 		controlLockCharacter();
 

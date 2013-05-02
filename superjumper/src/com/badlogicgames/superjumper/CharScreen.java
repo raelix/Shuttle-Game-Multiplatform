@@ -275,13 +275,13 @@ public class CharScreen implements Screen {
 		{
 			batcher.draw(Assets.lock,bobfem.position.x-10 ,bobfem.position.y+30 ,100,100);
 			batcher.draw(Assets.locked,bobfem.position.x-45,bobfem.position.y-70 ,170,150);
-			Assets.fontsmall.draw(batcher, "need 1000 scores", guiCam.position.x-90,guiCam.position.y-150);
+			Assets.fontsmall.draw(batcher, "need 10000 scores", guiCam.position.x-90,guiCam.position.y-150);
 		}
 		if(punteggio<30000 && state==2)
 		{
 			batcher.draw(Assets.lock,bobmil.position.x+26 ,bobmil.position.y+30 ,85,100);
 			batcher.draw(Assets.locked,bobmil.position.x-18,bobmil.position.y-70 ,170,150);
-			Assets.fontsmall.draw(batcher, "need 3000 scores", guiCam.position.x-90,guiCam.position.y-150);
+			Assets.fontsmall.draw(batcher, "need 30000 scores", guiCam.position.x-90,guiCam.position.y-150);
 		}
 
 		//batcher.draw(Assets.backgroundRegion,bob.position.x ,bob.position.y ,25, 35, 120, 150, 1, 1, 180);

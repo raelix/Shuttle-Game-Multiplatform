@@ -23,6 +23,7 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.GLCommon;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
@@ -72,14 +73,17 @@ public class FirstScreen implements Screen {
 		batcher.begin();
 		batcher.draw(Assets.welcome, 0, 0, 512,512);
 		//MainMenuScreen.drawGradient(batcher, Assets.rect, 0, 0, 320, 480,Color.BLACK,Assets.colore, false);
-		
 		batcher.end();
 
 		batcher.enableBlending();
 		batcher.begin();
-		Assets.font.draw(batcher, "W E L C O M E",160 - 85, 265);
-		Assets.font.draw(batcher, "T O",160-20, 230);
-		Assets.font.draw(batcher, "SUPER JUMPER",160 - 85, 195);
+		Assets.handfontsmall.scale(-0.25f);
+		Assets.handfontsmall.getRegion().getTexture().setFilter(TextureFilter.MipMapLinearNearest, TextureFilter.MipMapLinearNearest);
+		Assets.handfontsmall.draw(batcher, "W E L C O M E",160 - 98, 280);
+		Assets.handfontsmall.draw(batcher, "T O",160-20, 230);
+		Assets.handfontsmall.draw(batcher, "SUPER JUMPER",160 - 98, 180);
+		Assets.handfontsmall.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		Assets.handfontsmall.scale(0.25f);
 		//batcher.draw(Assets.icontextback, 320, 0, -54, 54);
 		batcher.end();
 

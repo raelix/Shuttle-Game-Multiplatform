@@ -252,7 +252,7 @@ public class World {
 	private void updatePlatforms (float deltaTime) {
 
 		for ( Platform plat : this.platforms) {
-			if (plat.type == Platform.PLATFORM_TYPE_MOVING && bob.position.y-plat.position.y>-5){
+			if (plat.type == Platform.PLATFORM_TYPE_MOVING && bob.position.y-plat.position.y>-9){
 				Utils.changeGravityTowards(plat, bob);
 			}
 			plat.update(deltaTime);
@@ -274,6 +274,7 @@ public class World {
 			Squirrel squirrel = squirrels.get(i);
 			if(squirrel.bubbleuse==1){
 				if(squirrels.get(i).crashtime==0)squirrels.get(i).crashtime=squirrels.get(i).stateTime;
+				bob.enablebubble=1;
 				squirrel.bubbleuse=2;
 			}
 		}
@@ -533,11 +534,11 @@ public class World {
 					bob.enablenos=1;
 					break;
 				}
-				else if(random>0.5f && random<=0.75f && bob.enablebubble!=1 )
+				else if(random>0.5f && random<=0.75f && !(bob.enablebubble>0)  )
 				{
 					Gdx.app.debug("bolla", "...");
 					squirrel.state=Squirrel.BUBBLE_CLISION;
-					bob.enablebubble=1;
+					bob.enablebubble=2;
 					squirrel.bubbleuse=1;
 					squirrel.inuse=true;
 					break;
