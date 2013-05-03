@@ -259,7 +259,8 @@ public class GameScreen implements Screen {
 	}
 
 	private void presentReady () {
-		batcher.draw(Assets.ready, 160 - 192 / 2, 240 - 32 / 2, 192, 32);
+		Assets.handfontsmall.draw(batcher, "R E A D Y ?", 160-105, 240-18);
+		//batcher.draw(Assets.ready, 160 - 192 / 2, 240 - 32 / 2, 192, 32);
 	}
 
 	private void presentRunning () {
@@ -290,35 +291,81 @@ public class GameScreen implements Screen {
 	{ 
 		if (world.signal2screen==1)
 		{
-			stampo("x5");
+			stampo("+10 ammo");
 		}
-		if (world.signal2screen==2)
+		else if (world.signal2screen==2)
 		{
-			stampo("+1");
+			stampo("+1 life");
 		}
-		if (world.signal2screen==3)
+		else	if (world.signal2screen==3)
 		{
-			stampo("-1");
+			stampo("-1 warning");
 		}
-		if (world.signal2screen==4 )
+		else if (world.signal2screen==4)
 		{
-			stampo("new alien");
-			world.print1times=1;
+			stampo("slow!");
+			if(statexplosion==0)
+				world.signal2screen=10;
 		}
-		if (world.signal2screen==5 )
+		else	if (world.signal2screen==5)
+		{
+			stampo("good!");
+			if(statexplosion==0)
+				world.signal2screen=11;
+		}
+		else	if (world.signal2screen==6)
+		{
+			stampo("fast!");
+			if(statexplosion==0)
+				world.signal2screen=12;
+		}
+		else	if (world.signal2screen==7)
+		{
+			stampo("excellent!");
+			if(statexplosion==0)
+			world.signal2screen=13;
+		}
+		else	if (world.signal2screen==8 )
 		{
 			stampo("new alien");
 			world.print1times=2;
 		}
-	}
+		else	if (world.signal2screen==9 )
+		{
+			stampo("new alien");
+			world.print1times=3;
+		}
+		else	if (world.signal2screen==10)
+		{
+			stampo("+100");
+		}
+		else	if (world.signal2screen==11)
+		{
+			stampo("+200");
+		}
+		else	if (world.signal2screen==12)
+		{
+			stampo("+500");
+		}
+		else	if (world.signal2screen==13)
+		{
+			stampo("+1000");
+		}
+		else	if (world.signal2screen==14)
+		{
+			stampo("Kill!!");
+			world.print1times=1;
+		}
+
+}
 	private void stampo(String explosion)
 	{
-		Assets.handfontsmall.scale(0.08f);
-		Assets.handfontsmall.draw(batcher, explosion, guiCam.position.x-70,guiCam.position.y);
+		Assets.handfontsmall.scale(0.03f);
+		Assets.handfontsmall.draw(batcher, explosion, guiCam.position.x-75,guiCam.position.y);
 		statexplosion+=1f;
 		if(statexplosion==43 )
 		{
-			Assets.handfontsmall.scale(-0.08f*43);
+			Assets.handfontsmall.scale(-0.03f*43);
 			statexplosion=0;
 			world.signal2screen=0;
 		}
@@ -332,9 +379,10 @@ public class GameScreen implements Screen {
 		//Assets.font.draw(batcher, "R e s u m e",160 - 85, 265);
 		//Assets.font.draw(batcher, "Q u i t",160 - 45, 230 );
 		//batcher.draw(Assets.pauseMenu, 160 - 192 / 2, 240 - 96 / 2, 192, 96);
-		Assets.font.getRegion().getTexture().setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+		//Assets.font.getRegion().getTexture().setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 		//Assets.font.draw(batcher, scoreString, 18, 480 - 10);
-		Assets.font.draw(batcher, scoreString, 150, 480 - 5);
+		Assets.handfontsmall.scale(-0.4f);
+		Assets.handfontsmall.draw(batcher, scoreString, 150, 480);
 		int len = buttons.size();
 		for (int i = 0; i < len; i++) {
 			Button button = buttons.get(i);
@@ -342,23 +390,27 @@ public class GameScreen implements Screen {
 			if(i==1)keyFrame=Assets.quit;
 			batcher.draw(keyFrame,button.position.x,button.position.y,145,145);
 		}
-
+		Assets.handfontsmall.scale(0.4f);
 	}
 
 	private void presentLevelEnd () {
+	
 		String topText = "your friends ...";
-		String bottomText = "aren't here!";
+		String bottomText = "... aren't here!";
 		float topWidth = Assets.font.getBounds(topText).width;
 		float bottomWidth = Assets.font.getBounds(bottomText).width;
-		Assets.font.draw(batcher, topText, 160 - topWidth / 2, 480 - 40);
-		Assets.font.draw(batcher, bottomText, 160 - bottomWidth / 2, 40);
+		Assets.handfontsmall.draw(batcher, topText, 160 - topWidth / 2, 480 - 40);
+		Assets.handfontsmall.draw(batcher, bottomText, 160 - bottomWidth / 2, 40);
+		
 	}
 
 	private void presentGameOver () {
-		Assets.font.draw(batcher, "G A M E  O V E R",160 - 200 / 2, 300);
+		Assets.handfontsmall.scale(-0.3f);
+		Assets.handfontsmall.draw(batcher, "G A M E  O V E R",160 - 200 / 2, 300);
 		//batcher.draw(Assets.gameOver, 160 - 160 / 2, 240 - 96 / 2, 160, 96);
 		float scoreWidth = Assets.font.getBounds(scoreString).width;
-		Assets.font.draw(batcher, scoreString, 160 - scoreWidth / 2, 480 - 20);
+		Assets.handfontsmall.draw(batcher, scoreString, 160 - scoreWidth / 2, 480 - 20);
+		Assets.handfontsmall.scale(0.3f);
 	}
 
 	@Override

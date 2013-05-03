@@ -6,6 +6,8 @@ import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.actions.RemoveActorAction;
+import com.sun.org.apache.bcel.internal.generic.AllocationInstruction;
 
 public class World {
 	public interface WorldListener {
@@ -24,13 +26,14 @@ public class World {
 	public final int PLATFORMS_DISTANCE = 10;
 	public final int STARS_DISTANCE = 1;
 	public final Bob bob;
+	public Enemy charlie;
 	public final List<Platform> platforms;
 	public final List<Star> stars;
 	public final List<Spring> springs;
 	public final List<Squirrel> squirrels;
 	public final List<Projectile> projectiles;
 	public final List<Coin> coins;
-	
+
 	public Castle castle;
 	public final WorldListener listener;
 	public final Random rand;
@@ -49,13 +52,14 @@ public class World {
 
 	public World (WorldListener listener) {
 		this.bob = new Bob(4, 2);
+		this.charlie = new Enemy(5,200);
 		this.platforms = new ArrayList<Platform>();
 		this.stars = new ArrayList<Star>();
 		this.projectiles = new ArrayList<Projectile>();
 		this.springs = new ArrayList<Spring>();
 		this.squirrels = new ArrayList<Squirrel>();
 		this.coins = new ArrayList<Coin>();
-		
+
 		this.listener = listener;
 		this.rand = new Random(5000L);
 		this.generateLevel();
@@ -63,7 +67,7 @@ public class World {
 		this.heightSoFar = 0;
 		this.score = 0;
 		this.state = WORLD_STATE_RUNNING;
-	
+
 		this.randsquirrel=new Random();
 
 	}
@@ -126,7 +130,7 @@ public class World {
 	}
 
 	public void LifeLess(){
-		
+
 		if(life>0){
 			if(life<=2)signal2screen=3;
 			life-=1;
@@ -136,10 +140,7 @@ public class World {
 
 	public void LifeMore(){
 		if(life<=4)life+=1;
-
-
 	}
-
 
 	public void ShotProjectile()
 	{
@@ -169,7 +170,7 @@ public class World {
 
 
 	public void update (float deltaTime, float accelX) {
-
+		updateEnemy(deltaTime,bob);
 		updateBob(deltaTime, accelX);
 		updatePlatforms(deltaTime);
 		updateSquirrels(deltaTime);
@@ -201,28 +202,6 @@ public class World {
 		}
 	}
 
-	private void updateunlockcharacter () 
-	{
-
-		if(Settings.highscores[0]<10000 && !(print1times>=1))
-		{
-			if(score>10000)
-			{
-				signal2screen=4;
-
-			}
-
-		}
-		else if(Settings.highscores[0]<30000 && !(print1times>=2))
-		{
-			if(score>30000)signal2screen=5;
-
-		}
-	}
-
-
-
-
 	private void updateBob (float deltaTime, float accelX) {
 		//if (bob.state != Bob.BOB_STATE_HIT && bob.position.y <= 0.5f) bob.hitPlatform();
 		if (bob.state != Bob.BOB_STATE_HIT) bob.velocity.x = -accelX / 4 * Bob.BOB_MOVE_VELOCITY;
@@ -230,13 +209,71 @@ public class World {
 		heightSoFar = Math.max(bob.position.y, heightSoFar);
 	}
 
+	private void updateEnemy (float deltaTime,DynamicGameObject oggetto) {
+		
+		if(charlie!=null)
+		{
+			charlie.update(deltaTime,oggetto);
+			Gdx.app.debug("state"+charlie.state,"");
+			if(bob.position.y>charlie.position.y-10)
+			{
+				charlie.active=1;
+				if(!(print1times>=1))signal2screen=14;
+				if(charlie.killtime==0)charlie.killtime=charlie.stateTime;//imposto il killTime x sapere quanto tempo cè voluto x ucc charlie
+				
+				
+			}
+			if(charlie.life==0 && charlie.pulverizetime==0)
+			{
+				charlie.state = Enemy.ENEMY_STATE_DIE;//cabio stato x polverizzarlo e segnalare a schermo il punteggio
+				charlie.pulverizetime=charlie.stateTime;//setto pulverizeTime da ora x la durata della polverizzazione
+			}
+			if(charlie.state==Enemy.ENEMY_STATE_DIE)
+			{
+				//Gdx.app.debug("killtime:"+charlie.killtime, "stateTime:"+charlie.stateTime);
+				if(charlie.stateTime-charlie.killtime<3f)
+				{
+					signal2screen=7;
+					score=score+1000;
+					charlie.killtime=-1;
+				}
+				else if(charlie.stateTime-charlie.killtime<5f)
+				{
+					signal2screen=6;
+					score=score+500;
+					charlie.killtime=-1;
+				}
+				else if(charlie.stateTime-charlie.killtime<7f)
+				{
+					signal2screen=5;
+					score=score+200;
+					charlie.killtime=-1;
+				}
+				else if(charlie.stateTime-charlie.killtime>9f)
+				{
+					signal2screen=4;
+					score=score+100;
+					charlie.killtime=-1;
+				}
+				charlie.state = Enemy.ENEMY_STATE_REM;//cambio stato di modo da segnalare una volta sola il risultato
+			}
+			if (charlie.state==Enemy.ENEMY_STATE_REM && charlie.stateTime - charlie.pulverizetime>Enemy.ENEMY_PULVERIZE_TIME) //FIXME
+				charlie=null;
+		}
+		else if(bob.position.y<500)this.charlie = new Enemy(5,500);
+		
+	}
+
 	private void addStarDynamic(){
 		//star generate
 		int type_star = rand.nextFloat()>0.3?Star.STAR_TYPE_STATIC:Star.STAR_TYPE_MOVING;//star light
 		float y_star = rand.nextFloat() *10;//star
 		float x_star = rand.nextFloat() *10;//star
-		Star star = new Star(type_star, x_star, y_star+bob.position.y+13);//star
-		stars.add(star);//star
+		Star star = new Star(type_star, x_star, y_star+bob.position.y+13);
+		Star star1 = new Star(type_star, x_star, y_star+bob.position.y+9);//aggiunto da poco
+		stars.add(star);
+		stars.add(star);//aggiunto da poco
+		stars.add(star1);//aggiunto da poco
 		////end star generate
 	}
 
@@ -268,32 +305,7 @@ public class World {
 		}
 	}
 
-	public void bubbleActivate(){
-		int len = squirrels.size();
-		for (int i = 0; i < len; i++) {
-			Squirrel squirrel = squirrels.get(i);
-			if(squirrel.bubbleuse==1){
-				if(squirrels.get(i).crashtime==0)squirrels.get(i).crashtime=squirrels.get(i).stateTime;
-				bob.enablebubble=1;
-				squirrel.bubbleuse=2;
-			}
-		}
-	}
 
-
-	public void nosActivate(){
-		int len = squirrels.size();
-		for (int i = 0; i < len; i++) {
-			Squirrel squirrel = squirrels.get(i);
-			if(squirrel.nosTap==true){
-				if(squirrels.get(i).nostime==0)squirrels.get(i).nostime=squirrels.get(i).stateTime;
-				Turbo();
-				turbo=turbo+1;
-				squirrel.nosTap=false;
-				nosinuse=1;
-			}
-		}
-	}
 
 
 	private void updateSquirrels (float deltaTime) {
@@ -345,7 +357,7 @@ public class World {
 	private void checkRemoveProjectile(){
 		int i = 0;
 		if (!projectiles.isEmpty()) {
-			if ( projectiles.get(i).position.y > bob.position.y+14 ) 
+			if ( projectiles.get(i).position.y > bob.position.y+11 ) 
 				projectiles.remove(i);
 		}
 	}
@@ -359,8 +371,12 @@ public class World {
 
 	private void checkRemoveStars() {
 		if (!stars.isEmpty()) { 
-			if (bob.position.y > stars.get(0).position.y+5  ) stars.remove(0);
-		}
+			int len = stars.size();
+			for (int i = 0; i < len; i++) {
+				Star star = stars.get(i);
+				if (bob.position.y > star.position.y+5  ) stars.remove(star);
+				len = stars.size();
+			}}
 	}
 
 	private void checkRemoveCoin() {
@@ -376,15 +392,145 @@ public class World {
 	}
 	private void checkCollisions () {
 		checkPlatformCollisions();
-		checkDoubleJump();
+		//checkDoubleJump();
 		checkSquirrelCollisions();
 		checkItemCollisions();
 		checkCastleCollisions();
 		checkVelocity();
 		checkProjectileCollisions();
 		checkProjectileWorldCollisions();
-
+		checkProjectilEnemyCollisions();
 	}
+
+
+
+	private void checkPlatformCollisions () {
+		//if (bob.velocity.y > 0) return;
+		int len = platforms.size();
+		for (int i = 0; i < len; i++) {
+			Platform platform = platforms.get(i);
+			if (bob.position.y > platform.position.y) {
+				if (platform.state != Platform.PLATFORM_STATE_PULVERIZING && OverlapTester.overlapRectangles(bob.bounds, platform.bounds)) {
+					bob.hitPlatform();
+
+					Gdx.input.vibrate(new long[] { 1, 20,10, 5}, -1); 
+					if(bob.enablebubble!=1)
+					{	
+						LifeLess();
+						score -= 300;
+					}
+					else score += 300;
+
+					platform.pulverize();
+					listener.hit();
+					len = platforms.size();
+					break;
+				}
+			}
+		}
+	}
+
+	private void checkDoubleJump() {
+		if(Bob.BOB_DOUBLE_JUMP){
+			Bob.BOB_DOUBLE_JUMP=false;
+			bob.hitPlatform();
+			listener.hit();
+		}
+	}
+
+
+	private void checkSquirrelCollisions () {
+		int len = squirrels.size();
+		float random=randsquirrel.nextFloat();
+		for (int i = 0; i < len; i++) {
+			Squirrel squirrel = squirrels.get(i);
+			if (!squirrel.inuse && OverlapTester.overlapRectangles(squirrel.bounds, bob.bounds)) {
+				Gdx.input.vibrate(new long[] { 1, 10, 6, 10}, -1);
+				if(random<=0.30f &&  life<5 )
+				{
+					Gdx.app.debug("vita", "...");
+					squirrel.state=Squirrel.LIFE_CLISION;
+					LifeMore();
+					squirrel.inuse=true;
+					signal2screen=2;
+					break;
+				}
+				else if(random>0.25f && random <= 0.5f && bob.enablenos!=1 )
+				{    
+					Gdx.app.debug("nos", "...");
+					/*GameScreen si occupa di controllare il click sul nos x attivarlo*/
+					squirrel.state=Squirrel.NOS_CLISION;
+					squirrel.inuse=true;
+					squirrel.nosTap=true;
+					bob.enablenos=1;
+					break;
+				}
+				else if(random>0.5f && random<=0.75f && !(bob.enablebubble>0)  )
+				{
+					Gdx.app.debug("bolla", "...");
+					squirrel.state=Squirrel.BUBBLE_CLISION;
+					bob.enablebubble=2;
+					squirrel.bubbleuse=1;
+					squirrel.inuse=true;
+					break;
+				}
+				else if(random>0.75f )
+				{ 
+					Gdx.app.debug("ammo", "...");
+					squirrel.state=Squirrel.PROJ_CLISION;
+					shot=shot+10;
+					squirrel.inuse=true;
+					signal2screen=1;
+					break;
+				}
+
+				listener.hit(); 
+				//squirrels.remove(squirrel);
+				len = squirrels.size();
+				break;
+			}
+		}
+	}
+
+
+	private void checkItemCollisions () {
+		int len = coins.size();
+		for (int i = 0; i < len; i++) {
+			Coin coin = coins.get(i);
+			if (coin.state != Coin.COIN_STATE_PULVERIZING && OverlapTester.overlapRectangles(bob.bounds, coin.bounds)) {
+				Gdx.input.vibrate(new long[] { 1, 90, 40, 90},-1); 
+				if(bob.enablebubble!=1)
+				{	
+					bob.velocity.y=2;
+					bob.setGravityBob(0, 3);
+					LifeLess();
+					nosinuse=0;
+					score -= 300;
+				}
+				else
+					score += 300;
+				len = coins.size();
+				coin.pulverize();
+				listener.coin();
+				coins.remove(coin);
+				break;
+			}
+		}
+		if (bob.velocity.y > 0) return;
+		len = springs.size();
+		for (int i = 0; i < len; i++) {
+			Spring spring = springs.get(i);
+			if (bob.position.y > spring.position.y) {
+				if (OverlapTester.overlapRectangles(bob.bounds, spring.bounds)) {
+					bob.hitSpring();
+					listener.highJump();
+					break;
+				}
+			}
+		}
+	}
+
+
 	private void checkProjectileCollisions(){
 		int i = 0, j = 0;
 		if (!projectiles.isEmpty() && !platforms.isEmpty()){
@@ -466,6 +612,40 @@ public class World {
 		}
 	}
 
+	private void checkProjectilEnemyCollisions(){
+		int i = 0;
+		if (!projectiles.isEmpty() && charlie!=null ){
+			for(i=0;i<projectiles.size();i++)
+			{
+				Projectile projectile=projectiles.get(i);
+				if (OverlapTester.overlapRectangles(charlie.bounds, projectile.bounds)) {
+					Gdx.input.vibrate(new long[] { 1, 20, 40, 20}, -1); 
+					score += 300;
+					projectiles.remove(i);
+					charlie.life-=1;
+					/*platforms.remove(j);*/
+					break;
+				}
+			}
+		}
+	}
+
+
+	private void updateunlockcharacter () 
+	{
+		if(Settings.highscores[0]<20000 && !(print1times>=2))
+		{
+			if(score>20000)
+			{
+				signal2screen=8;
+			}
+		}
+		else if(Settings.highscores[0]<40000 && !(print1times>=3))
+		{
+			if(score>40000)signal2screen=9;
+		}
+	}
+
 	private void checkVelocity () {
 		if (bob.velocity.y > bob.MAXVELOCITY && nosinuse==0){
 			bob.setGravityBob(0, 0);
@@ -473,132 +653,28 @@ public class World {
 		}
 	}
 
-	private void checkPlatformCollisions () {
-		//if (bob.velocity.y > 0) return;
-		int len = platforms.size();
-		for (int i = 0; i < len; i++) {
-			Platform platform = platforms.get(i);
-			if (bob.position.y > platform.position.y) {
-				if (platform.state != Platform.PLATFORM_STATE_PULVERIZING && OverlapTester.overlapRectangles(bob.bounds, platform.bounds)) {
-					bob.hitPlatform();
-					
-					Gdx.input.vibrate(new long[] { 1, 20,10, 5}, -1); 
-					if(bob.enablebubble!=1)
-					{	
-						LifeLess();
-						score -= 300;
-					}
-					else score += 300;
-					
-					platform.pulverize();
-					listener.hit();
-					len = platforms.size();
-					break;
-				}
-			}
-		}
-	}
-
-	private void checkDoubleJump() {
-		if(Bob.BOB_DOUBLE_JUMP){
-			Bob.BOB_DOUBLE_JUMP=false;
-			bob.hitPlatform();
-			listener.hit();
-		}
-	}
-
-
-	private void checkSquirrelCollisions () {
+	public void bubbleActivate(){
 		int len = squirrels.size();
-		float random=randsquirrel.nextFloat();
 		for (int i = 0; i < len; i++) {
 			Squirrel squirrel = squirrels.get(i);
-			if (!squirrel.inuse && OverlapTester.overlapRectangles(squirrel.bounds, bob.bounds)) {
-				Gdx.input.vibrate(new long[] { 1, 10, 6, 10}, -1);
-				if(random<=0.30f &&  life<5 )
-				{
-					Gdx.app.debug("vita", "...");
-					squirrel.state=Squirrel.LIFE_CLISION;
-					LifeMore();
-					squirrel.inuse=true;
-					signal2screen=2;
-					break;
-				}
-				else if(random>0.25f && random <= 0.5f && bob.enablenos!=1 )
-				{    
-					Gdx.app.debug("nos", "...");
-					/*GameScreen si occupa di controllare il click sul nos x attivarlo*/
-					squirrel.state=Squirrel.NOS_CLISION;
-					squirrel.inuse=true;
-					squirrel.nosTap=true;
-					bob.enablenos=1;
-					break;
-				}
-				else if(random>0.5f && random<=0.75f && !(bob.enablebubble>0)  )
-				{
-					Gdx.app.debug("bolla", "...");
-					squirrel.state=Squirrel.BUBBLE_CLISION;
-					bob.enablebubble=2;
-					squirrel.bubbleuse=1;
-					squirrel.inuse=true;
-					break;
-				}
-				else if(random>0.75f )
-				{ 
-					Gdx.app.debug("ammo", "...");
-					squirrel.state=Squirrel.PROJ_CLISION;
-					shot=shot+5;
-					squirrel.inuse=true;
-					signal2screen=1;
-					break;
-				}
-
-				listener.hit(); 
-				//squirrels.remove(squirrel);
-				len = squirrels.size();
-				break;
+			if(squirrel.bubbleuse==1){
+				if(squirrels.get(i).crashtime==0)squirrels.get(i).crashtime=squirrels.get(i).stateTime;
+				bob.enablebubble=1;
+				squirrel.bubbleuse=2;
 			}
 		}
 	}
 
-
-	private void checkItemCollisions () {
-		int len = coins.size();
+	public void nosActivate(){
+		int len = squirrels.size();
 		for (int i = 0; i < len; i++) {
-			int p=0;
-
-			Coin coin = coins.get(i);
-			if (coin.state != Coin.COIN_STATE_PULVERIZING && OverlapTester.overlapRectangles(bob.bounds, coin.bounds)) {
-				Gdx.input.vibrate(new long[] { 1, 90, 40, 90},-1); 
-				if(bob.enablebubble!=1)
-				{	
-					bob.velocity.y=2;
-					bob.setGravityBob(0, 3);
-					LifeLess();
-					nosinuse=0;
-					score -= 300;
-				}
-				else
-				score += 300;
-				len = coins.size();
-				coin.pulverize();
-				listener.coin();
-				
-
-				coins.remove(coin);
-				break;
-			}
-		}
-		if (bob.velocity.y > 0) return;
-		len = springs.size();
-		for (int i = 0; i < len; i++) {
-			Spring spring = springs.get(i);
-			if (bob.position.y > spring.position.y) {
-				if (OverlapTester.overlapRectangles(bob.bounds, spring.bounds)) {
-					bob.hitSpring();
-					listener.highJump();
-					break;
-				}
+			Squirrel squirrel = squirrels.get(i);
+			if(squirrel.nosTap==true){
+				if(squirrels.get(i).nostime==0)squirrels.get(i).nostime=squirrels.get(i).stateTime;
+				Turbo();
+				turbo=turbo+1;
+				squirrel.nosTap=false;
+				nosinuse=1;
 			}
 		}
 	}
@@ -614,7 +690,7 @@ public class World {
 		if (heightSoFar - 7.5f > bob.position.y) {
 			state = WORLD_STATE_GAME_OVER;
 		}
-		
+
 		if (life<=0){ state = WORLD_STATE_GAME_OVER;}
 	}
 

@@ -58,6 +58,7 @@ public class WorldRenderer {
 		renderItems();
 		renderSquirrels();
 		renderCastle();
+		renderEnemy();
 		renderProjectiles();
 		batch.end();
 	}
@@ -200,6 +201,24 @@ public class WorldRenderer {
 				batch.draw(keyFrame, star.position.x , star.position.y , 0.13f, 0.1f);}
 		}
 	}
+
+	private void renderEnemy()
+	{
+		TextureRegion  keyFrame;
+		if(world.charlie!=null){
+			if (world.charlie.state == Enemy.ENEMY_STATE_DIE ||world.charlie.state == Enemy.ENEMY_STATE_REM) {
+				keyFrame = Assets.brakingPlatform.getKeyFrame(world.charlie.stateTime, Animation.ANIMATION_LOOPING);
+				batch.draw(keyFrame, world.charlie.position.x - 1, world.charlie.position.y - 0.25f, 4, 4);
+			}
+			else if (world.charlie.state != Enemy.ENEMY_STATE_DIE||world.charlie.state != Enemy.ENEMY_STATE_REM)
+			{
+				keyFrame = Assets.enemyRegion;
+				batch.draw(keyFrame, world.charlie.position.x-1.5f , world.charlie.position.y-0.8f , 2f, 2f);}
+		}
+		else keyFrame=Assets.enemyRegion1;
+	}
+
+
 	public static void drawGradient(SpriteBatch batch, TextureRegion tex, float x, float y,
 		float width, float height, Color a, Color b, boolean horiz) {
 		float ca = a.toFloatBits();

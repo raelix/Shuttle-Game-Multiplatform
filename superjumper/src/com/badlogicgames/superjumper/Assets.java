@@ -15,6 +15,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public class Assets {
 	public static ParticleEffect particleEffect;
 	public static ParticleEffect particleClouds;
+	public static Texture enemy;
+	public static Texture enemy1;
 	public static Texture star;
 	public static Texture star1;
 	public static Texture star2;
@@ -77,6 +79,8 @@ public class Assets {
 	public static Texture welcomepaused;
 	public static Texture resume,quit,ospita,partecipa;
 	public static Texture swipetext,swipe,swipe1,swipe2;
+	public static TextureRegion enemyRegion;
+	public static TextureRegion enemyRegion1;
 	public static TextureRegion starRegion;
 	public static TextureRegion bubbles;
 	public static TextureRegion nos;
@@ -153,6 +157,8 @@ public class Assets {
 		particleClouds.allowCompletion();
 		particleEffect.allowCompletion();
 		//fine particelle effetto fuoco
+		enemy = loadTexture("data/enemy.png");
+		enemy1 = loadTexture("data/enemy1.png");
 		star = loadTexture("data/particle.png");
 		bubble = loadTexture("data/bubble.png");
 		bubblestart = loadTexture("data/bubblestart.png");
@@ -230,6 +236,8 @@ public class Assets {
 		starRegion= new TextureRegion(star, 0, 0, 128, 128);
 		bubbles= new TextureRegion(bubble, 0, 0, 256, 256);
 		nos= new TextureRegion(portanos, 0, 0, 256, 256);
+		enemyRegion = new TextureRegion(enemy, 0, 0, 512, 512);
+		enemyRegion1 = new TextureRegion(enemy1, 0, 0, 512, 512);
 		bubblesstart= new TextureRegion(bubblestart, 0, 0, 256, 256);
 		backgroundRegion = new TextureRegion(shuttle, 0, 0, 512, 512);
 		backgroundRegion10=new TextureRegion(shuttlef,0,0,512,512);

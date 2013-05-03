@@ -176,9 +176,9 @@ public class CharScreen implements Screen {
 		if (Gdx.input.justTouched()) {
 			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
 
-			if (OverlapTester.pointInRectangle(nextBounds, touchPoint.x, touchPoint.y) && state==0 && punteggio>10000 
+			if (OverlapTester.pointInRectangle(nextBounds, touchPoint.x, touchPoint.y) && state==0 && punteggio>20000 
 				|| (OverlapTester.pointInRectangle(nextBounds, touchPoint.x, touchPoint.y) && state==1)||
-				(OverlapTester.pointInRectangle(nextBounds, touchPoint.x, touchPoint.y) && state==2 && punteggio>30000 )) {
+				(OverlapTester.pointInRectangle(nextBounds, touchPoint.x, touchPoint.y) && state==2 && punteggio>40000 )) {
 				Assets.playSound(Assets.clickSound);
 				game.setScreen(new GameScreen(game));
 				return;
@@ -271,17 +271,17 @@ public class CharScreen implements Screen {
 		batcher.draw(Assets.backgroundRegion,bob.position.x ,bob.position.y ,130,130);
 		batcher.draw(Assets.backgroundRegion10,bobfem.position.x ,bobfem.position.y ,130,130);
 		batcher.draw(Assets.backgroundRegion11,bobmil.position.x-20 ,bobmil.position.y ,170,170);
-		if(punteggio<10000 && state==0)
+		if(punteggio<20000 && state==0)
 		{
 			batcher.draw(Assets.lock,bobfem.position.x-10 ,bobfem.position.y+30 ,100,100);
 			batcher.draw(Assets.locked,bobfem.position.x-45,bobfem.position.y-70 ,170,150);
-			Assets.fontsmall.draw(batcher, "need 10000 scores", guiCam.position.x-90,guiCam.position.y-150);
+			Assets.fontsmall.draw(batcher, "need 20000 scores", guiCam.position.x-90,guiCam.position.y-150);
 		}
-		if(punteggio<30000 && state==2)
+		if(punteggio<40000 && state==2)
 		{
 			batcher.draw(Assets.lock,bobmil.position.x+26 ,bobmil.position.y+30 ,85,100);
 			batcher.draw(Assets.locked,bobmil.position.x-18,bobmil.position.y-70 ,170,150);
-			Assets.fontsmall.draw(batcher, "need 30000 scores", guiCam.position.x-90,guiCam.position.y-150);
+			Assets.fontsmall.draw(batcher, "need 40000 scores", guiCam.position.x-90,guiCam.position.y-150);
 		}
 
 		//batcher.draw(Assets.backgroundRegion,bob.position.x ,bob.position.y ,25, 35, 120, 150, 1, 1, 180);
