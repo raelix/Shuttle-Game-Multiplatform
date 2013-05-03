@@ -60,6 +60,7 @@ public class WorldRenderer {
 		renderCastle();
 		renderEnemy();
 		renderProjectiles();
+		renderProjectilesenemy();
 		batch.end();
 	}
 
@@ -151,6 +152,16 @@ public class WorldRenderer {
 			Projectile projectile = world.projectiles.get(i);
 			TextureRegion keyFrame = Assets.projAnim.getKeyFrame(projectile.stateTime, Animation.ANIMATION_LOOPING);	
 			batch.draw(keyFrame, projectile.position.x -0.07f , projectile.position.y+0.4f, 0.3f,0.6f);
+		}
+	}
+	
+	private void renderProjectilesenemy(){
+		int len = world.projectenemy.size();
+		for (int i = 0; i < len; i++) {
+			Projectile projectenemy = world.projectenemy.get(i);
+			TextureRegion keyFrame = Assets.projAnim.getKeyFrame(projectenemy.stateTime, Animation.ANIMATION_LOOPING);	
+			batch.draw(keyFrame,projectenemy.position.x -0.07f ,projectenemy.position.y+0.4f,0, 0, 0.3f, 0.6f, 1, 1, 180);
+			//batch.draw(keyFrame, projectenemy.position.x -0.07f , projectenemy.position.y+0.4f, 0.3f,0.6f);
 		}
 	}
 

@@ -49,7 +49,6 @@ public class WorldRendererMulti {
 		renderBob();
 		renderPlatforms();
 		renderItems();
-		renderLifes();
 		renderSquirrels();
 		renderCastle();
 		renderProjectiles();
@@ -107,16 +106,7 @@ public class WorldRendererMulti {
 		}
 	}
 
-	private void renderLifes(){
-		int len = world.lifes.size();
-		for (int i = 0; i < len; i++) {
-			Life life = world.lifes.get(i);
-			TextureRegion keyFrame = Assets.lifeAnim.getKeyFrame(life.stateTime, Animation.ANIMATION_LOOPING);	
-			batch.draw(keyFrame, cam.position.x - FRUSTUM_WIDTH/2, cam.position.y + i+3, 0.5f, 0.5f);
-
-
-		}
-	}
+	
 
 	private void renderProjectiles(){
 		int len = world.projectiles.size();

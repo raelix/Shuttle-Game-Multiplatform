@@ -3,7 +3,6 @@ package com.badlogicgames.superjumper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.actions.RemoveActorAction;
@@ -32,8 +31,8 @@ public class World {
 	public final List<Spring> springs;
 	public final List<Squirrel> squirrels;
 	public final List<Projectile> projectiles;
+	public final List<Projectile> projectenemy;
 	public final List<Coin> coins;
-
 	public Castle castle;
 	public final WorldListener listener;
 	public final Random rand;
@@ -49,7 +48,7 @@ public class World {
 	public int print1times=0;
 	public float bubbletimes;
 	private Vector2 gravity = new Vector2(0,15);
-
+	float enemyshotTime=0;
 	public World (WorldListener listener) {
 		this.bob = new Bob(4, 2);
 		this.charlie = new Enemy(5,200);
@@ -59,7 +58,7 @@ public class World {
 		this.springs = new ArrayList<Spring>();
 		this.squirrels = new ArrayList<Squirrel>();
 		this.coins = new ArrayList<Coin>();
-
+		this.projectenemy=new ArrayList<Projectile>();
 		this.listener = listener;
 		this.rand = new Random(5000L);
 		this.generateLevel();
@@ -67,7 +66,6 @@ public class World {
 		this.heightSoFar = 0;
 		this.score = 0;
 		this.state = WORLD_STATE_RUNNING;
-
 		this.randsquirrel=new Random();
 
 	}
@@ -104,21 +102,14 @@ public class World {
 				/*Coin coin = new Coin(platform.position.x + (platform.position.x < WORLD_WIDTH /2 ? 5*rand.nextFloat() : -k*rand.nextFloat()), 
 					platform.position.y + (rand.nextFloat() > 0.5f ? k*rand.nextFloat() : -k*rand.nextFloat()));
 				coins.add(coin);*/
-
 			}
 			y += (maxJumpHeight - 0.5f);
 			//y -= rand.nextFloat() * (maxJumpHeight / 3);
-
-
 			if (y > WORLD_HEIGHT / 2) {
 				Coin coin = new Coin(platform.position.x + (platform.position.x < WORLD_WIDTH /2 ? 5*rand.nextFloat() : -k*rand.nextFloat()), 
 					platform.position.y + (rand.nextFloat() > 0.5f ? k*rand.nextFloat() : -k*rand.nextFloat()));
 				coins.add(coin);
 			}
-
-
-
-
 		}
 		castle = new Castle(WORLD_WIDTH / 2, y);
 	}
@@ -129,6 +120,43 @@ public class World {
 		bob.setGravityBob(x, y);
 	}
 
+
+	public void update (float deltaTime, float accelX) {
+		checkRemoveStars();
+		updateEnemy(deltaTime,bob);
+		updateBob(deltaTime, accelX);
+		updatePlatforms(deltaTime);
+		updateSquirrels(deltaTime);
+		updateCoins(deltaTime);
+		//updateGravityPlanet(deltaTime);
+		addStarDynamic();
+		updateStar( deltaTime);
+		updateProjectiles(deltaTime);
+		updateProjectilenemys(deltaTime);
+		updateunlockcharacter ();
+		//if (rand.nextFloat() > 0.5f) 
+		score += (int)bob.velocity.y/8;
+		//if (bob.state != Bob.BOB_STATE_HIT) //caso in cui bob cade verso il basso quando muore senza sbattere con gli ogg restati
+		checkCollisions();
+		checkRemovePlatform();
+		checkRemoveProjectile();
+		checkRemoveCoin();
+		checkGameOver();
+		checkRemoveEnemyProjectile();
+		CheckRemoveEnemey();
+		/* checkRemoveSquirrel();
+		checkRemoveBubble();*/
+
+	}
+
+	private void updateGravityPlanet(float deltaTime){
+		for ( Platform plat : this.platforms) {
+			if (plat.type != Platform.PLATFORM_TYPE_MOVING){
+				Utils.changeGravityTowards(bob, plat);
+			}
+		}
+	}
+	
 	public void LifeLess(){
 
 		if(life>0){
@@ -147,7 +175,7 @@ public class World {
 		if(shot>0){
 			Gdx.input.vibrate(new long[] { 1, 20, 10, 20}, -1); 
 			Projectile projectile = new Projectile(bob.position.x,bob.position.y);
-			projectile.setVelocity(0,15);
+			projectile.setVelocity(0,25);
 			projectiles.add(projectile);
 			shot=shot-1;}
 
@@ -160,109 +188,94 @@ public class World {
 		if(turbo>=1){
 			bob.velocity.y=18;
 			turbo-=1;
-
 		}
 	}
+	
 	public void TurboLess()
 	{
 		bob.velocity.y=12;
 	}
 
 
-	public void update (float deltaTime, float accelX) {
-		updateEnemy(deltaTime,bob);
-		updateBob(deltaTime, accelX);
-		updatePlatforms(deltaTime);
-		updateSquirrels(deltaTime);
-		updateCoins(deltaTime);
-		//updateGravityPlanet(deltaTime);
-		addStarDynamic();
-		updateStar( deltaTime);
-		updateProjectiles(deltaTime);
-		updateunlockcharacter ();
-		if (rand.nextFloat() > 0.5f) 
-			score += (int)bob.velocity.y;
-		if (bob.state != Bob.BOB_STATE_HIT) 
-			checkCollisions();
-		checkRemovePlatform();
-		checkRemoveProjectile();
-		checkRemoveCoin();
-		checkGameOver();
-		checkRemoveStars();
-		/* checkRemoveSquirrel();
-		checkRemoveBubble();*/
-
-	}
-
-	private void updateGravityPlanet(float deltaTime){
-		for ( Platform plat : this.platforms) {
-			if (plat.type != Platform.PLATFORM_TYPE_MOVING){
-				Utils.changeGravityTowards(bob, plat);
-			}
-		}
-	}
-
 	private void updateBob (float deltaTime, float accelX) {
 		//if (bob.state != Bob.BOB_STATE_HIT && bob.position.y <= 0.5f) bob.hitPlatform();
-		if (bob.state != Bob.BOB_STATE_HIT) bob.velocity.x = -accelX / 4 * Bob.BOB_MOVE_VELOCITY;
+		if (bob.state != Bob.BOB_STATE_HIT) bob.velocity.x = -accelX / 2.5f * Bob.BOB_MOVE_VELOCITY;
 		bob.update(deltaTime);
 		heightSoFar = Math.max(bob.position.y, heightSoFar);
 	}
 
 	private void updateEnemy (float deltaTime,DynamicGameObject oggetto) {
-		
 		if(charlie!=null)
 		{
 			charlie.update(deltaTime,oggetto);
-			Gdx.app.debug("state"+charlie.state,"");
+			EnemyShotBob();
 			if(bob.position.y>charlie.position.y-10)
 			{
 				charlie.active=1;
 				if(!(print1times>=1))signal2screen=14;
 				if(charlie.killtime==0)charlie.killtime=charlie.stateTime;//imposto il killTime x sapere quanto tempo cè voluto x ucc charlie
-				
-				
 			}
 			if(charlie.life==0 && charlie.pulverizetime==0)
 			{
 				charlie.state = Enemy.ENEMY_STATE_DIE;//cabio stato x polverizzarlo e segnalare a schermo il punteggio
 				charlie.pulverizetime=charlie.stateTime;//setto pulverizeTime da ora x la durata della polverizzazione
 			}
-			if(charlie.state==Enemy.ENEMY_STATE_DIE)
-			{
-				//Gdx.app.debug("killtime:"+charlie.killtime, "stateTime:"+charlie.stateTime);
-				if(charlie.stateTime-charlie.killtime<3f)
-				{
-					signal2screen=7;
-					score=score+1000;
-					charlie.killtime=-1;
-				}
-				else if(charlie.stateTime-charlie.killtime<5f)
-				{
-					signal2screen=6;
-					score=score+500;
-					charlie.killtime=-1;
-				}
-				else if(charlie.stateTime-charlie.killtime<7f)
-				{
-					signal2screen=5;
-					score=score+200;
-					charlie.killtime=-1;
-				}
-				else if(charlie.stateTime-charlie.killtime>9f)
-				{
-					signal2screen=4;
-					score=score+100;
-					charlie.killtime=-1;
-				}
-				charlie.state = Enemy.ENEMY_STATE_REM;//cambio stato di modo da segnalare una volta sola il risultato
-			}
-			if (charlie.state==Enemy.ENEMY_STATE_REM && charlie.stateTime - charlie.pulverizetime>Enemy.ENEMY_PULVERIZE_TIME) //FIXME
-				charlie=null;
+			ScoreEnemyDied();
 		}
-		else if(bob.position.y<500)this.charlie = new Enemy(5,500);
-		
+		else if(bob.position.y<500 && charlie==null)this.charlie = new Enemy(5,500);
+		else if(bob.position.y<800 && charlie==null)this.charlie = new Enemy(5,800);
 	}
+
+	private void EnemyShotBob()
+	{
+		float difficoltxfascio=0.5f;//incrementa x sparare su piu' punti x
+		float delaysparo=0.8f;//decrementa x avere uno sparo piu' veloce
+		if(rand.nextFloat()>0.3f && rand.nextFloat()>0.5f && 
+			charlie.position.x-bob.position.x <difficoltxfascio && charlie.position.y-bob.position.y <9f &&
+			enemyshotTime<charlie.stateTime-delaysparo)
+		{
+			if(enemyshotTime<charlie.stateTime)enemyshotTime=charlie.stateTime;
+			Projectile projectilenemy = new Projectile( charlie.position.x, charlie.position.y);
+			projectilenemy.state=1;
+			projectilenemy.setVelocity(0,-20);
+			projectenemy.add(projectilenemy);
+			Gdx.app.debug("x"+projectilenemy.position.x,"y"+projectilenemy.position.y);
+		}
+	}
+
+	private void ScoreEnemyDied()
+	{
+		if(charlie.state==Enemy.ENEMY_STATE_DIE)
+		{
+			//Gdx.app.debug("killtime:"+charlie.killtime, "stateTime:"+charlie.stateTime);
+			if(charlie.stateTime-charlie.killtime<3f)
+			{
+				signal2screen=7;
+				score=score+1000;
+				charlie.killtime=-1;
+			}
+			else if(charlie.stateTime-charlie.killtime<5f)
+			{
+				signal2screen=6;
+				score=score+500;
+				charlie.killtime=-1;
+			}
+			else if(charlie.stateTime-charlie.killtime<7f)
+			{
+				signal2screen=5;
+				score=score+200;
+				charlie.killtime=-1;
+			}
+			else 
+			{
+				signal2screen=4;
+				score=score+100;
+				charlie.killtime=-1;
+			}
+			charlie.state = Enemy.ENEMY_STATE_REM;//cambio stato di modo da segnalare una volta sola il risultato
+		}
+	}
+
 
 	private void addStarDynamic(){
 		//star generate
@@ -328,6 +341,7 @@ public class World {
 			{
 				squirrels.remove(squirrel);
 			}
+			else if(squirrel.state==Squirrel.NOS_CLISION && nosinuse==1)Gdx.input.vibrate(new long[] { 1, 10, 6, 10}, -1);
 			len = squirrels.size();
 		}
 	}
@@ -353,12 +367,43 @@ public class World {
 		}
 	}
 
+	private void updateProjectilenemys(float deltaTime) {
+		int len = projectenemy.size();
+		for (int i = 0; i < len; i++) {
+			Projectile projectenemys = projectenemy.get(i);
+			projectenemys.update(deltaTime);
+		}
+	}
+
+	private void CheckRemoveEnemey()
+	{	
+		if(charlie!=null)
+		if (charlie.state==Enemy.ENEMY_STATE_REM && charlie.stateTime - charlie.pulverizetime>Enemy.ENEMY_PULVERIZE_TIME) //FIXME
+			charlie=null;
+	}
+
 
 	private void checkRemoveProjectile(){
-		int i = 0;
 		if (!projectiles.isEmpty()) {
-			if ( projectiles.get(i).position.y > bob.position.y+11 ) 
-				projectiles.remove(i);
+			int len = projectiles.size();
+			for (int i = 0; i < len; i++) {
+				Projectile projectile = projectiles.get(i);
+				if ( projectile.position.y > bob.position.y+11 ) 
+					projectiles.remove(projectile);
+				len = projectiles.size();
+			}
+		}
+	}
+
+	private void checkRemoveEnemyProjectile(){
+		if (!projectenemy.isEmpty()) {
+			int len = projectenemy.size();
+			for (int i = 0; i < len; i++) {
+				Projectile projectilenem = projectenemy.get(i);
+				if ( projectilenem.position.y < bob.position.y-5 ) 
+					projectenemy.remove(projectilenem);
+				len = projectenemy.size();
+			}
 		}
 	}
 
@@ -400,6 +445,7 @@ public class World {
 		checkProjectileCollisions();
 		checkProjectileWorldCollisions();
 		checkProjectilEnemyCollisions();
+		checkProjectilBobCollisions();
 	}
 
 
@@ -630,6 +676,25 @@ public class World {
 		}
 	}
 
+	private void checkProjectilBobCollisions(){
+		if (!projectenemy.isEmpty()){
+			int len = projectenemy.size();
+			for(int i=0;i<len;i++)
+			{
+				Projectile projectilenem=projectenemy.get(i);
+				if ((bob.enablebubble!=1)&&OverlapTester.overlapRectangles(bob.bounds, projectilenem.bounds)) {
+					Gdx.input.vibrate(new long[] { 1, 20, 40, 20}, -1); 
+					score -= 300;
+					LifeLess();
+					projectiles.remove(projectilenem);
+					len = projectenemy.size();
+					/*platforms.remove(j);*/
+					break;
+				}
+			}
+		}
+	}
+
 
 	private void updateunlockcharacter () 
 	{
@@ -659,6 +724,7 @@ public class World {
 			Squirrel squirrel = squirrels.get(i);
 			if(squirrel.bubbleuse==1){
 				if(squirrels.get(i).crashtime==0)squirrels.get(i).crashtime=squirrels.get(i).stateTime;
+				Gdx.input.vibrate(new long[] { 1, 10, 6, 10}, -1);
 				bob.enablebubble=1;
 				squirrel.bubbleuse=2;
 			}
