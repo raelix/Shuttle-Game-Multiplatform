@@ -7,7 +7,6 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.Input.Peripheral;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.GLCommon;
@@ -26,7 +25,6 @@ public class GameScreen implements Screen {
 	static final int GAME_LEVEL_END = 3;
 	static final int GAME_OVER = 4;
 	public final List<Button> buttons;
-	FingerControl control=new FingerControl();
 	Game game;
 	int state;
 	OrthographicCamera guiCam;
@@ -127,7 +125,6 @@ public class GameScreen implements Screen {
 	}
 
 	private void updateRunning (float deltaTime) {
-		
 		if (Gdx.input.justTouched()) 
 		{
 
@@ -161,14 +158,12 @@ public class GameScreen implements Screen {
 				return;
 			}
 		}
-		
-		//if (Gdx.input.isTouched())	Gdx.app.debug("ISTOUCHED", "position.y: " + Gdx.input.getY() + " position.x: " + Gdx.input.getX());
+
 
 
 		ApplicationType appType = Gdx.app.getType();
 		// should work also with Gdx.input.isPeripheralAvailable(Peripheral.Accelerometer)
-		if (Gdx.input.isPeripheralAvailable(Peripheral.Accelerometer)) {
-		//if (appType == ApplicationType.Android || appType == ApplicationType.iOS) {
+		if (appType == ApplicationType.Android || appType == ApplicationType.iOS) {
 			world.update(deltaTime, Gdx.input.getAccelerometerX());
 		} else {
 			float accel = 0;
