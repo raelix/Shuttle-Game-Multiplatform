@@ -293,6 +293,7 @@ public class GameScreen implements Screen {
 				levelnos.decremento(deltaTime);
 				world.turbo=true;
 				world.Turbo();
+				Gdx.input.vibrate(new long[] { 1, 20, 10, 20}, -1); 
 				if(levelnos.isEmpty)
 					{
 					world.TurboLess();
