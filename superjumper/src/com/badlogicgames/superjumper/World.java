@@ -44,7 +44,7 @@ public class World {
 	public int state;
 	public int shot=10;
 	public int nosinuse=0;
-	public int turbo=1;
+	public boolean turbo=true;
 	public int life=50;
 	public float freeze=100;
 	public int missiles = 10;
@@ -202,9 +202,9 @@ public class World {
 	}
 
 	public void Turbo(){
-		if(turbo>=1){
+		if(turbo){
 			bob.velocity.y=18;
-			turbo-=1;
+			turbo=false;
 		}
 	}
 
@@ -752,7 +752,7 @@ public class World {
 			if(squirrel.nosTap==true){
 				if(squirrels.get(i).nostime==0)squirrels.get(i).nostime=squirrels.get(i).stateTime;
 				Turbo();
-				turbo=turbo+1;
+				turbo=true;
 				squirrel.nosTap=false;
 				nosinuse=1;
 			}

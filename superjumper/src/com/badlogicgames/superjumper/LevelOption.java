@@ -23,7 +23,7 @@ public class LevelOption {
 	public void incremento(float deltaTime){
 		isEmpty=false;
 		if(this.constant>15)return;
-		else this.constant+=deltaTime/2;
+		else this.constant+=deltaTime;
 	}
 
 

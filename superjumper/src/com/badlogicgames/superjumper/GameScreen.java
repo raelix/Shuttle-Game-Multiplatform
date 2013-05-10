@@ -48,7 +48,9 @@ public class GameScreen implements Screen {
 	Rectangle nosBounds;
 	Rectangle bubbleBounds;
 	Boolean decremento=false;
+	Boolean decrementonos=false;
 	LevelOption level=new LevelOption();
+	LevelOption levelnos=new LevelOption();
 	int lastScore;
 	float statexplosion=0;
 	String scoreString;
@@ -205,10 +207,12 @@ public class GameScreen implements Screen {
 					if(velocityY > 20) {
 						Gdx.app.debug("fling", "trascino giù");
 						world.signal2screen=14;
+						if(world.freezeON)decrementonos=false;
 						world.freezeON = true;
 						decremento=true;
 					} else if (velocityY < 20) {
 						Gdx.app.debug("fling", "trascino su");
+						if(!world.freezeON)decrementonos=true;
 						world.freezeON = false;
 						decremento=false;
 					}
@@ -274,6 +278,22 @@ public class GameScreen implements Screen {
 				}
 		}
 		if(!decremento){level.incremento(deltaTime);}
+		
+		//if(world.bob.enablenos==1)
+		{
+			if(decrementonos)
+			{
+				levelnos.decremento(deltaTime);
+				world.turbo=true;
+				world.Turbo();
+				if(levelnos.isEmpty)
+					{
+					world.TurboLess();
+					decrementonos=false;
+					}
+			}
+			if(!decrementonos){levelnos.incremento(deltaTime);}
+		}
 		ApplicationType appType = Gdx.app.getType();
 		// should work also with Gdx.input.isPeripheralAvailable(Peripheral.Accelerometer)
 		if (Gdx.input.isPeripheralAvailable(Peripheral.Accelerometer)) {
@@ -386,11 +406,13 @@ public class GameScreen implements Screen {
 		batcher.draw(Assets.pause, 320 - 49, 480 - 53, 44, 44);
 		{
 			//batcher.draw(Assets.tmprectwhite, 15, 50, 10, 90/level.constant);
-			batcher.draw(Assets.tmprectwhite, 15, 45, 10, 90);
+			batcher.draw(Assets.tmprectwhite, 15, 45, 10, 85);
+			batcher.draw(Assets.tmprectwhite, 27, 45, 8, 85);
 			batcher.draw(Assets.tmprectblack, 15, 45, 10, 5*level.constant);
+			batcher.draw(Assets.tmprectblack, 27, 45, 8, 5*levelnos.constant);
 			}
 		batcher.draw(Assets.level, -35, 480 - 479, 130, 154);
-		
+	
 		//Assets.fontsmall.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		//Assets.fontsmall.scale(3f);explosion text 
 		batcher.draw(Assets.tubo, 0, 225, 250, 280);
