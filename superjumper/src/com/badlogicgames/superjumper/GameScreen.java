@@ -206,10 +206,17 @@ public class GameScreen implements Screen {
 				} else {
 					if(velocityY > 20) {
 						Gdx.app.debug("fling", "trascino giù");
-						world.signal2screen=14;
-						if(world.freezeON)decrementonos=false;
-						world.freezeON = true;
-						decremento=true;
+						
+						
+						if(!decrementonos){
+							world.signal2screen=14;
+							world.freezeON = true;
+						decremento=true;}
+						if(decrementonos)
+						{
+							decrementonos=false;
+							world.TurboLess();
+						}
 					} else if (velocityY < 20) {
 						Gdx.app.debug("fling", "trascino su");
 						if(!world.freezeON)decrementonos=true;
@@ -584,6 +591,8 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void resume () {
+		Assets.RectBlack();
+		Assets.RectWhite();
 	}
 
 	@Override

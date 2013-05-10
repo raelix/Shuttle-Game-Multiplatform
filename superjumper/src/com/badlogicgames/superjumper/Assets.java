@@ -355,14 +355,14 @@ public class Assets {
 		rect = new TextureRegion(tmptext1, 0, 0, 10, 15);
 	}
 	
-	private static void RectWhite()
+	public static void RectWhite()
 	{
 		pixmap2=new Pixmap(512, 512, Pixmap.Format.RGBA8888);
 		pixmap2.setColor(Color.WHITE);
 		pixmap2.fillRectangle(0, 0, 512, 512);
 		tmprectwhite = new Texture(pixmap2);
 	}
-	private static void RectBlack()
+	public static void RectBlack()
 	{
 		pixmap3=new Pixmap(512, 512, Pixmap.Format.RGBA8888);
 		pixmap3.setColor(Color.BLACK);
