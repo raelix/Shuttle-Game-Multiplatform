@@ -16,6 +16,7 @@ public class SuperMissile extends Missile {
 		this.list = projectiles;
 		this.enemylist = enemylist;
 		this.type = TYPE;
+		this.pulverizetime=0;
 	}
 
 	@Override

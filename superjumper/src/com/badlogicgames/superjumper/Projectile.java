@@ -10,8 +10,10 @@ public class Projectile extends DynamicGameObject {
 	public Vector2 gravity = new Vector2();
 	public int state=0;
 	float stateTime;
+	public float pulverizetime;
 	public static final int TYPE = 0;
-
+	public static final float MISSILE_PULVERIZE_TIME = 0.2f * 3;
+	public static final int MISSILE_STATE_PULVERIZING = 1;
 
 	public Projectile (float x, float y) {
 		super(x, y, BOB_WIDTH, BOB_HEIGHT);

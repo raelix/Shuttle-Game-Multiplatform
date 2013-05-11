@@ -254,7 +254,7 @@ public class World {
 			projectilenemy.state=1;
 			projectilenemy.setVelocity(0,-20);
 			projectenemy.add(projectilenemy);
-			Gdx.app.debug("ENEMYSHOTBOB","x"+projectilenemy.position.x + "y"+projectilenemy.position.y);
+		//	Gdx.app.debug("ENEMYSHOTBOB","x"+projectilenemy.position.x + "y"+projectilenemy.position.y);
 		}
 	}
 
@@ -407,8 +407,13 @@ public class World {
 		if (!projectiles.isEmpty()) {
 			for (int i = 0; i < projectiles.size(); i++) {
 				Projectile projectile = projectiles.get(i);
-				if ( projectile.position.y > bob.position.y+11 ) 
+				 if (projectile.state == Projectile.MISSILE_STATE_PULVERIZING && (projectile.stateTime - projectile.pulverizetime) > Projectile.MISSILE_PULVERIZE_TIME){
+					 Gdx.app.debug("è passato tutto il tempo", "adesso faccio la rimozione");
+					 projectiles.remove(projectile);}
+				else	if ( projectile.position.y > bob.position.y+11 && (projectile.type==0) ){ 
 					projectiles.remove(projectile);
+					 Gdx.app.debug("projectile:", "remove classica");
+				}
 			}
 		}
 	}
@@ -499,7 +504,7 @@ public class World {
 					LifeMore();
 					squirrel.inuse=true;
 					signal2screen=2;
-				} else if(random<= 0.5f) {    
+				} else if(random<= 0.5f && !this.supermissileButton) {    
 					Gdx.app.debug("checkSquirrelCollisions", "nos");
 					/*GameScreen si occupa di controllare il click sul nos x attivarlo*/
 					squirrel.state=Squirrel.NOS_CLISION;
@@ -662,10 +667,15 @@ public class World {
 				for(i=0;i<projectiles.size();i++)
 				{
 					Projectile projectile=projectiles.get(i);
-					if (OverlapTester.overlapRectangles(charlie.bounds, projectile.bounds)) {
+					if (OverlapTester.overlapRectangles(charlie.bounds, projectile.bounds)&& projectile.pulverizetime==0) {
 						Gdx.input.vibrate(new long[] { 1, 20, 40, 20}, -1); 
 						score += 100;
-						projectiles.remove(i);
+						if((projectile.type==1||projectile.type==2)){
+							Gdx.app.debug("cambio stato", "attivo pulverize sul proiettile");
+							projectile.state=Projectile.MISSILE_STATE_PULVERIZING;
+							projectile.pulverizetime=projectile.stateTime;
+						}
+						else if(projectile.type==0)projectiles.remove(i);
 						charlie.life--;
 						/*platforms.remove(j);*/
 						break;
