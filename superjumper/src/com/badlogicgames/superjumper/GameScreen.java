@@ -424,14 +424,12 @@ public class GameScreen implements Screen {
 		
 		batcher.draw(Assets.pause, 320 - 49, 480 - 53, 44, 44);
 		{
-			//batcher.draw(Assets.tmprectwhite, 15, 50, 10, 90/level.constant);
-			batcher.draw(Assets.tmprectwhite, 15, 45, 10, 85);
-			batcher.draw(Assets.tmprectwhite, 27, 45, 8, 85);
-			batcher.draw(Assets.tmprectblack, 15, 45, 10, 5*level.constant);
-			batcher.draw(Assets.tmprectblack, 27, 45, 8, 5*levelnos.constant);
+			batcher.draw(Assets.tmprectwhite, 20, 48, 12, 90);
+			batcher.draw(Assets.tmprectwhite, 36.5f, 48, 12, 90);
+			batcher.draw(Assets.tmprectblack, 20, 48, 12, 5.6f*level.constant);
+			batcher.draw(Assets.tmprectblack, 36.5f, 48, 12,  5.6f*levelnos.constant);
 			}
-		batcher.draw(Assets.level, -35, 480 - 479, 130, 154);
-	
+		batcher.draw(Assets.level, -53, 480 - 479, 190, 170);
 		//Assets.fontsmall.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		//Assets.fontsmall.scale(3f);explosion text 
 		batcher.draw(Assets.tubo, 0, 225, 250, 280);
@@ -452,7 +450,7 @@ public class GameScreen implements Screen {
 	{ 
 		if (world.signal2screen==1)
 		{
-			stampo("+10 ammo");
+			stampo("+30 ammo");
 		}
 		else if (world.signal2screen==2)
 		{

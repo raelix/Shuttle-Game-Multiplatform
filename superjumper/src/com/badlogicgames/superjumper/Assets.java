@@ -16,6 +16,7 @@ public class Assets {
 	public static ParticleEffect particleEffect;
 	public static ParticleEffect particleClouds;
 	public static Texture level;
+	public static Texture missile;
 	public static Texture enemy;
 	public static Texture enemy1;
 	public static Texture star;
@@ -82,6 +83,7 @@ public class Assets {
 	public static Texture welcomepaused;
 	public static Texture resume,quit,ospita,partecipa;
 	public static Texture swipetext,swipe,swipe1,swipe2;
+	public static TextureRegion missileRegion;
 	public static TextureRegion enemyRegion;
 	public static TextureRegion enemyRegion1;
 	public static TextureRegion starRegion;
@@ -164,6 +166,7 @@ public class Assets {
 		particleClouds.allowCompletion();
 		particleEffect.allowCompletion();
 		//fine particelle effetto fuoco
+		missile = loadTexture("data/missile.png");
 		level = loadTexture("data/level.png");
 		enemy = loadTexture("data/enemy.png");
 		enemy1 = loadTexture("data/enemy1.png");
@@ -241,6 +244,7 @@ public class Assets {
 		ready = new TextureRegion(items, 320, 224, 192, 32);		
 		spring = new TextureRegion(items, 128, 0, 32, 32);
 		castle = new TextureRegion(items, 128, 64, 64, 64);
+		missileRegion = new TextureRegion(missile, 0, 0, 256, 256);
 		starRegion= new TextureRegion(star, 0, 0, 128, 128);
 		bubbles= new TextureRegion(bubble, 0, 0, 256, 256);
 		nos= new TextureRegion(portanos, 0, 0, 256, 256);

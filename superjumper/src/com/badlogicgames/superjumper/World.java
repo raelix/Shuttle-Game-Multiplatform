@@ -133,49 +133,6 @@ public class World {
 		this.gravity.y = y;
 		bob.setGravityBob(x, y);
 	}
-
-
-	public void update (float deltaTime, float accelX) {
-		checkRemoveStars();
-
-		if (this.freezeON) {
-			deltaTime /= 4;
-		}
-		//Gdx.app.debug("update","init");
-		updateBob(deltaTime, accelX);
-		updatePlatforms(deltaTime);
-		updateSquirrels(deltaTime);
-		updateCoins(deltaTime);
-		//updateGravityPlanet(deltaTime);
-		addStarDynamic();
-		updateStar( deltaTime);
-		updateProjectiles(deltaTime);
-		updateProjectilenemys(deltaTime);//deltaTime*4 se si vuole mantenere la velocità del proiettile nemico anche durante il freezeing
-		updateEnemy(deltaTime,bob);//deltaTime*4 se si vuole mantenere la velocità del nemico anche durante il freezeing
-		updateunlockcharacter ();
-		//if (rand.nextFloat() > 0.5f) 
-		score += (int)bob.velocity.y/10;
-		//if (bob.state != Bob.BOB_STATE_HIT) //caso in cui bob cade verso il basso quando muore senza sbattere con gli ogg restati
-		checkCollisions();
-		checkRemovePlatform();
-		checkRemoveProjectile();
-		checkRemoveCoin();
-		checkGameOver();
-		checkRemoveEnemyProjectile();
-		CheckRemoveEnemey();
-		/* checkRemoveSquirrel();
-		checkRemoveBubble();*/
-
-	}
-
-	private void updateGravityPlanet(float deltaTime){
-		for ( Platform plat : this.platforms) {
-			if (plat.type != Platform.PLATFORM_TYPE_MOVING){
-				Utils.changeGravityTowards(bob, plat);
-			}
-		}
-	}
-
 	public void LifeLess(){
 
 		if(life>0){
@@ -214,6 +171,44 @@ public class World {
 	{
 		bob.velocity.y=12;
 	}
+	
+
+	private void addStarDynamic(){
+		//star generate
+		int type_star = rand.nextFloat()>0.3?Star.STAR_TYPE_STATIC:Star.STAR_TYPE_MOVING;//star light
+		float y_star = rand.nextFloat() *10;//star
+		float x_star = rand.nextFloat() *10;//star
+		Star star = new Star(type_star, x_star, y_star+bob.position.y+13);
+		Star star1 = new Star(type_star, x_star, y_star+bob.position.y+9);
+		Star star2 = new Star(Star.STAR_TYPE_STATIC, x_star, y_star+bob.position.y-3);//aggiunto da poco
+		stars.add(star);
+		stars.add(star1);//aggiunto da poco
+		stars.add(star2);//aggiunto da poco
+		////end star generate
+	}
+
+	public void update (float deltaTime, float accelX) {
+		score += (int)bob.velocity.y/10;
+		if (this.freezeON)deltaTime /= 4;
+		updateBob(deltaTime, accelX);
+		updatePlatforms(deltaTime);
+		updateSquirrels(deltaTime);
+		updateCoins(deltaTime);
+		addStarDynamic();
+		updateStar( deltaTime);
+		updateProjectiles(deltaTime);
+		updateProjectilenemys(deltaTime);//deltaTime*4 se si vuole mantenere la velocità del proiettile nemico anche durante il freezeing
+		updateEnemy(deltaTime,bob);//deltaTime*4 se si vuole mantenere la velocità del nemico anche durante il freezeing
+		updateunlockcharacter();
+		checkCollisions();
+		checkRemoveStars();
+		/* checkRemoveSquirrel();
+		checkRemoveBubble();*/
+	}
+
+
+
+	
 
 
 	private void updateBob (float deltaTime, float accelX) {
@@ -226,7 +221,7 @@ public class World {
 	private void updateEnemy (float deltaTime, DynamicGameObject oggetto) {
 		for (Enemy enemy : enemies) {
 			enemy.update(deltaTime, oggetto);
-			//EnemyShotBob(enemy);
+			updateEnemyShotBob(enemy);
 			if(bob.position.y>enemy.position.y-10)
 			{
 				enemy.active=1;
@@ -238,14 +233,14 @@ public class World {
 				enemy.state = Enemy.ENEMY_STATE_DIE;//cabio stato x polverizzarlo e segnalare a schermo il punteggio
 				enemy.pulverizetime= enemy.stateTime;//setto pulverizeTime da ora x la durata della polverizzazione
 			}
-			ScoreEnemyDied(enemy);
+			updateScoreEnemyDied(enemy);
 		}
 		if (bob.position.y > WORLD_HEIGHT / 10 && enemies.size() < (this.bob.position.y * 5) / WORLD_HEIGHT) {
 			enemies.offer(new Enemy(-10 + this.rand.nextFloat()*20, this.bob.position.y + this.rand.nextFloat()*100));
 		}
 	}
 
-	private void EnemyShotBob(Enemy charlie) {
+	private void updateEnemyShotBob(Enemy charlie) {
 		Gdx.app.debug("ENEMYSHOTBOB","init");
 		float difficoltxfascio=0.5f;//incrementa x sparare su piu' punti x
 		float delaysparo=1f;//decrementa x avere uno sparo piu' veloce
@@ -263,7 +258,7 @@ public class World {
 		}
 	}
 
-	private void ScoreEnemyDied(Enemy charlie)
+	private void updateScoreEnemyDied(Enemy charlie)
 	{
 		if(charlie.state==Enemy.ENEMY_STATE_DIE)
 		{
@@ -296,21 +291,21 @@ public class World {
 		}
 	}
 
-
-
-	private void addStarDynamic(){
-		//star generate
-		int type_star = rand.nextFloat()>0.3?Star.STAR_TYPE_STATIC:Star.STAR_TYPE_MOVING;//star light
-		float y_star = rand.nextFloat() *10;//star
-		float x_star = rand.nextFloat() *10;//star
-		Star star = new Star(type_star, x_star, y_star+bob.position.y+13);
-		Star star1 = new Star(type_star, x_star, y_star+bob.position.y+9);
-		Star star2 = new Star(Star.STAR_TYPE_STATIC, x_star, y_star+bob.position.y-3);//aggiunto da poco
-		stars.add(star);
-		stars.add(star1);//aggiunto da poco
-		stars.add(star2);//aggiunto da poco
-		////end star generate
+	private void updateunlockcharacter () 
+	{
+		if(Settings.highscores[0]<20000 && !(print1times>=2))
+		{
+			if(score>20000)
+			{
+				signal2screen=8;
+			}
+		}
+		else if(Settings.highscores[0]<40000 && !(print1times>=3))
+		{
+			if(score>40000)signal2screen=9;
+		}
 	}
+
 
 
 	private void updateStar(float deltaTime){
@@ -379,6 +374,26 @@ public class World {
 		}
 	}
 
+	private void checkCollisions () {
+		checkPlatformCollisions();
+		//checkDoubleJump();
+		checkSquirrelCollisions();
+		checkItemCollisions();
+		checkCastleCollisions();
+		checkVelocity();
+		checkProjectileCollisions();
+		checkProjectileWorldCollisions();
+		checkProjectilEnemyCollisions();
+		checkProjectilBobCollisions();
+		checkRemovePlatform();
+		checkRemoveProjectile();
+		checkRemoveCoin();
+		checkGameOver();
+		checkRemoveEnemyProjectile();
+		CheckRemoveEnemey();
+	}
+	
+	
 	private void CheckRemoveEnemey() {
 		for (int i = 0; i < enemies.size(); i++){
 			Enemy charlie = enemies.get(i);
@@ -436,20 +451,6 @@ public class World {
 			if (bob.position.y > squirrels.get(0).position.y+5  ) squirrels.remove(0);
 		}
 	}
-	private void checkCollisions () {
-		checkPlatformCollisions();
-		//checkDoubleJump();
-		checkSquirrelCollisions();
-		checkItemCollisions();
-		checkCastleCollisions();
-		checkVelocity();
-		checkProjectileCollisions();
-		checkProjectileWorldCollisions();
-		checkProjectilEnemyCollisions();
-		checkProjectilBobCollisions();
-	}
-
-
 
 	private void checkPlatformCollisions () {
 		//if (bob.velocity.y > 0) return;
@@ -683,7 +684,7 @@ public class World {
 					Gdx.input.vibrate(new long[] { 1, 20, 40, 20}, -1); 
 					score -= 100;
 					LifeLess();
-					projectiles.remove(projectilenem);
+					projectenemy.remove(i);
 					/*platforms.remove(j);*/
 					break;
 				}
@@ -692,20 +693,7 @@ public class World {
 	}
 
 
-	private void updateunlockcharacter () 
-	{
-		if(Settings.highscores[0]<20000 && !(print1times>=2))
-		{
-			if(score>20000)
-			{
-				signal2screen=8;
-			}
-		}
-		else if(Settings.highscores[0]<40000 && !(print1times>=3))
-		{
-			if(score>40000)signal2screen=9;
-		}
-	}
+
 
 	private void checkVelocity () {
 		if (bob.velocity.y > bob.MAXVELOCITY && nosinuse==0){

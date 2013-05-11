@@ -153,9 +153,23 @@ public class WorldRenderer {
 	private void renderProjectiles(){
 		int len = world.projectiles.size();
 		for (int i = 0; i < len; i++) {
+			TextureRegion keyFrame;
 			Projectile projectile = world.projectiles.get(i);
-			TextureRegion keyFrame = Assets.projAnim.getKeyFrame(projectile.stateTime, Animation.ANIMATION_LOOPING);    
+			if(projectile.type==0)
+			{
+			keyFrame = Assets.projAnim.getKeyFrame(projectile.stateTime, Animation.ANIMATION_LOOPING);    
 			batch.draw(keyFrame, projectile.position.x -0.07f , projectile.position.y+0.4f, 0.3f,0.6f);
+			}
+			else if(projectile.type==1)
+			{
+			keyFrame = Assets.missileRegion;    
+			batch.draw(keyFrame, projectile.position.x-0.4f , projectile.position.y+0.2f, 1f,1.4f);
+			}
+			else if(projectile.type==2)
+			{
+				keyFrame = Assets.missileRegion;    
+				batch.draw(keyFrame, projectile.position.x-0.4f , projectile.position.y+0.2f, 1f,1.4f);
+			}
 		}
 	}
 
