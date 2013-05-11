@@ -208,11 +208,15 @@ public class WorldRenderer {
 
 	private void renderButtons() {
 		if (world.activemissile == true ){
-			TextureRegion keyFrame = this.portaproj; // FIXME
+			TextureRegion keyFrame;
+			if (world.enemies.isEmpty())keyFrame = Assets.portamissilebnRegion;
+			else keyFrame = Assets.nosAnim.getKeyFrame(0, Animation.ANIMATION_LOOPING);//must add stateTime
 			batch.draw(keyFrame,cam.position.x + 3.4f, cam.position.y - 2.8f , 1.5f, 1.5f);
 		}
 		if (world.supermissileButton == true ){
-			TextureRegion keyFrame = Assets.nosAnim.getKeyFrame(0, Animation.ANIMATION_LOOPING);
+			TextureRegion keyFrame;
+			if (world.enemies.isEmpty())keyFrame = Assets.doubleportamissilebnRegion;
+			else keyFrame = Assets.doubleportamissileRegion;
 			batch.draw(keyFrame,cam.position.x + 3.4f, cam.position.y - 4.8f , 1.5f, 1.5f);
 		}
 		if (world.bubbleButton == true ){
