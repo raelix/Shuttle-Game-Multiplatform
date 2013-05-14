@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.GLCommon;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
@@ -15,27 +16,93 @@ public class WorldRenderer {
 	private static float[] verts = new float[20];
 	//static int a = 0;
 	World world;
-	OrthographicCamera cam;
+	OrthographicCamera cam, screencam;
 	SpriteBatch batch;
 	TextureRegion background;
 	TextureRegion portaproj; //FIXME
 
 
-	public WorldRenderer (SpriteBatch batch, World world) {
+	public WorldRenderer (SpriteBatch batch, World world, OrthographicCamera screencam) {
 		this.world = world;
 		this.cam = new OrthographicCamera(FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
 		this.cam.position.set(FRUSTUM_WIDTH / 2, FRUSTUM_HEIGHT / 2, 0);
+		this.screencam = screencam;
 		this.batch = batch;
 		this.portaproj = new TextureRegion(Assets.portaproj);
-
 	}
 
+
 	public void render () {
-		if (world.bob.position.y+5 > cam.position.y) cam.position.y = world.bob.position.y+5;
-		cam.update();
-		batch.setProjectionMatrix(cam.combined);
-		renderBackground();
-		renderObjects();
+		switch (world.state){
+		case CONSTANTS.GAME_RUNNING:
+			batch.enableBlending();
+			cam.position.y = world.bob.position.y+4;
+			cam.update();
+			batch.setProjectionMatrix(cam.combined);
+			renderBackground();
+			batch.begin();
+			renderObjects();
+			batch.end();
+			batch.begin();
+			batch.setProjectionMatrix(screencam.combined);
+			renderUI();
+			batch.end();
+			batch.disableBlending();
+			break;
+
+		case CONSTANTS.GAME_PAUSED:
+			batch.begin();
+			batch.setProjectionMatrix(screencam.combined);
+			batch.draw(Assets.welcomepaused,0,0,UI.SCREENPAUSEX,UI.SCREENPAUSEY);
+			batch.enableBlending();
+			for (Button button : world.buttons) {
+				button.draw(batch);
+			}
+			batch.end();
+			break;
+
+		case CONSTANTS.GAME_LEVEL_END:
+			batch.begin();
+			String topText = "your friends ...";
+			String bottomText = "... aren't here!";
+			float topWidth = Assets.font.getBounds(topText).width;
+			float bottomWidth = Assets.font.getBounds(bottomText).width;
+			Assets.handfontsmall.draw(batch, topText, UI.SCREENWIDTH/2 - topWidth / 2, UI.SCREENHEIGHT - 40);
+			Assets.handfontsmall.draw(batch, bottomText, UI.SCREENWIDTH/2 - bottomWidth / 2, 40);
+			batch.end();
+			break;
+
+		case CONSTANTS.GAME_OVER:
+			batch.begin();
+			Assets.handfontsmall.scale(-0.3f);
+			new Text(UI.SCREENWIDTH/2 - 200 / 2,UI.SCREENHEIGHT*2/3,"G A M E  O V E R").draw(batch);
+			world.scoretext.draw(batch);
+			Assets.handfontsmall.scale(0.3f);
+			batch.end();
+			break;
+
+		case CONSTANTS.GAME_READY:
+			batch.begin();
+			new Text(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2,"R E A D Y ?").draw(batch);
+			batch.end();
+			break;
+
+
+		}
+	}
+
+	private void renderUI() {
+		renderTexts();
+		renderButtons();
+		batch.draw(Assets.pause,UI.POSITIONPAUSEX - UI.INDICATORSIZE/2 , UI.POSITIONPAUSEY  - UI.INDICATORSIZE/2, UI.INDICATORSIZE, UI.INDICATORSIZE);
+		batch.draw(Assets.portaproj, UI.POSITIONPORTAPROJX, UI.POSITIONPORTAPROJY, UI.INDICATORSIZE, UI.INDICATORSIZE);
+		batch.draw(Assets.portalife, UI.POSITIONPORTALIFEX,UI.POSITIONPORTALIFEY, UI.INDICATORSIZE, UI.INDICATORSIZE);
+		batch.draw(Assets.tmprectwhite, 20, 48, 12, 90);
+		batch.draw(Assets.tmprectwhite, 36.5f, 48, 12, 90);
+		batch.draw(Assets.tmprectblack, 20, 48, 12, 5.6f * world.level.constant);
+		batch.draw(Assets.tmprectblack, 36.5f, 48, 12, 5.6f*world.levelnos.constant);
+		batch.draw(Assets.level, UI.LEVELPOSITIONX, UI.LEVELPOSITIONY, 190, 170);
+		batch.draw(Assets.tubo, UI.TUBOPOSITIONX, UI.TUBOPOSITIONY, UI.TUBOWIDTH, UI.TUBOHEIGHT);
 	}
 
 	public void renderBackground () {
@@ -43,18 +110,15 @@ public class WorldRenderer {
 		gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT | GL10.GL_STENCIL_BUFFER_BIT);
 		//Gradient Background 
-		batch.begin();
 		batch.disableBlending();
-		drawGradient(batch, Assets.rect, 0, 0, 10, 110,Color.BLACK,Assets.colore, false);
-		batch.enableBlending();
+		batch.begin();
+		drawGradient(batch, Assets.rect, 0, -2, 10, 110,Color.BLACK,Assets.colore, false);
 		batch.end();
+		batch.enableBlending();
 	}
 
 	public void renderObjects () {
-		batch.enableBlending();
-		batch.begin();
 		renderStars();
-		//renderMissile();
 		renderBob();
 		renderPlatforms();
 		renderItems();
@@ -63,12 +127,22 @@ public class WorldRenderer {
 		renderEnemy();
 		renderProjectiles();
 		renderProjectilesenemy();
-		renderButtons();
 		renderBubble();
-		batch.end();
+		renderExplosions();
 	}
 
+	private void renderTexts() {
+		for (Text text : world.texts) {
+			text.draw(batch);
+		}
+	}
 
+	private void renderExplosions() {
+		for (Explosion exp : world.explosions) {
+			TextureRegion keyFrame=Assets.brakingPlatform.getKeyFrame( exp.stateTime, Animation.ANIMATION_LOOPING);
+			batch.draw(keyFrame, exp.position.x, exp.position.y, exp.width, exp.height);
+		}
+	}
 
 	private void renderBob () {
 		TextureRegion keyFrame;
@@ -76,7 +150,7 @@ public class WorldRenderer {
 		//render world terra
 		//Color c = new Color(batch.getColor()); 
 		//batch.setColor(0,1,0,1);
-		batch.draw(Assets.backgroundRegion1, 0, -1, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
+		batch.draw(Assets.backgroundRegion1, 0, -3, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
 		//batch.setColor(c);
 		switch (world.bob.state) {
 		case Bob.BOB_STATE_FALL:
@@ -122,11 +196,7 @@ public class WorldRenderer {
 		for (int i = 0; i < len; i++) {
 			Platform platform = world.platforms.get(i);
 			TextureRegion keyFrame ;
-			if (platform.state == Platform.PLATFORM_STATE_PULVERIZING) {
-				keyFrame = Assets.brakingPlatform.getKeyFrame(platform.stateTime, Animation.ANIMATION_LOOPING);
-				batch.draw(keyFrame, platform.position.x - 1, platform.position.y - 0.25f, 4, 4);
-			}
-			else {keyFrame = Assets.coinAnim.getKeyFrame(platform.stateTime, Animation.ANIMATION_LOOPING);
+			{keyFrame = Assets.coinAnim.getKeyFrame(platform.stateTime, Animation.ANIMATION_LOOPING);
 			batch.draw(keyFrame, platform.position.x - 0.75f, platform.position.y - 0.75f, 1.5f, 1.5f);
 			}}
 	}
@@ -155,35 +225,24 @@ public class WorldRenderer {
 		for (int i = 0; i < len; i++) {
 			Projectile projectile = world.projectiles.get(i);
 			TextureRegion keyFrame = Assets.projAnim.getKeyFrame(projectile.stateTime, Animation.ANIMATION_LOOPING);  
-			if(projectile.type==0 && projectile.state!=Missile.MISSILE_STATE_PULVERIZING)
+			if(projectile.type==0 && projectile.state!=Projectile.MISSILE_STATE_PULVERIZING)
 			{
-			keyFrame = Assets.projAnim.getKeyFrame(projectile.stateTime, Animation.ANIMATION_LOOPING);    
-			batch.draw(keyFrame, projectile.position.x -0.07f , projectile.position.y+0.4f, 0.3f,0.6f);
+				keyFrame = Assets.projAnim.getKeyFrame(projectile.stateTime, Animation.ANIMATION_LOOPING);    
+				batch.draw(keyFrame, projectile.position.x -0.07f , projectile.position.y+0.4f, 0.3f,0.6f);
 			}
-			else if(projectile.type==1 && projectile.state!=Missile.MISSILE_STATE_PULVERIZING)
-			{
-			keyFrame = Assets.missileRegion;    
-			batch.draw(keyFrame, projectile.position.x-0.4f , projectile.position.y+0.2f, 1f,1.4f);
-			}
-			else if(projectile.type==2 && projectile.state!=Missile.MISSILE_STATE_PULVERIZING)
+			else if(projectile.type==1 && projectile.state!=Projectile.MISSILE_STATE_PULVERIZING)
 			{
 				keyFrame = Assets.missileRegion;    
 				batch.draw(keyFrame, projectile.position.x-0.4f , projectile.position.y+0.2f, 1f,1.4f);
 			}
-			else if(projectile.state == Missile.MISSILE_STATE_PULVERIZING){
-				keyFrame=Assets.brakingPlatform.getKeyFrame(projectile.stateTime, Animation.ANIMATION_LOOPING);
-			batch.draw(keyFrame, projectile.position.x-0.4f , projectile.position.y+0.2f, 2f,2f);}
+			else if(projectile.type==2 && projectile.state!=Projectile.MISSILE_STATE_PULVERIZING)
+			{
+				keyFrame = Assets.missileRegion;    
+				batch.draw(keyFrame, projectile.position.x-0.4f , projectile.position.y+0.2f, 1f,1.4f);
+			}
 		}
 	}
 
-	private void renderMissile(){
-		int len = world.rockets.size();
-		for (int i = 0; i < len; i++) {
-			Missile missile = world.rockets.get(i);
-			TextureRegion keyFrame = Assets.projAnim.getKeyFrame(missile.stateTime, Animation.ANIMATION_LOOPING);    
-			batch.draw(keyFrame, missile.position.x -0.07f , missile.position.y+0.4f, 0.3f,0.6f);
-		}
-	}
 
 	private void renderProjectilesenemy(){
 		int len = world.projectenemy.size();
@@ -214,17 +273,17 @@ public class WorldRenderer {
 			TextureRegion keyFrame;
 			if (world.enemies.isEmpty())keyFrame = Assets.portamissilebnRegion;
 			else keyFrame = Assets.nosAnim.getKeyFrame(0, Animation.ANIMATION_LOOPING);//must add stateTime
-			batch.draw(keyFrame,cam.position.x + 3.4f, cam.position.y - 2.8f , 1.5f, 1.5f);
+			batch.draw(keyFrame, UI.MISSILEPOSITIONX - UI.INDICATORSIZE/2, UI.MISSILEPOSITIONY - UI.INDICATORSIZE/2, UI.INDICATORSIZE, UI.INDICATORSIZE);
 		}
 		if (world.supermissileButton == true ){
 			TextureRegion keyFrame;
 			if (world.enemies.isEmpty())keyFrame = Assets.doubleportamissilebnRegion;
 			else keyFrame = Assets.doubleportamissileRegion;
-			batch.draw(keyFrame,cam.position.x + 3.4f, cam.position.y - 4.8f , 1.5f, 1.5f);
+			batch.draw(keyFrame,UI.SUPERMISSILEPOSITIONX - UI.INDICATORSIZE/2, UI.SUPERMISSILEPOSITIONY - UI.INDICATORSIZE/2, UI.INDICATORSIZE, UI.INDICATORSIZE);
 		}
 		if (world.bubbleButton == true ){
 			TextureRegion keyFrame = Assets.bubbleAnim.getKeyFrame(0, Animation.ANIMATION_LOOPING);
-			batch.draw(keyFrame,cam.position.x + 3.4f, cam.position.y - 6.8f , 1.5f, 1.5f);
+			batch.draw(keyFrame, UI.BUBBLEPOSITIONX - UI.INDICATORSIZE/2, UI.BUBBLEPOSITIONY - UI.INDICATORSIZE/2, UI.INDICATORSIZE, UI.INDICATORSIZE);
 
 		}
 	}
@@ -249,20 +308,13 @@ public class WorldRenderer {
 		}
 	}
 
-	private void renderEnemy()
-	{
+	private void renderEnemy(){
 		TextureRegion keyFrame;
 		for (Enemy charlie : world.enemies){
-			if (charlie.state == Enemy.ENEMY_STATE_DIE || charlie.state == Enemy.ENEMY_STATE_REM) {
-				keyFrame = Assets.brakingPlatform.getKeyFrame( charlie.stateTime, Animation.ANIMATION_LOOPING);
-				batch.draw(keyFrame, charlie.position.x - 1, charlie.position.y - 0.25f, 4, 4);
-			}
-			else if ( charlie.state != Enemy.ENEMY_STATE_DIE|| charlie.state != Enemy.ENEMY_STATE_REM)
-			{
-				keyFrame = Assets.enemyRegion;
-				batch.draw(keyFrame, charlie.position.x-1.5f , charlie.position.y-0.8f , 2f, 2f);}
+
+			keyFrame = Assets.enemyRegion;
+			batch.draw(keyFrame, charlie.position.x-1.5f , charlie.position.y-0.8f , 2f, 2f);
 		}
-		//else keyFrame=Assets.enemyRegion1;
 	}
 
 

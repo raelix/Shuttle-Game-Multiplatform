@@ -9,8 +9,10 @@ public class Main {
 		cfg.title = "superjumper";
 		cfg.width = 320;
 		cfg.height = 480;
-		//cfg.useGL20 = false;
-		
+		//cfg.width = 1920;
+		//cfg.height = 1080;
+		cfg.useGL20 = true;
+
 		new LwjglApplication(new SuperJumper(), cfg);
 	}
 }
