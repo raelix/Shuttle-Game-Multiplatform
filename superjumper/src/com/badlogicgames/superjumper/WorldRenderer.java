@@ -97,11 +97,11 @@ public class WorldRenderer {
 		batch.draw(Assets.pause,UI.POSITIONPAUSEX - UI.INDICATORSIZE/2 , UI.POSITIONPAUSEY  - UI.INDICATORSIZE/2, UI.INDICATORSIZE, UI.INDICATORSIZE);
 		batch.draw(Assets.portaproj, UI.POSITIONPORTAPROJX, UI.POSITIONPORTAPROJY, UI.INDICATORSIZE, UI.INDICATORSIZE);
 		batch.draw(Assets.portalife, UI.POSITIONPORTALIFEX,UI.POSITIONPORTALIFEY, UI.INDICATORSIZE, UI.INDICATORSIZE);
-		batch.draw(Assets.tmprectwhite, 20, 48, 12, 90);
-		batch.draw(Assets.tmprectwhite, 36.5f, 48, 12, 90);
-		batch.draw(Assets.tmprectblack, 20, 48, 12, 5.6f * world.level.constant);
-		batch.draw(Assets.tmprectblack, 36.5f, 48, 12, 5.6f*world.levelnos.constant);
-		batch.draw(Assets.level, UI.LEVELPOSITIONX, UI.LEVELPOSITIONY, 190, 170);
+		batch.draw(Assets.tmprectwhite, UI.BARPOSITIONX,UI.BARPOSITIONY, UI.BARSIZEX, UI.BARSIZEY);
+		batch.draw(Assets.tmprectwhite,UI.SECONDBARPOSITIONX, UI.BARPOSITIONY,  UI.BARSIZEX,  UI.BARSIZEY);
+		batch.draw(Assets.tmprectblack,  UI.BARPOSITIONX , UI.BARPOSITIONY, UI.BARSIZEX, UI.BARCONSTANT * world.level.constant);
+		batch.draw(Assets.tmprectblack, UI.SECONDBARPOSITIONX, UI.BARPOSITIONY,  UI.BARSIZEX,  UI.BARCONSTANT*world.levelnos.constant);
+		batch.draw(Assets.level, UI.LEVELPOSITIONX, UI.LEVELPOSITIONY, UI.LEVELSIZEX, UI.LEVELSIZEY);
 		batch.draw(Assets.tubo, UI.TUBOPOSITIONX, UI.TUBOPOSITIONY, UI.TUBOWIDTH, UI.TUBOHEIGHT);
 	}
 

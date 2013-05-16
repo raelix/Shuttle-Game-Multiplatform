@@ -3,6 +3,7 @@ package com.badlogicgames.superjumper;
 import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 
 public interface UI {//MUST FIX LEVELBAR & TEXT RESIZE
 	public static final float SCREENWIDTH = Gdx.graphics.getWidth();
@@ -13,9 +14,9 @@ public interface UI {//MUST FIX LEVELBAR & TEXT RESIZE
 	public static final float HALFSCREENWIDTH = SCREENWIDTH/2;
 	public static final float HALFSCREENHEIGHT = SCREENHEIGHT/2;
 	//FIRST SCREEN
-	public static final float FIRSTEXT=UI.SCREENHEIGHT*0.60f;
-	public static final float SECONDTEXT=UI.SCREENHEIGHT*0.52f;
-	public static final float THIRDTEXT=UI.SCREENHEIGHT*0.44f;
+	public static final float FIRSTEXT=SCREENHEIGHT*0.60f;
+	public static final float SECONDTEXT=SCREENHEIGHT*0.52f;
+	public static final float THIRDTEXT=SCREENHEIGHT*0.44f;
 	public static final float FIRSTSCREENTEXTSCALE = (-SCREENWIDTH *0.0008f)*2f;
 	//BUTTON
 	public static final float BUTTONRESUMEPOSITIONX = SCREENWIDTH*0.35f;
@@ -27,11 +28,11 @@ public interface UI {//MUST FIX LEVELBAR & TEXT RESIZE
 	//SCORE POSITION
 	public static final float SCOREPOSITIONX = SCREENWIDTH * 0.29f;
 	public static final float SCOREPOSITIONY = SCREENHEIGHT * 0.968f;
-	//TEXT SCALE FIXME
-	public static final float TEXTSCALE = -SCREENWIDTH *0.0012f;
+	//TEXT SCALE
+	public static final float TEXTSCALE = -(SCREENWIDTH+SCREENHEIGHT) *0.0001f;
 	public static final float TEXTSCALEX = SCREENWIDTH *0.0008f;//FIX ME IN CLASS
 	public static final float TEXTSCALEY = SCREENWIDTH *0.0008f;//FIX ME IN CLASS
-	//ICONS IN WORLD FIXME
+	//ICONS IN WORLD
 	public static final float INDICATORSIZE = SCREENWIDTH/7;
 	public static final float AMMOPOSITIONX = SCREENWIDTH *0.82f;
 	public static final float AMMOPOSITIONY = SCREENHEIGHT * 0.9f;
@@ -47,13 +48,24 @@ public interface UI {//MUST FIX LEVELBAR & TEXT RESIZE
 	public static final float TUBOHEIGHT = SCREENHEIGHT * 0.43f;
 	public static final float TUBOPOSITIONX = 0;
 	public static final float TUBOPOSITIONY = SCREENHEIGHT * 0.597f;
-	public static final float LEVELPOSITIONX = -53;//FIXME
-	public static final float LEVELPOSITIONY = 0;//FIXME
 	public static final float BUBBLEPOSITIONX = AMMOPOSITIONX*1.1f;
 	public static final float BUBBLEPOSITIONY = SCREENHEIGHT * 0.4f;
 	public static final float MISSILEPOSITIONX = BUBBLEPOSITIONX;
 	public static final float MISSILEPOSITIONY = SCREENHEIGHT * 0.3f;
 	public static final float SUPERMISSILEPOSITIONX = BUBBLEPOSITIONX;
 	public static final float SUPERMISSILEPOSITIONY = SCREENHEIGHT * 0.2f;
-	
+	//LEVEL
+	public static final float LEVELPOSITIONX = -SCREENWIDTH*0.111f;
+	public static final float LEVELPOSITIONY = 0;
+	public static final float LEVELSIZEY = SCREENHEIGHT*0.2f;
+	public static final float LEVELSIZEX = SCREENWIDTH*0.4f;
+	//LEVEL BAR
+	public static final float BARPOSITIONX = SCREENWIDTH*0.047f;
+	public static final float BARPOSITIONY = SCREENHEIGHT*0.060f;
+	public static final float SECONDBARPOSITIONX = SCREENWIDTH*0.083f;
+	public static final float BARSIZEX = SCREENWIDTH*0.0198f;
+	public static final float BARSIZEY = SCREENHEIGHT*0.093f;
+	public static final float BARCONSTANT = SCREENHEIGHT*0.0062f;
+
+
 }
