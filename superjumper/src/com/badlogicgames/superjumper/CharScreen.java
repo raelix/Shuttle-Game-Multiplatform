@@ -79,10 +79,6 @@ public class CharScreen implements Screen {
 		this.bob.CHARSCREENUSE=1;
 		this.bobfem.CHARSCREENUSE=1;
 		this.bobmil.CHARSCREENUSE=1;
-		Button button = new Button(150,220,Assets.lock);
-		buttons.add(button);
-		Button buttones = new Button(150,120,Assets.locked);
-		buttons.add(buttones);
 
 		gestureDetector = new GestureDetector(20, 0.5f, 2, 0.15f, new GestureListener() {
 

@@ -53,7 +53,7 @@ public class WorldRenderer {
 		case CONSTANTS.GAME_PAUSED:
 			batch.begin();
 			batch.setProjectionMatrix(screencam.combined);
-			batch.draw(Assets.welcomepaused,0,0,UI.SCREENPAUSEX,UI.SCREENPAUSEY);
+			batch.draw(Assets.welcomepaused,0,0,UI.SCREENPOSITIONX,UI.SCREENPOSITIONY);
 			batch.enableBlending();
 			for (Button button : world.buttons) {
 				button.draw(batch);
