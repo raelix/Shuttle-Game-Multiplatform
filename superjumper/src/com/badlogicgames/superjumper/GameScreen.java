@@ -302,7 +302,9 @@ public class GameScreen implements Screen, CONSTANTS {
 
 	@Override
 	public void show () {
-	}
+		Assets.RectBlack();
+		Assets.RectWhite();
+}
 
 	@Override
 	public void hide () {

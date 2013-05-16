@@ -5,7 +5,7 @@ import java.util.Random;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 
-public interface UI {//MUST FIX LEVELBAR & TEXT RESIZE
+public interface UI {//WILL CONTROL TEXT RESIZE
 	public static final float SCREENWIDTH = Gdx.graphics.getWidth();
 	public static final float SCREENHEIGHT = Gdx.graphics.getHeight();
 	//ACTIVITY LAYOUT
@@ -13,7 +13,7 @@ public interface UI {//MUST FIX LEVELBAR & TEXT RESIZE
 	public static final float SCREENPOSITIONY=SCREENHEIGHT*1.1f;
 	public static final float HALFSCREENWIDTH = SCREENWIDTH/2;
 	public static final float HALFSCREENHEIGHT = SCREENHEIGHT/2;
-	//FIRST SCREEN
+	//FIRST SCREEN LAYOUT TEXT
 	public static final float FIRSTEXT=SCREENHEIGHT*0.60f;
 	public static final float SECONDTEXT=SCREENHEIGHT*0.52f;
 	public static final float THIRDTEXT=SCREENHEIGHT*0.44f;
