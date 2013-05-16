@@ -319,7 +319,7 @@ public class World implements UI, CONSTANTS {
 				if(enemy.killtime==0)enemy.killtime=enemy.stateTime;//imposto il killTime x sapere quanto tempo cè voluto x ucc charlie
 			}
 
-			updateScoreEnemyDied(enemy);
+			
 		}
 		if (bob.position.y > WORLD_HEIGHT / 10 && enemies.size() < (this.bob.position.y * 5) / WORLD_HEIGHT) {
 			enemies.offer(new Enemy(-10 + this.rand.nextFloat()*20, this.bob.position.y + this.rand.nextFloat()*100));
@@ -330,9 +330,6 @@ public class World implements UI, CONSTANTS {
 		//Gdx.app.debug("ENEMYSHOTBOB","init");
 		float difficoltxfascio=0.5f;//incrementa x sparare su piu' punti x
 		float delaysparo=1f;//decrementa x avere uno sparo piu' veloce
-		/*if( 
-			charlie.position.x-bob.position.x <difficoltxfascio && charlie.position.y-bob.position.y <10f &&    
-			enemyshotTime<charlie.stateTime-delaysparo)*/
 
 		if ((Math.abs(charlie.position.x-bob.position.x) < difficoltxfascio ) && (charlie.position.y-bob.position.y > 5f &&  charlie.position.y-bob.position.y < 15f) && (charlie.stateTime > charlie.enemyshotime + delaysparo)) {
 			charlie.enemyshotime=charlie.stateTime;
@@ -346,13 +343,12 @@ public class World implements UI, CONSTANTS {
 
 	private void updateScoreEnemyDied(Enemy charlie)
 	{
-		if(charlie.state==Enemy.ENEMY_STATE_DIE)
-		{
+		
 			//Gdx.app.debug("killtime:"+charlie.killtime, "stateTime:"+charlie.stateTime);
 			if(charlie.stateTime-charlie.killtime<3f)
 			{
 				//signal2screen=7;
-				this.texts.offer(new FloatingText("EXCELLENT!",0));
+				this.texts.offer(new FloatingText("EXCELLENT!",1.5f));
 				this.texts.offer(new FloatingText("+1000",0));
 				score=score+1000;
 				charlie.killtime=-1;
@@ -360,14 +356,14 @@ public class World implements UI, CONSTANTS {
 			else if(charlie.stateTime-charlie.killtime<5f)
 			{
 				//signal2screen=6;
-				this.texts.offer(new FloatingText("FAST!",0));
+				this.texts.offer(new FloatingText("FAST!",1.5f));
 				this.texts.offer(new FloatingText("+500",0));
 				score=score+500;
 				charlie.killtime=-1;
 			}
 			else if(charlie.stateTime-charlie.killtime<7f)
 			{
-				this.texts.offer(new FloatingText("good!",0));
+				this.texts.offer(new FloatingText("good!",1.5f));
 				this.texts.offer(new FloatingText("+200",0));
 				//signal2screen=5;
 				score=score+200;
@@ -375,7 +371,7 @@ public class World implements UI, CONSTANTS {
 			}
 			else 
 			{
-				this.texts.offer(new FloatingText("slow.",0));
+				this.texts.offer(new FloatingText("slow.",1.5f));
 				this.texts.offer(new FloatingText("+100",0));
 				//signal2screen=4;
 				score=score+100;
@@ -384,7 +380,7 @@ public class World implements UI, CONSTANTS {
 
 			//charlie.state = Enemy.ENEMY_STATE_REM;//cambio stato di modo da segnalare una volta sola il risultato
 		}
-	}
+	
 
 	private void updateunlockcharacter () //FIXME
 	{
@@ -486,6 +482,7 @@ public class World implements UI, CONSTANTS {
 			if(charlie.life==0 )
 			{
 				explosions.offer(new Explosion(charlie.position.x, charlie.position.y,Enemy.ENEMY_WIDTH,Enemy.ENEMY_HEIGHT, 0));
+				updateScoreEnemyDied(charlie);
 				enemies.remove(i);
 			}
 		}
