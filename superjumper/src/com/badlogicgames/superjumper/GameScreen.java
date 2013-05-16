@@ -45,15 +45,13 @@ public class GameScreen implements Screen, CONSTANTS {
 	String scoreString;
 	private Random rand =  new Random(); //FIXME
 	private boolean missileON = false;
-	/*public static boolean attivatraj=false;
-	public LinkedList<Vector2> traiettoria;
-	private boolean prectouch = false;*/
+
 
 	public GameScreen (final Game game) {
 		this.game = game;
 		state = GAME_READY;
-		guiCam = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		guiCam.position.set(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2, 0);
+		guiCam = new OrthographicCamera(UI.SCREENWIDTH, UI.SCREENHEIGHT);
+		guiCam.position.set(UI.HALFSCREENWIDTH, UI.HALFSCREENHEIGHT, 0);
 		touchPoint = new Vector3();
 		batcher = new SpriteBatch();
 		worldListener = new WorldListener() {
