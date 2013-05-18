@@ -75,7 +75,7 @@ public class WorldRenderer {
 		case CONSTANTS.GAME_OVER:
 			batch.begin();
 			Assets.handfontsmall.scale(-0.3f);
-			new Text(UI.SCREENWIDTH/2 - 200 / 2,UI.SCREENHEIGHT*2/3,"G A M E  O V E R").draw(batch);
+			new Text(UI.SCREENWIDTH/2 ,UI.SCREENHEIGHT*2/3,"G A M E  O V E R").draw(batch);
 			world.scoretext.draw(batch);
 			Assets.handfontsmall.scale(0.3f);
 			batch.end();
@@ -195,22 +195,33 @@ public class WorldRenderer {
 		int len = world.platforms.size();
 		for (int i = 0; i < len; i++) {
 			Platform platform = world.platforms.get(i);
-			TextureRegion keyFrame ;
-			{keyFrame = Assets.coinAnim.getKeyFrame(platform.stateTime, Animation.ANIMATION_LOOPING);
-			batch.draw(keyFrame, platform.position.x - 0.75f, platform.position.y - 0.75f, 1.5f, 1.5f);
-			}}
+			{
+			if(platform.rendertype==0)
+			//batch.draw(Assets.meteoragrigiaRegion, platform.position.x - 0.75f, platform.position.y - 0.75f, Platform.PLATFORM_WIDTH, Platform.PLATFORM_HEIGHT);
+			batch.draw(Assets.meteoragrigiaRegion,platform.position.x - 0.75f,platform.position.y,Platform.PLATFORM_WIDTH/2,Platform.PLATFORM_HEIGHT/2, Platform.PLATFORM_WIDTH, Platform.PLATFORM_HEIGHT, 1, 1, -platform.rotation);
+			else if(platform.rendertype==1)
+				//batch.draw(Assets.meteorabluRegion, platform.position.x - 0.75f, platform.position.y - 0.75f, Platform.PLATFORM_WIDTH, Platform.PLATFORM_HEIGHT);
+				batch.draw(Assets.meteorabluRegion,platform.position.x - 0.75f,platform.position.y,Platform.PLATFORM_WIDTH/2,Platform.PLATFORM_HEIGHT/2, Platform.PLATFORM_WIDTH, Platform.PLATFORM_HEIGHT, 1, 1, platform.rotation);
+			else if(platform.rendertype==2)
+				//batch.draw(Assets.meteorarosaRegion, platform.position.x - 0.75f, platform.position.y - 0.75f, Platform.PLATFORM_WIDTH, Platform.PLATFORM_HEIGHT);
+				batch.draw(Assets.meteorarosaRegion,platform.position.x - 0.75f,platform.position.y,Platform.PLATFORM_WIDTH/2,Platform.PLATFORM_HEIGHT/2, Platform.PLATFORM_WIDTH, Platform.PLATFORM_HEIGHT, 1, 1, -platform.rotation);
+			else if(platform.rendertype==3)
+			//batch.draw(Assets.meteoragiallaRegion, platform.position.x - 0.75f, platform.position.y - 0.75f, Platform.PLATFORM_WIDTH, Platform.PLATFORM_HEIGHT);
+			batch.draw(Assets.meteoragiallaRegion,platform.position.x - 0.75f,platform.position.y,Platform.PLATFORM_WIDTH/2,Platform.PLATFORM_HEIGHT/2, Platform.PLATFORM_WIDTH, Platform.PLATFORM_HEIGHT, 1, 1, platform.rotation);
+
+			}
+		}
 	}
 
 
 
 	private void renderItems () {
-		int len = world.springs.size();
-		for (int i = 0; i < len; i++) {
-			Spring spring = world.springs.get(i);
-			batch.draw(Assets.spring, spring.position.x - 0.5f, spring.position.y - 0.5f, 1, 1);
+	
+		for (Spring spring : world.springs) {
+			spring.draw(batch,Assets.coinAnim.getKeyFrame(0, Animation.ANIMATION_LOOPING));
+			
 		}
-
-		len = world.coins.size();
+		int len = world.coins.size();
 		for (int i = 0; i < len; i++) {
 			Coin coin = world.coins.get(i);
 			TextureRegion keyFrame = Assets.platform.getKeyFrame(coin.stateTime, Animation.ANIMATION_LOOPING);
@@ -219,6 +230,7 @@ public class WorldRenderer {
 			batch.draw(keyFrame, coin.position.x - 1, coin.position.y - 0.25f, 2.5f, 2.5f);
 		}
 	}
+
 
 	private void renderProjectiles(){
 		int len = world.projectiles.size();

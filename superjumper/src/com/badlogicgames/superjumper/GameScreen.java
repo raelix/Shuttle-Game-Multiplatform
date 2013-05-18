@@ -212,7 +212,7 @@ public class GameScreen implements Screen, CONSTANTS {
 						}	
 					} else {
 						if(velocityY > 20) {
-							Gdx.app.debug("fling", "trascino giù");
+							Gdx.app.debug("fling", "trascino giu");
 
 
 							if(!world.decrementonos){
