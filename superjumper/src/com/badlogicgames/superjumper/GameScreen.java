@@ -117,7 +117,7 @@ public class GameScreen implements Screen, CONSTANTS {
 			@Override
 			public boolean tap (float x, float y, int count, int button) {
 				guiCam.unproject(touchPoint.set(x, y, 0));
-				Gdx.app.debug("TAP", "touchPoint.x = " + touchPoint.x + "touchPoint.y = " + touchPoint.y);
+				Gdx.app.debug("TAP", "touchPoint.x = " + touchPoint.x + "touchPoint.y = " + touchPoint.y + ", worldstate = " + world.state);
 				switch (world.state) {
 
 				case CONSTANTS.GAME_RUNNING:
@@ -147,6 +147,12 @@ public class GameScreen implements Screen, CONSTANTS {
 					break;
 
 				case CONSTANTS.GAME_OVER:
+					if (world.score > Settings.highscores[4]){
+						world.scoretext.update(0, "NEW HIGHSCORE: " + world.score);
+						Settings.addScore(world.score);
+						Settings.save();
+					}
+					world.state = CONSTANTS.GAME_RUNNING;
 					game.setScreen(new MainMenuScreen(game));
 					break;
 
@@ -165,7 +171,7 @@ public class GameScreen implements Screen, CONSTANTS {
 								Gdx.app.debug("TAP", "RESUME");
 								world.state = GAME_RUNNING;
 							} else if (b.texture == Assets.quit){
-								Gdx.app.debug("TAP", "QUIT");
+								world.state = CONSTANTS.GAME_RUNNING;
 								game.setScreen(new MainMenuScreen(game));
 							}
 						}
@@ -175,6 +181,7 @@ public class GameScreen implements Screen, CONSTANTS {
 				case CONSTANTS.GAME_READY:
 					state = GAME_RUNNING;
 					break;
+				
 
 				}
 				return true;

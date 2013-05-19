@@ -41,7 +41,7 @@ public class World implements UI, CONSTANTS {
 	public int shot=10;
 	public int nosinuse=0;
 	public boolean turbo=true;
-	public int life=50;
+	public int life=1;
 	public float freeze=100;
 	public int missiles = 0;
 	public int print1times=0;
@@ -103,7 +103,7 @@ public class World implements UI, CONSTANTS {
 		float maxJumpHeight = this.PLATFORMS_DISTANCE;
 		float minJumpHeight = this.STARS_DISTANCE;
 		while (y < WORLD_HEIGHT - WORLD_WIDTH / 2) {
-			int type = y>WORLD_HEIGHT/3 ? Platform.PLATFORM_TYPE_MOVING : Platform.PLATFORM_TYPE_STATIC;
+			int type = y>WORLD_HEIGHT/3 && rand.nextFloat() > 0.5f ? Platform.PLATFORM_TYPE_MOVING : Platform.PLATFORM_TYPE_STATIC;
 			float x = rand.nextFloat() > 0.5f ? rand.nextFloat() *k : WORLD_WIDTH - rand.nextFloat() *k/2;
 			//star generate
 			int type_star = Star.STAR_TYPE_STATIC;//star
@@ -114,7 +114,7 @@ public class World implements UI, CONSTANTS {
 			//stars.add(star);
 			//end star generate
 			Platform platform = new Platform(type, x, y*2);
-			platforms.add(platform);
+			//platforms.add(platform);
 			if (rand.nextFloat() > 0.2f && type != Platform.PLATFORM_TYPE_MOVING) {
 				Spring spring = new Spring(platform.position.x, platform.position.y + Platform.PLATFORM_HEIGHT / 2 + Spring.SPRING_HEIGHT / 2);
 				springs.add(spring);
@@ -214,7 +214,7 @@ public class World implements UI, CONSTANTS {
 	}
 
 
-	private void addStarDynamic(){
+	private void generateStars(){
 		//star generate
 		int type_star = rand.nextFloat()>0.3?Star.STAR_TYPE_STATIC:Star.STAR_TYPE_MOVING;//star light
 		float y_star = rand.nextFloat() *10;//star
@@ -227,6 +227,19 @@ public class World implements UI, CONSTANTS {
 		stars.add(star2);//aggiunto da poco
 		////end star generate
 	}
+	public void generatePlatforms(){
+		float difficultnumb=70;
+		int type;
+		if(bob.position.y>WORLD_HEIGHT/2){
+			difficultnumb=200;
+			type=rand.nextFloat()>0.5f ? Platform.PLATFORM_TYPE_STATIC : Platform.PLATFORM_TYPE_MOVING;
+		}
+		else type=Platform.PLATFORM_TYPE_STATIC;
+		if (bob.position.y > 10 && platforms.size() < (this.bob.position.y/(WORLD_HEIGHT/difficultnumb))) {
+			Platform platform = new Platform(type,-10 + this.rand.nextFloat()*20, this.bob.position.y + this.rand.nextFloat()*100+10);
+			platforms.add(platform);
+		}
+		}
 
 	public void update (float deltaTime, float accelX) {
 		switch (this.state) {
@@ -235,6 +248,8 @@ public class World implements UI, CONSTANTS {
 			editPosition( deltaTime);
 			score += (int)bob.velocity.y/10;
 			if (this.freezeON)deltaTime /= 4;
+			generatePlatforms();
+			generateStars();
 			level.update(deltaTime);
 			updateSprings(deltaTime);
 			updateTexts(deltaTime);
@@ -242,7 +257,6 @@ public class World implements UI, CONSTANTS {
 			updatePlatforms(deltaTime);
 			updateSquirrels(deltaTime);
 			updateCoins(deltaTime);
-			addStarDynamic();
 			updateStar( deltaTime);
 			updateProjectiles(deltaTime);
 			updateExplosions(deltaTime);
@@ -257,13 +271,12 @@ public class World implements UI, CONSTANTS {
 
 		case CONSTANTS.GAME_LEVEL_END:
 			break;
+			
+		case CONSTANTS.MAIN_MENU:
+			break;
 
 		case CONSTANTS.GAME_OVER:
-			if (score >= Settings.highscores[4]){
-				scoretext.update(deltaTime, "NEW HIGHSCORE: " + score);
-				Settings.addScore(score);
-				Settings.save();
-			}
+		
 			break;
 
 		case CONSTANTS.GAME_PAUSED:
@@ -761,7 +774,7 @@ public class World implements UI, CONSTANTS {
 							explosions.offer(new Explosion(charlie.position.x, charlie.position.y,Platform.PLATFORM_WIDTH,Platform.PLATFORM_HEIGHT,0));
 							projectiles.remove(projectile);
 						}
-						else if(projectile.type==0)projectiles.remove(i);
+						else if(projectile.type==0)projectiles.remove(projectile);
 						charlie.life--;
 						/*platforms.remove(j);*/
 						break;

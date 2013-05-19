@@ -33,7 +33,7 @@ public interface UI {//WILL CONTROL TEXT RESIZE
 	public static final float TEXTSCALEX = SCREENWIDTH *0.0008f;//FIX ME IN CLASS
 	public static final float TEXTSCALEY = SCREENWIDTH *0.0008f;//FIX ME IN CLASS
 	//ICONS IN WORLD
-	public static final float INDICATORSIZE = SCREENWIDTH/7;
+	public static final float INDICATORSIZE = SCREENWIDTH > SCREENHEIGHT ? SCREENHEIGHT/9 : SCREENWIDTH/7;
 	public static final float AMMOPOSITIONX = SCREENWIDTH *0.82f;
 	public static final float AMMOPOSITIONY = SCREENHEIGHT * 0.9f;
 	public static final float POSITIONPORTAPROJX = AMMOPOSITIONX*1.04f;

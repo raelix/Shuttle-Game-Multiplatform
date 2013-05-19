@@ -194,7 +194,7 @@ public class CharScreen implements Screen {
 			Button button=buttons.get(i);
 			button.update(deltaTime);
 		}
-		updateScore();//controllo quanti punti sono stati conquistati
+		//updateScore();//controllo quanti punti sono stati conquistati
 		if(bob.position.x<320&&bob.position.x>0)state=1;
 		else if(bobfem.position.x<320&&bobfem.position.x>0)state=0;
 		else if(bobmil.position.x<320&&bobmil.position.x>0)state=2;
@@ -321,11 +321,12 @@ public class CharScreen implements Screen {
 	@Override
 	public void dispose () {
 	}
+	/*
 	private void updateScore(){
 		for (int i = 0; i < 5; i++) {
 			if (punteggio<Settings.highscores[i])punteggio=Settings.highscores[i];
 		}
-	}
+	}*/
 
 
 }
