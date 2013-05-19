@@ -228,14 +228,14 @@ public class World implements UI, CONSTANTS {
 		////end star generate
 	}
 	public void generatePlatforms(){
-		float difficultnumb=70;
+		float difficultnumber=170;
 		int type;
 		if(bob.position.y>WORLD_HEIGHT/2){
-			difficultnumb=200;
+			difficultnumber=300;
 			type=rand.nextFloat()>0.5f ? Platform.PLATFORM_TYPE_STATIC : Platform.PLATFORM_TYPE_MOVING;
 		}
 		else type=Platform.PLATFORM_TYPE_STATIC;
-		if (bob.position.y > 10 && platforms.size() < (this.bob.position.y/(WORLD_HEIGHT/difficultnumb))) {
+		if (bob.position.y > 10 && platforms.size() < (this.bob.position.y/(WORLD_HEIGHT/difficultnumber))) {
 			Platform platform = new Platform(type,-10 + this.rand.nextFloat()*20, this.bob.position.y + this.rand.nextFloat()*100+10);
 			platforms.add(platform);
 		}
