@@ -14,8 +14,7 @@ import com.badlogic.gdx.Gdx;
  */
 public class MultiWorld extends World {
 
-	private float precdelta;
-	private float precaccelx;
+	private float precdelta, precaccelx, precaccely;
 	protected static FullDuplexBuffer buffer = new FullDuplexBuffer();
 	public static String enemy = "";
 	public Bob bobMulti;
@@ -36,7 +35,9 @@ public class MultiWorld extends World {
 		switch (this.state) {
 		case CONSTANTS.GAME_RUNNING:
 			Pacco pkt;
-			while ((pkt = buffer.takePaccoInNOBLOCK()) != null) {
+			boolean flag = true;
+			//while ((pkt = buffer.takePaccoInNOBLOCK()) != null) {
+			if ((pkt = buffer.takePaccoInNOBLOCK()) != null) {
 				switch (pkt.getType()) {
 				case PROTOCOL_CONSTANTS.PACKET_TYPE_BOB_MULTI:
 					PaccoUpdateBobMulti pktbob;
@@ -48,7 +49,10 @@ public class MultiWorld extends World {
 					}
 					this.precdelta = pktbob.getDeltaTime();
 					this.precaccelx = pktbob.getAccelX();
-					updateBobMulti(this.precdelta,this.precaccelx);
+					this.precaccely = pktbob.getAccelY();
+					//Gdx.app.debug("pkt component", "precdelta= "+ this.precdelta + "accelx= "+ this.precaccelx +" accely= "+this.precaccely);
+					updateBobMulti(this.precdelta,this.precaccelx,this.precaccely);
+					flag = false;
 					break;
 				case PROTOCOL_CONSTANTS.PACKET_END:
 					this.state = CONSTANTS.GAME_LEVEL_END;
@@ -61,7 +65,9 @@ public class MultiWorld extends World {
 					break;
 				}
 			}
-			buffer.putPaccoOutNOBLOCK(new PaccoUpdateBobMulti(deltaTime, accelX));
+			//if (flag) bobMulti.update(deltaTime);
+			//Gdx.app.debug("pkt component2", "precdelta= "+ deltaTime + "accelx= "+ accelX +" accely= " + this.bob.velocity.y);
+			buffer.putPaccoOutNOBLOCK(new PaccoUpdateBobMulti(deltaTime, bob.position.x, bob.position.y));
 			if (this.life == 0) {
 				buffer.putPaccoOutNOBLOCK(new PaccoEnd());
 				this.state = CONSTANTS.GAME_OVER;
@@ -70,8 +76,7 @@ public class MultiWorld extends World {
 			for (int i = 0; i < projEnemy.size(); i++) {
 				Projectile projectile = projEnemy.get(i);
 				projectile.update(deltaTime);
-				int j=0;
-				for(j=0;j<platforms.size();j++) {
+				for(int j=0;j<platforms.size();j++) {
 					Platform platform=platforms.get(j);
 					if (OverlapTester.overlapRectangles(platform.bounds, projectile.bounds)) {
 						bob.hitPlatform();
@@ -83,20 +88,20 @@ public class MultiWorld extends World {
 						break;
 					}
 					if (OverlapTester.overlapRectangles(bob.bounds, projectile.bounds)){
-					  projEnemy.remove(i--);
-					  this.LifeLess();
+						projEnemy.remove(i--);
+						this.LifeLess();
 					}
 				}
 				if (projectile.position.y > bobMulti.position.y+11){ 
 					projEnemy.remove(i--);
 				}
-			}
+			}/*
 			if(OverlapTester.overlapRectangles(bob.bounds, bobMulti.bounds)){
 				bob.hitPlatform();
 				Gdx.input.vibrate(new long[] { 1, 20}, -1); 
 				bob.gravity.x=-10;
 				bobMulti.gravity.x=10;
-			}
+			}*/
 			for(int i=0;i<projectiles.size();i++){
 				Projectile projectile=projectiles.get(i);
 				if (OverlapTester.overlapRectangles(bobMulti.bounds, projectile.bounds)) {
@@ -106,7 +111,7 @@ public class MultiWorld extends World {
 						explosions.offer(new Explosion(bobMulti.position.x, bobMulti.position.y,Platform.PLATFORM_WIDTH,Platform.PLATFORM_HEIGHT,0));
 						projectiles.remove(projectile);
 					}
-					else if(projectile.type==0)projectiles.remove(projectile);
+					else if (projectile.type==0) projectiles.remove(projectile);
 					break;
 				}
 			}
@@ -114,9 +119,12 @@ public class MultiWorld extends World {
 		}
 	}
 
+	private void updateBobMulti (float deltaTime, float accelX, float accelY) {
+//		bobMulti.position.add(((-accelX / 10) * Bob.BOB_MOVE_VELOCITY)* deltaTime, accelY * deltaTime);
+		bobMulti.position.x=accelX ;
+		bobMulti.position.y=accelY ;
+		Gdx.app.debug("updatebobmulti","deltatime="+deltaTime+"accX="+accelX+"accY="+accelY);
+		Gdx.app.debug("updatebobomulti", "bobMulti.position.y = " + bobMulti.position.y + " bob.position.y = " + bob.position.y);
 
-private void updateBobMulti (float deltaTime, float accelX) {
-	bobMulti.velocity.x = -accelX / 10 * Bob.BOB_MOVE_VELOCITY;
-	bobMulti.update(deltaTime);
-}
+	}
 }

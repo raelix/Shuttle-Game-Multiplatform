@@ -22,7 +22,7 @@ import com.badlogic.gdx.math.Vector3;
 
 public class MultiplayerScreen implements Screen {
 	public static final int PORT = 10000;
-	public static final String IPTOCONNECT = "192.168.1.130";
+	public static final String IPTOCONNECT = "192.168.1.133";
 	Game game;
 	public final List<Button> buttons;
 	OrthographicCamera guiCam;
@@ -51,9 +51,9 @@ public class MultiplayerScreen implements Screen {
 		ServerBounds = new Rectangle(100, 260, 300, 20);
 		touchPoint = new Vector3();
 		batcher = new SpriteBatch();
-		Button button = new Button(90,230,Assets.resume);
+		Button button = new Button(90 ,230 , UI.SCREENWIDTH/2,UI.SCREENHEIGHT ,Assets.resume);
 		buttons.add(button);
-		Button buttones = new Button(90,180,Assets.quit);
+		Button buttones = new Button(90 ,180 , UI.SCREENWIDTH/2,0,Assets.quit);
 		buttons.add(buttones);
 	}
 
@@ -82,9 +82,11 @@ public class MultiplayerScreen implements Screen {
 					sem.acquire();
 				} catch (InterruptedException e) {
 					str = "ERROR.";
+					Gdx.app.debug("PHTEST", str);
 					return;
 				}
 				str = "CONNECTED";
+				Gdx.app.debug("PHTEST", "connected");
 				game.setScreen(new MultiGameScreen(game,seed));
 			} else if (OverlapTester.pointInRectangle(ServerBounds, touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);
@@ -100,6 +102,7 @@ public class MultiplayerScreen implements Screen {
 					sem.acquire();
 				} catch (InterruptedException e) {
 					str = "ERROR.";
+					Gdx.app.debug("PHTEST", str);
 					return;
 				}
 				str = "CONNECTED";
@@ -167,8 +170,6 @@ public class MultiplayerScreen implements Screen {
 	}
 
 	public void test() {
-
-
 		Socket smtpSocket = null;  
 		DataOutputStream os = null;
 		DataInputStream is = null;

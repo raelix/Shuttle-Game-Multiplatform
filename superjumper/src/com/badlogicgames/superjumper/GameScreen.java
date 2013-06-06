@@ -282,8 +282,8 @@ public class GameScreen implements Screen, CONSTANTS {
 
 	@Override
 	public void pause () {
-		world.buttons.add(new Button(UI.BUTTONRESUMEPOSITIONX ,UI.BUTTONRESUMEPOSITIONY,Assets.resume));
-		world.buttons.add(new Button(UI.BUTTONQUITPOSITIONX,UI.BUTTONQUITPOSITIONY,Assets.quit));
+		world.buttons.add(new Button(UI.BUTTONRESUMEPOSITIONX ,UI.BUTTONRESUMEPOSITIONY ,UI.SCREENWIDTH,UI.SCREENHEIGHT/2-50 ,Assets.resume));
+		world.buttons.add(new Button(UI.BUTTONQUITPOSITIONX,UI.BUTTONQUITPOSITIONY ,UI.SCREENWIDTH,UI.SCREENHEIGHT/2-50 ,Assets.quit));
 		Assets.playSound(Assets.clickSound);
 		world.state = CONSTANTS.GAME_PAUSED;
 	}

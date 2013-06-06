@@ -36,6 +36,7 @@ import com.badlogic.gdx.math.Vector3;
 
 public class CharScreen implements Screen {
 	Game game;
+	Spring ruota;
 	float velX, velY;
 	boolean flinging = false;
 	float initialScale = 1;
@@ -65,6 +66,7 @@ public class CharScreen implements Screen {
 
 	public CharScreen (Game game) {
 		this.game = game;
+		this.ruota=new Spring(-160,-50);
 		this.bob = new Bob(centrox,centroy);
 		this.bobfem = new Bob(iniziox-100,inizioy);
 		this.bobmil = new Bob(iniziox-150,inizioy);
@@ -186,6 +188,7 @@ public class CharScreen implements Screen {
 				return;
 			}*/
 		}
+		ruota.update(deltaTime);
 		bob.update(deltaTime);
 		bobfem.update(deltaTime);
 		bobmil.update(deltaTime);
@@ -235,11 +238,14 @@ public class CharScreen implements Screen {
 		batcher.setProjectionMatrix(guiCam.combined);
 		batcher.disableBlending();
 		batcher.begin();
-		batcher.draw(Assets.choose,0,0,512,512);
+		batcher.draw(Assets.welcome, 0, 0, 512,512);
+		
 		//MainMenuScreen.drawGradient(batcher, Assets.rect, 0, 0, 320, 480,Color.BLACK,Color.BLUE, false);
 		batcher.end();
 		batcher.enableBlending();
 		batcher.begin();
+		ruota.draw(batcher, Assets.ruotaRegion,512+128,512+128);
+		batcher.draw(Assets.choose,0,0,512,512);
 		batcher.draw(Assets.icontext,275,10,45,45);
 		batcher.draw(Assets.icontextback,0,10,45,45);
 		//int len = buttons.size();

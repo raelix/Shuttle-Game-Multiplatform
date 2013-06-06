@@ -34,9 +34,7 @@ public class ConnectThread extends Thread {
 			sock = new Socket(dest,port);
 			btsock = new BTsocket(sock.getInputStream(),sock.getOutputStream());
 			OK2Send = true;
-			Gdx.app.debug("PHTEST", "rilascio sem (connect thread)");
 			MultiplayerScreen.str = "CONNECT THREAD";
-
 			Gdx.app.debug("PHTEST", "CONNECTTHREAD():mando pkt welcome");
 			btsock.writePkt(new PaccoWelcome("TEST"));
 			Pacco p = btsock.readPkt();
@@ -63,7 +61,7 @@ public class ConnectThread extends Thread {
 				return;
 			}
 			//FIXME set seed
-			Gdx.app.debug("PHTEST", "CONNECTTHREAD(): ricevuto packet start");
+			Gdx.app.debug("PHTEST", "CONNECTTHREAD(): ricevuto packet start, rilascio sem");
 			sem.release();
 			new SendThread().start();
 
@@ -90,7 +88,7 @@ public class ConnectThread extends Thread {
 			Gdx.app.debug("CONNECTTHREAD()", "ERROR IOException");
 			sem.release();
 		}
-		
+
 	}
 
 	void close(){
@@ -116,7 +114,9 @@ public class ConnectThread extends Thread {
 					Pacco pkt = buf.takePaccoOutBLOCK();
 					btsock.writePkt(pkt);
 					if (pkt.getType() == PROTOCOL_CONSTANTS.PACKET_END) break;
-				} catch (InterruptedException e) { }
+				} catch (InterruptedException e) {
+					Gdx.app.error("SendThread", "INTERRUPTEDEXCEPTION");
+				}
 			}
 		}
 	}

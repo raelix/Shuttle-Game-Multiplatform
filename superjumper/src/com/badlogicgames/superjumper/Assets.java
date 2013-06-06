@@ -15,6 +15,10 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public class Assets {
 	public static ParticleEffect particleEffect;
 	public static ParticleEffect particleClouds;
+	public static Texture mondofuc;
+	public static Texture mondoluna;
+	public static Texture mondoros;
+	public static Texture mondoterra;
 	public static Texture meteorablu;
 	public static Texture meteoragialla;
 	public static Texture meteorarosa;
@@ -84,12 +88,18 @@ public class Assets {
 	public static Texture lock,locked;
 	public static Texture welcome;
 	public static Texture choose;
+	public static Texture ruota;
 	public static Texture welcomemulti;
 	public static Texture welcomehigh;
 	public static Texture welcomepaused;
 	public static Texture resume,quit,ospita,partecipa;
 	public static Texture swipetext,swipe,swipe1,swipe2;
+	public static TextureRegion mondofucRegion;
+	public static TextureRegion mondolunaRegion;
+	public static TextureRegion mondorosRegion;
+	public static TextureRegion mondoterraRegion;
 	public static TextureRegion meteoragrigiaRegion;
+	public static TextureRegion ruotaRegion;
 	public static TextureRegion meteorabluRegion;
 	public static TextureRegion meteoragiallaRegion;
 	public static TextureRegion meteorarosaRegion;
@@ -198,6 +208,10 @@ public class Assets {
 		nos2 = loadTexture("data/portanos3.png");
 		star1 = loadTexture("data/particle1.png");
 		star2 = loadTexture("data/particle2.png");
+		mondofuc = loadTexture("data/mondofuc.png");
+		mondoluna = loadTexture("data/mondoluna.png");
+		mondoros= loadTexture("data/mondoros.png");
+		mondoterra = loadTexture("data/mondoterra.png");
 		nuvole = loadTexture("data/cloud.png");
 		nuvole1 = loadTexture("data/cloud1.png");
 		nuvole2 = loadTexture("data/cloud2.png");
@@ -243,6 +257,7 @@ public class Assets {
 		lock=loadTexture("data/lock.png");
 		locked=loadTexture("data/locked.png");
 		welcome=loadTexture("data/welcome.png");
+		ruota=loadTexture("data/ruota.png");
 		choose=loadTexture("data/choosen.png");
 		welcomemulti=loadTexture("data/multi.png");
 		welcomehigh=loadTexture("data/high.png");
@@ -263,6 +278,10 @@ public class Assets {
 		ready = new TextureRegion(items, 320, 224, 192, 32);		
 		spring = new TextureRegion(items, 128, 0, 32, 32);
 		castle = new TextureRegion(items, 128, 64, 64, 64);
+		mondofucRegion=new TextureRegion(mondofuc, 0, 0, 256, 256);
+		mondolunaRegion=new TextureRegion(mondoluna, 0, 0, 256, 256);
+		mondorosRegion=new TextureRegion(mondoros, 0, 0, 256, 256);
+		mondoterraRegion=new TextureRegion(mondoterra, 0, 0, 256, 256);
 		meteoragrigiaRegion=new TextureRegion(coin1, 0, 0, 128, 128);
 		meteorabluRegion = new TextureRegion(meteorablu, 0, 0, 256, 256);
 		meteoragiallaRegion = new TextureRegion(meteoragialla, 0, 0, 256, 256);
@@ -274,6 +293,7 @@ public class Assets {
 		starRegion= new TextureRegion(star, 0, 0, 128, 128);
 		bubbles= new TextureRegion(bubble, 0, 0, 256, 256);
 		nos= new TextureRegion(portanos, 0, 0, 256, 256);
+		ruotaRegion= new TextureRegion(ruota, 0, 0, 512, 512);
 		enemyRegion = new TextureRegion(enemy, 0, 0, 512, 512);
 		enemyRegion1 = new TextureRegion(enemy1, 0, 0, 512, 512);
 		bubblesstart= new TextureRegion(bubblestart, 0, 0, 256, 256);
@@ -328,6 +348,7 @@ public class Assets {
 
 
 	private static void SetFilter(){
+		ruota.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		doubleportamissile.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		doubleportamissilebn.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		missile.setFilter(TextureFilter.Linear, TextureFilter.Linear);

@@ -204,8 +204,8 @@ public class WorldRenderer {
 
 	private void renderItems () {
 		for (Spring spring : world.springs) {
-			spring.draw(batch,Assets.coinAnim.getKeyFrame(0, Animation.ANIMATION_LOOPING));
-		}
+			spring.draw(batch);
+			}
 		for (Coin coin : world.coins) {
 			TextureRegion keyFrame = Assets.platform.getKeyFrame(coin.stateTime, Animation.ANIMATION_LOOPING);
 			batch.draw(keyFrame, coin.position.x - 1, coin.position.y - 0.25f, 2.5f, 2.5f);
