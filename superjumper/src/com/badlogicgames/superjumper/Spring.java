@@ -39,11 +39,11 @@ public class Spring extends DynamicGameObject {
 	
 	public void update(float deltaTime) {
 		position.add(velocity.x*deltaTime, velocity.y*deltaTime);
-		bounds.x = position.x - UI.SPRING_WIDTH / 2;
-		bounds.y = position.y - UI.SPRING_HEIGHT / 2;
 		this.stateTime += deltaTime*5;
 		rotation += deltaTime*70;
 		if (rotation > 360) rotation -= 360;
+		bounds.x = position.x - UI.SPRING_WIDTH / 2;
+		bounds.y = position.y - UI.SPRING_HEIGHT / 2;
 	}
 //	FIXME si potrebbe modificare di modo da avere dimensioni di ogni pianeta a random diverse e anche la rotazione a random diversa
 	public void draw (SpriteBatch batch) {

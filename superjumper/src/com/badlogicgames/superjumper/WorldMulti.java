@@ -184,7 +184,7 @@ public class WorldMulti implements PROTOCOL_CONSTANTS {
 		for (int i = 0; i < len; i++) {
 			Platform platform = platforms.get(i);
 			platform.update(deltaTime);
-			if (platform.state == Platform.PLATFORM_STATE_PULVERIZING && platform.stateTime > Platform.PLATFORM_PULVERIZE_TIME) {
+			if ( platform.stateTime > Platform.PLATFORM_PULVERIZE_TIME) {
 				platforms.remove(platform);
 				len = platforms.size();
 			}
@@ -288,7 +288,7 @@ public class WorldMulti implements PROTOCOL_CONSTANTS {
 				{
 					Projectile projectile=projectiles.get(i);
 					Platform platform=platforms.get(j);
-					if (platform.state != Platform.PLATFORM_STATE_PULVERIZING && OverlapTester.overlapRectangles(platform.bounds, projectile.bounds)) {
+					if ( OverlapTester.overlapRectangles(platform.bounds, projectile.bounds)) {
 						Gdx.input.vibrate(new long[] { 1, 100, 60, 100}, -1); 
 						projectiles.remove(i);
 						i--;
@@ -337,7 +337,7 @@ public class WorldMulti implements PROTOCOL_CONSTANTS {
 				{
 					Projectile projectile=projectiles.get(i);
 					Platform platform=platforms.get(j);
-					if (platform.state != Platform.PLATFORM_STATE_PULVERIZING && OverlapTester.overlapRectangles(platform.bounds, projectile.bounds)) {
+					if ( OverlapTester.overlapRectangles(platform.bounds, projectile.bounds)) {
 						Gdx.input.vibrate(new long[] { 1, 100, 60, 100}, -1); 
 						projectiles.remove(i);
 						i--;
@@ -430,7 +430,7 @@ public class WorldMulti implements PROTOCOL_CONSTANTS {
 		for (int i = 0; i < len; i++) {
 			Platform platform = platforms.get(i);
 			if (bobMulti.position.y > platform.position.y) {
-				if (platform.state != Platform.PLATFORM_STATE_PULVERIZING && OverlapTester.overlapRectangles(bobMulti.bounds, platform.bounds)) {
+				if ( OverlapTester.overlapRectangles(bobMulti.bounds, platform.bounds)) {
 					bobMulti.hitPlatform();
 					Turbo();
 					Gdx.input.vibrate(new long[] { 1, 20,10, 5}, -1); 
@@ -452,7 +452,7 @@ public class WorldMulti implements PROTOCOL_CONSTANTS {
 		for (int i = 0; i < len; i++) {
 			Platform platform = platforms.get(i);
 			if (bob.position.y > platform.position.y) {
-				if (platform.state != Platform.PLATFORM_STATE_PULVERIZING && OverlapTester.overlapRectangles(bob.bounds, platform.bounds)) {
+				if (OverlapTester.overlapRectangles(bob.bounds, platform.bounds)) {
 					bob.hitPlatform();
 					Turbo();
 					Gdx.input.vibrate(new long[] { 1, 20,10, 5}, -1); 

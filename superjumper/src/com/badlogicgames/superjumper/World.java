@@ -131,12 +131,13 @@ public class World implements UI, CONSTANTS {
 		int type;
 		if(bob.position.y>WORLD_HEIGHT/2){
 			difficultnumber=150;
-			type=randgenerate.nextFloat()>0.5f ? Platform.PLATFORM_TYPE_STATIC : Platform.PLATFORM_TYPE_MOVING;
+			type=randgenerate.nextFloat()>0.5f ? Platform.PLATFORM_TYPE_MOVING : Platform.PLATFORM_STATE_CIRCLE;
 		}
-		else type=Platform.PLATFORM_TYPE_STATIC;
-		if (bob.position.y > 10 && platforms.size() < (this.bob.position.y/(WORLD_HEIGHT/difficultnumber))) {
+		else type=randgenerate.nextFloat()>0.3f ?Platform.PLATFORM_STATE_CIRCLE:Platform.PLATFORM_TYPE_STATIC;
+		if (bob.position.y > 10 && platforms.size() < (this.bob.position.y/(WORLD_HEIGHT/difficultnumber)) ) {
 			platforms.offer(new Platform(type,-10 + this.randgenerate.nextFloat()*20, this.bob.position.y + this.randgenerate.nextFloat()*100+10));
 		}
+		
 	}
 
 	private void generateCoins() {
@@ -150,8 +151,10 @@ public class World implements UI, CONSTANTS {
 
 	private void generateSprings() {
 		final int k = 15;
-		if (springs.isEmpty() || !this.springs.isEmpty() && springs.size() < 5 && this.springs.getLast().position.y < bob.position.y + k*2)
+		if (springs.isEmpty() || !this.springs.isEmpty() && springs.size() < 5 && this.springs.getLast().position.y < bob.position.y + k*2){
 			springs.offer(new Spring(randgenerate.nextFloat() * WORLD_WIDTH, bob.position.y + k));
+		platforms.offer(new Platform(Platform.PLATFORM_STATE_CIRCLE,randgenerate.nextFloat() * WORLD_WIDTH, bob.position.y + k,springs.getLast()));
+		}		
 	}
 
 	private void generateSquirrels() {
@@ -435,14 +438,16 @@ public class World implements UI, CONSTANTS {
 			platforms.remove(0);*/
 		for (int i = 0; i < platforms.size(); i++) {
 			Platform plat = platforms.get(i);
+			
 			if (plat.type == Platform.PLATFORM_TYPE_MOVING && bob.position.y-plat.position.y>-9){
 				Utils.changeGravityTowards(plat, bob);
 			}
+			
 			plat.update(deltaTime);
 			if (plat.position.y < bob.position.y-5){ 
 				platforms.remove(i--);
-			}
-		}
+			}}
+		
 	}
 	private void updateSquirrels (float deltaTime) {
 		if (squirrels.size() > 1 && squirrels.peek().position.y < bob.position.y - 5 ) 
