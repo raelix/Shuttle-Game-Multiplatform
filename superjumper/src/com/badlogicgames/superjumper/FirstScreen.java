@@ -34,7 +34,7 @@ import com.badlogic.gdx.math.Vector3;
 public class FirstScreen implements Screen {
 	Game game;
 	Spring ruota;
-	LinkedList<FloatingText> testo;
+	LinkedList<Text> testo;
 	OrthographicCamera guiCam;
 	SpriteBatch batcher;
 	Rectangle clickBounds;
@@ -44,14 +44,14 @@ public class FirstScreen implements Screen {
 
 	public FirstScreen (Game game) {
 		this.game = game;
-		this.ruota=new Spring(-300,-30);
-		this.testo=new LinkedList<FloatingText>();
-		this.testo.offer(new FloatingText(UI.HALFSCREENWIDTH,UI.FIRSTEXT+50, "Welcome",0.2f));
-		this.testo.offer(new FloatingText(UI.HALFSCREENWIDTH,UI.SECONDTEXT+50, "To",0.2f));
-		this.testo.offer(new FloatingText(UI.HALFSCREENWIDTH,UI.THIRDTEXT+50,"Game",0.2f));
-		guiCam = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		guiCam.position.set(Gdx.graphics.getWidth()/ 2, Gdx.graphics.getHeight() /2, 0);
-		clickBounds = new Rectangle(0, 0, Gdx.graphics.getWidth(),  Gdx.graphics.getHeight());
+		this.testo=new LinkedList<Text>();
+		guiCam = new OrthographicCamera(UI.SCREENWIDTH,UI.SCREENHEIGHT);
+		guiCam.position.set(UI.HALFSCREENWIDTH, UI.HALFSCREENHEIGHT, 0);
+		this.ruota=new Spring(UI.RUOTAPOSITIONX,UI.RUOTAPOSITIONY);
+		this.testo.offer(new Text(UI.FIRSTEXTX, UI.FIRSTEXTY, UI.SCREENWIDTH/2,UI.SCREENHEIGHT, "Welcome"));
+		this.testo.offer(new Text(UI.SECONDTEXTX,UI.SECONDTEXTY,UI.SCREENWIDTH,UI.SCREENHEIGHT/2, "To"));
+		this.testo.offer(new Text(UI.THIRDTEXTX,UI.THIRDTEXTY,UI.SCREENWIDTH/2,0,"Game"));
+		clickBounds = new Rectangle(0, 0, UI.SCREENWIDTH, UI.SCREENHEIGHT);
 		touchPoint = new Vector3();
 		batcher = new SpriteBatch();
 	}
@@ -59,9 +59,7 @@ public class FirstScreen implements Screen {
 	public void update (float deltaTime) {
 		ruota.update(deltaTime);
 		for(int i=0;i<testo.size();i++){
-		if ( testo.get(i).stateTime > testo.get(i).duration)
-			testo.get(i).update(0);
-		else testo.get(i).update(deltaTime);
+			testo.get(i).updateAnim(deltaTime);
 		}
 			if (Gdx.input.justTouched()) {
 			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
@@ -82,23 +80,17 @@ public class FirstScreen implements Screen {
 		batcher.disableBlending();
 		batcher.begin();
 		batcher.draw(Assets.welcome, 0, 0, UI.SCREENPOSITIONX,UI.SCREENPOSITIONY);
-		
-		//MainMenuScreen.drawGradient(batcher, Assets.rect, 0, 0, 320, 480,Color.BLACK,Assets.colore, false);
 		batcher.end();
 		batcher.enableBlending();
 		batcher.begin();
-		ruota.draw(batcher, Assets.ruotaRegion,Gdx.graphics.getHeight()+150f,Gdx.graphics.getHeight()+150f);
-		//batcher.draw(Assets.ruota, 0, 0, UI.SCREENWIDTH,UI.SCREENHEIGHT);
-		
+		ruota.draw(batcher, Assets.ruotaRegion,UI.RUOTASIZE,UI.RUOTASIZE);
 		Assets.handfontsmall.scale(-UI.FIRSTSCREENTEXTSCALE);
 		Assets.handfontsmall.getRegion().getTexture().setFilter(TextureFilter.MipMapLinearNearest, TextureFilter.MipMapLinearNearest);
 		for(int i=0;i<testo.size();i++)
-		testo.get(i).draw(batcher);
+		testo.get(i).drawAnim(batcher);
 		Assets.handfontsmall.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		Assets.handfontsmall.scale(UI.FIRSTSCREENTEXTSCALE);
-		//batcher.draw(Assets.icontextback, 320, 0, -54, 54);
 		batcher.end();
-
 		gl.glDisable(GL10.GL_BLEND);
 	}
 
