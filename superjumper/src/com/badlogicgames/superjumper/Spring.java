@@ -62,7 +62,7 @@ public class Spring extends DynamicGameObject {
 			break;
 		case 3:
 			//batch.draw(Assets.meteoragiallaRegion, platform.position.x - 0.75f, platform.position.y - 0.75f, Platform.PLATFORM_WIDTH, Platform.PLATFORM_HEIGHT);
-			batch.draw(texture4,this.position.x - 0.75f,this.position.y,UI.SPRING_WIDTH/2,UI.SPRING_HEIGHT/ 2, UI.SPRING_WIDTH,UI.SPRING_HEIGHT , 1, 1, this.rotation);
+			batch.draw(texture4,this.position.x - 0.75f,this.position.y,UI.SPRING_WIDTH/2,UI.SPRING_HEIGHT/ 2, UI.SPRING_WIDTH,UI.SPRING_HEIGHT , 1, 1, this.rotation/2);
 			break;
 		default:
 			//Gdx.app.debug("RENDERPLATFORMS", "platform.rendertype = " + this.rendertype);

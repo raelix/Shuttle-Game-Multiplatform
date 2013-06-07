@@ -16,6 +16,8 @@ public class Assets {
 	public static ParticleEffect particleEffect;
 	public static ParticleEffect particleClouds;
 	public static Texture mondofuc;
+	public static Texture patterngreen;
+	public static Texture patternfucs;
 	public static Texture mondoluna;
 	public static Texture mondoros;
 	public static Texture mondoterra;
@@ -94,6 +96,8 @@ public class Assets {
 	public static Texture welcomepaused;
 	public static Texture resume,quit,ospita,partecipa;
 	public static Texture swipetext,swipe,swipe1,swipe2;
+	public static TextureRegion patterngreenRegion;
+	public static TextureRegion patternfucsRegion;
 	public static TextureRegion mondofucRegion;
 	public static TextureRegion mondolunaRegion;
 	public static TextureRegion mondorosRegion;
@@ -192,6 +196,8 @@ public class Assets {
 		doubleportamissile= loadTexture("data/doubleportamissile.png");
 		doubleportamissilebn = loadTexture("data/doubleportamissilebn.png");
 		portamissilebn = loadTexture("data/portamissilebn.png");
+		patternfucs = loadTexture("data/pattfucs.png");
+		patterngreen = loadTexture("data/pattgreen.png");
 		missile = loadTexture("data/missile.png");
 		meteorablu = loadTexture("data/metblu.png");
 		meteoragialla = loadTexture("data/metgialla.png");
@@ -278,6 +284,8 @@ public class Assets {
 		ready = new TextureRegion(items, 320, 224, 192, 32);		
 		spring = new TextureRegion(items, 128, 0, 32, 32);
 		castle = new TextureRegion(items, 128, 64, 64, 64);
+		patterngreenRegion=new TextureRegion(patterngreen, 0, 0, 256, 256);
+		patternfucsRegion=new TextureRegion(patternfucs, 0, 0, 256, 256);
 		mondofucRegion=new TextureRegion(mondofuc, 0, 0, 256, 256);
 		mondolunaRegion=new TextureRegion(mondoluna, 0, 0, 256, 256);
 		mondorosRegion=new TextureRegion(mondoros, 0, 0, 256, 256);
@@ -348,6 +356,8 @@ public class Assets {
 
 
 	private static void SetFilter(){
+		patternfucs.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+		patterngreen.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 		ruota.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		doubleportamissile.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		doubleportamissilebn.setFilter(TextureFilter.Linear, TextureFilter.Linear);

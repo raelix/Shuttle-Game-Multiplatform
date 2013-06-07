@@ -113,12 +113,13 @@ public class WorldRenderer {
 		//Gradient Background 
 		batch.disableBlending();
 		batch.begin();
-		drawGradient(batch, Assets.rect, 0, -2, 10, 110,Color.BLACK,Assets.colore, false);
+		drawGradient(batch, Assets.rect, 0, -2, 10, 100,Color.BLACK,Assets.colore, false);
 		batch.end();
 		batch.enableBlending();
 	}
 
 	public void renderObjects () {
+		renderGalaxies ();
 		renderStars();
 		renderBob();
 		renderPlatforms();
@@ -205,7 +206,7 @@ public class WorldRenderer {
 	private void renderItems () {
 		for (Spring spring : world.springs) {
 			spring.draw(batch);
-			}
+		}
 		for (Coin coin : world.coins) {
 			TextureRegion keyFrame = Assets.platform.getKeyFrame(coin.stateTime, Animation.ANIMATION_LOOPING);
 			batch.draw(keyFrame, coin.position.x - 1, coin.position.y - 0.25f, 2.5f, 2.5f);
@@ -296,16 +297,43 @@ public class WorldRenderer {
 		}
 	}
 
+	private void renderGalaxies () {
+		int len = world.galaxies.size();
+		for (int i = 0; i < len; i++) {
+			Galaxy galaxy = world.galaxies.get(i);
+			TextureRegion keyFrame = Assets.star1Region;
+			if (galaxy.type == Galaxy.GALAXY_TYPE_MOVING ) {
+				switch(galaxy.choose){
+				case 0:
+					keyFrame = Assets.patternfucsRegion;
+					batch.draw(keyFrame,galaxy.position.x , galaxy.position.y ,galaxy.size/2,galaxy.size/2, galaxy.size, galaxy.size, 1, 1, galaxy.choose*2);
+					//batch.draw(keyFrame, galaxy.position.x , galaxy.position.y , galaxy.size,  galaxy.size);
+				case 1:
+					keyFrame = Assets.patterngreenRegion;
+					batch.draw(keyFrame,galaxy.position.x , galaxy.position.y ,galaxy.size/2,galaxy.size/2, galaxy.size, galaxy.size, 1, 1, galaxy.choose*3);
+				}}
+			else if(galaxy.type == Galaxy.GALAXY_TYPE_STATIC ){
+				switch(galaxy.choose){
+				case 0:
+					keyFrame = Assets.patternfucsRegion;
+					batch.draw(keyFrame,galaxy.position.x , galaxy.position.y ,galaxy.size/2,galaxy.size/2, galaxy.size, galaxy.size, 1, 1, galaxy.choose);
+				case 1:
+					keyFrame = Assets.patterngreenRegion;
+					batch.draw(keyFrame,galaxy.position.x , galaxy.position.y ,galaxy.size/2,galaxy.size/2, galaxy.size, galaxy.size, 1, 1, galaxy.choose*-4);
+				}
+			}
+		}}
+
 	private void renderEnemy(){
 		TextureRegion keyFrame;
 		for (Enemy charlie : world.enemies){
-		switch(charlie.type){
-		case 0:
-			keyFrame = Assets.enemyRegion;
-			batch.draw(keyFrame, charlie.position.x-1.5f , charlie.position.y-0.8f , 2f, 2f);
-		case 1:
-			keyFrame= Assets.enemyRegion1;
-			batch.draw(keyFrame, charlie.position.x-1.5f , charlie.position.y-0.8f , 2f, 2f);
+			switch(charlie.type){
+			case 0:
+				keyFrame = Assets.enemyRegion;
+				batch.draw(keyFrame, charlie.position.x-1.5f , charlie.position.y-0.8f , 2f, 2f);
+			case 1:
+				keyFrame= Assets.enemyRegion1;
+				batch.draw(keyFrame, charlie.position.x-1.5f , charlie.position.y-0.8f , 2f, 2f);
 			}
 		}
 	}

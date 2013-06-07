@@ -21,9 +21,9 @@ public class World implements UI, CONSTANTS {
 	public final int PLATFORMS_DISTANCE = 10;
 	public final int STARS_DISTANCE = 1;
 	public final Bob bob;
-
 	public final LinkedList<Platform> platforms;
 	public final LinkedList<Star> stars;
+	public final LinkedList<Galaxy> galaxies;
 	public final LinkedList<Spring> springs;
 	public final LinkedList<Squirrel> squirrels;
 	public final List<Projectile> projectiles;
@@ -66,7 +66,7 @@ public class World implements UI, CONSTANTS {
 
 	public World () {
 		this.bob = new Bob(4, 2);
-		//this.charlie = new Enemy(5,200);
+		this.galaxies=new LinkedList<Galaxy>();
 		this.platforms = new LinkedList<Platform>();
 		this.stars = new LinkedList<Star>();
 		this.projectiles = new ArrayList<Projectile>();
@@ -94,6 +94,49 @@ public class World implements UI, CONSTANTS {
 
 	protected void generateLevel () {
 		castle = new Castle(WORLD_WIDTH / 2, WORLD_HEIGHT - 10);
+	}
+
+	private void generateStars(){
+		//star generate
+		if (stars.size() < 512) {
+			int type_star = rand.nextFloat()>0.3?Star.STAR_TYPE_STATIC:Star.STAR_TYPE_MOVING;//star light
+			float y_star = rand.nextFloat() *10;//star
+			float x_star = rand.nextFloat() *10;//star
+			Star star = new Star(type_star, x_star, y_star+bob.position.y+13);
+			Star star1 = new Star(type_star, x_star, y_star+bob.position.y+9);
+			Star star2 = new Star(Star.STAR_TYPE_STATIC, x_star, y_star+bob.position.y-3);//aggiunto da poco
+			stars.offer(star);
+			stars.offer(star1);//aggiunto da poco
+			stars.offer(star2);//aggiunto da poco
+			////end star generate
+		}
+	}
+
+	private void generateGalaxies(){
+		//galaxies generate
+		if (galaxies.size() < 5) {
+			int type_galaxies = rand.nextFloat()>0.5?Galaxy.GALAXY_TYPE_STATIC:Galaxy.GALAXY_TYPE_MOVING;//star light
+			float y_galaxies = rand.nextFloat() *10;//star
+			float x_galaxies = rand.nextFloat() * -2;//star
+			float size = rand.nextFloat() * 25f;
+			//size=size >10f?rand.nextFloat() * 15f:size;
+			Galaxy galaxy = new Galaxy(type_galaxies, x_galaxies, y_galaxies+bob.position.y+13,size,size);
+			galaxies.offer(galaxy);
+			////end galaxies generate
+		}
+	}
+
+	public void generatePlatforms(){
+		float difficultnumber=100;
+		int type;
+		if(bob.position.y>WORLD_HEIGHT/2){
+			difficultnumber=150;
+			type=randgenerate.nextFloat()>0.5f ? Platform.PLATFORM_TYPE_STATIC : Platform.PLATFORM_TYPE_MOVING;
+		}
+		else type=Platform.PLATFORM_TYPE_STATIC;
+		if (bob.position.y > 10 && platforms.size() < (this.bob.position.y/(WORLD_HEIGHT/difficultnumber))) {
+			platforms.offer(new Platform(type,-10 + this.randgenerate.nextFloat()*20, this.bob.position.y + this.randgenerate.nextFloat()*100+10));
+		}
 	}
 
 	private void generateCoins() {
@@ -192,34 +235,7 @@ public class World implements UI, CONSTANTS {
 	}
 
 
-	private void generateStars(){
-		//star generate
-		if (stars.size() < 512) {
-			int type_star = rand.nextFloat()>0.3?Star.STAR_TYPE_STATIC:Star.STAR_TYPE_MOVING;//star light
-			float y_star = rand.nextFloat() *10;//star
-			float x_star = rand.nextFloat() *10;//star
-			Star star = new Star(type_star, x_star, y_star+bob.position.y+13);
-			Star star1 = new Star(type_star, x_star, y_star+bob.position.y+9);
-			Star star2 = new Star(Star.STAR_TYPE_STATIC, x_star, y_star+bob.position.y-3);//aggiunto da poco
-			stars.offer(star);
-			stars.offer(star1);//aggiunto da poco
-			stars.offer(star2);//aggiunto da poco
-			////end star generate
-		}
-	}
 
-	public void generatePlatforms(){
-		float difficultnumber=170;
-		int type;
-		if(bob.position.y>WORLD_HEIGHT/2){
-			difficultnumber=300;
-			type=randgenerate.nextFloat()>0.5f ? Platform.PLATFORM_TYPE_STATIC : Platform.PLATFORM_TYPE_MOVING;
-		}
-		else type=Platform.PLATFORM_TYPE_STATIC;
-		if (bob.position.y > 10 && platforms.size() < (this.bob.position.y/(WORLD_HEIGHT/difficultnumber))) {
-			platforms.offer(new Platform(type,-10 + this.randgenerate.nextFloat()*20, this.bob.position.y + this.randgenerate.nextFloat()*100+10));
-		}
-	}
 
 	public void update (float deltaTime, float accelX) {
 		switch (this.state) {
@@ -229,6 +245,7 @@ public class World implements UI, CONSTANTS {
 			score += (int)bob.velocity.y/10;
 			if (this.freezeON) deltaTime /= 4;
 			generatePlatforms();
+			generateGalaxies();
 			generateStars();
 			generateSprings();
 			generateSquirrels();
@@ -240,6 +257,7 @@ public class World implements UI, CONSTANTS {
 			updatePlatforms(deltaTime);
 			updateSquirrels(deltaTime);
 			updateCoins(deltaTime);
+			updateGalaxy(deltaTime);
 			updateStar(deltaTime);
 			updateProjectiles(deltaTime);
 			updateExplosions(deltaTime);
@@ -403,6 +421,15 @@ public class World implements UI, CONSTANTS {
 		}
 	}
 
+	private void updateGalaxy(float deltaTime){
+		for (int i = 0; i < galaxies.size(); i++) {
+			Galaxy galaxy = galaxies.get(i);
+			galaxy.update(deltaTime);
+			if (galaxy.position.y < bob.position.y-35){ 
+				galaxies.remove(i--);}
+		}
+	}
+
 	private void updatePlatforms (float deltaTime) {
 		/*if (platforms.size() > 1 && bob.position.y > platforms.get(0).position.y+5) 
 			platforms.remove(0);*/
@@ -440,7 +467,7 @@ public class World implements UI, CONSTANTS {
 			projectile.update(deltaTime);
 			if (projectile.position.y > bob.position.y+11){ 
 				projectiles.remove(i--);
-				}
+			}
 		}
 	}
 
