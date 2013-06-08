@@ -39,8 +39,9 @@ public class World implements UI, CONSTANTS {
 	public int state;
 	public int shot=10;
 	public int nosinuse=0;
+	public int premiumlife=0;
 	public boolean turbo=true;
-	public int life=100;
+	public int life=10;
 	public float freeze=100;
 	public int missiles = 0;
 	public int print1times=0;
@@ -225,6 +226,14 @@ public class World implements UI, CONSTANTS {
 	public void TurboLess()	{
 		bob.velocity.y=12;
 	}
+	
+	public void PremiumLife()	{
+		if(premiumlife>=10){
+		this.texts.offer(new FloatingText("premium life +5", 0));
+		life=life+5;
+		premiumlife=0;
+		}
+	}
 
 	public void Slows(){
 		bob.velocity.y=4;
@@ -258,6 +267,7 @@ public class World implements UI, CONSTANTS {
 			generateSquirrels();
 			generateCoins();
 			level.update(deltaTime);
+			PremiumLife();
 			updateSprings(deltaTime);
 			updateTexts(deltaTime);
 			updateBob(deltaTime, accelX);
@@ -605,6 +615,8 @@ public class World implements UI, CONSTANTS {
 			if (OverlapTester.overlapRectangles(bob.bounds, spring.bounds)) {
 				Assets.playSound(Assets.soundExplosion1);
 				score += 300;
+				premiumlife++;
+//				Gdx.app.debug("premiumlife= ", "pl= "+premiumlife);
 				explosions.offer(new Explosion(spring.position.x-0.75f, spring.position.y-0.75f ,UI.SPRING_WIDTH*2, UI.SPRING_HEIGHT*2, 0.25f));
 				springs.remove(i--);
 				break;
