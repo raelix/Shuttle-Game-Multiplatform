@@ -172,6 +172,14 @@ public class Assets {
 	public static Sound hitSound;
 	public static Sound coinSound;
 	public static Sound clickSound;
+	public static Sound soundBubble;
+	public static Sound soundBulletime;
+	public static Sound soundNos;
+	public static Sound soundShot;
+	public static Sound soundExplosion;
+	public static Sound soundExplosion1;
+	public static Sound soundClick;
+	public static Sound soundRocket;
 	public static Music music;
 	public static Color colore;
 
@@ -352,6 +360,15 @@ public class Assets {
 		hitSound = Gdx.audio.newSound(Gdx.files.internal("data/hit.wav"));
 		coinSound = Gdx.audio.newSound(Gdx.files.internal("data/coin.wav"));
 		clickSound = Gdx.audio.newSound(Gdx.files.internal("data/click.wav"));
+	
+		soundBubble = Gdx.audio.newSound(Gdx.files.internal("data/bubble.wav"));
+		soundBulletime = Gdx.audio.newSound(Gdx.files.internal("data/bulletime.wav"));
+		soundNos = Gdx.audio.newSound(Gdx.files.internal("data/nos.wav"));
+		soundShot = Gdx.audio.newSound(Gdx.files.internal("data/shot.wav"));
+		soundExplosion = Gdx.audio.newSound(Gdx.files.internal("data/explosion.wav"));
+		soundExplosion1 = Gdx.audio.newSound(Gdx.files.internal("data/explosion1.wav"));
+		soundClick = Gdx.audio.newSound(Gdx.files.internal("data/click.wav"));
+		soundRocket = Gdx.audio.newSound(Gdx.files.internal("data/missile.wav"));
 	}
 
 

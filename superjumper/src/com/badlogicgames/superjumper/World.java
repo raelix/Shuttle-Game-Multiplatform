@@ -233,6 +233,7 @@ public class World implements UI, CONSTANTS {
 
 	public void ShotProjectile() {
 		if(shot>0){
+			Assets.playSound(Assets.soundShot);
 			Gdx.input.vibrate(new long[] { 1, 20, 10, 20}, -1); 
 			Projectile projectile = new Projectile(bob.position.x,bob.position.y, Projectile.WIDTH, Projectile.HEIGHT);
 			projectile.setVelocity(0,25);
@@ -362,7 +363,7 @@ public class World implements UI, CONSTANTS {
 
 	private void updateScoreEnemyDied(Enemy charlie)
 	{
-
+		Assets.playSound(Assets.soundExplosion1);
 		//Gdx.app.debug("killtime:"+charlie.killtime, "stateTime:"+charlie.stateTime);
 		if(charlie.stateTime-charlie.killtime<3f)
 		{
@@ -523,10 +524,11 @@ public class World implements UI, CONSTANTS {
 						Slows();
 						LifeLess();
 						score -= 300;
+						Assets.playSound(Assets.soundExplosion);
 					}
 					explosions.offer(new Explosion(platform.position.x-Platform.PLATFORM_WIDTH/2, platform.position.y-Platform.PLATFORM_HEIGHT/2,Platform.PLATFORM_WIDTH*2,Platform.PLATFORM_HEIGHT*2,0));
 					platforms.remove(i--);
-					Assets.playSound(Assets.hitSound);
+					Assets.playSound(Assets.soundExplosion);
 					break;
 				}
 			}
@@ -575,7 +577,7 @@ public class World implements UI, CONSTANTS {
 					squirrel.inuse=true;
 					this.texts.offer(new FloatingText("munitions +30!",0));//FIXME
 				}   
-				Assets.playSound(Assets.hitSound);
+				Assets.playSound(Assets.coinSound);
 				squirrels.remove(i--);
 				break;
 			}
@@ -593,7 +595,6 @@ public class World implements UI, CONSTANTS {
 					nosinuse=0;
 					score -= 300;
 				} //else score += 300;
-				Assets.playSound(Assets.coinSound);
 				explosions.offer(new Explosion(coin.position.x, coin.position.y,Coin.COIN_WIDTH,Coin.COIN_HEIGHT,0));
 				coins.remove(i--);
 				break;
@@ -602,6 +603,7 @@ public class World implements UI, CONSTANTS {
 		for (int i = 0; i < springs.size(); i++) {
 			Spring spring = springs.get(i);
 			if (OverlapTester.overlapRectangles(bob.bounds, spring.bounds)) {
+				Assets.playSound(Assets.soundExplosion1);
 				score += 300;
 				explosions.offer(new Explosion(spring.position.x-0.75f, spring.position.y-0.75f ,UI.SPRING_WIDTH*2, UI.SPRING_HEIGHT*2, 0.25f));
 				springs.remove(i--);
@@ -644,11 +646,9 @@ public class World implements UI, CONSTANTS {
 			for(j=0;j<platforms.size();j++) {
 				Platform platform=platforms.get(j);
 				if (OverlapTester.overlapRectangles(platform.bounds, projectile.bounds)) {
-					//Turbo();
+					Assets.playSound(Assets.soundExplosion1);
 					Gdx.input.vibrate(new long[] { 1, 20}, -1); 
 					score += 100;
-					//turbo=turbo+1;
-					//shot=shot+5;
 					projectiles.remove(i--);
 					explosions.offer(new Explosion(platform.position.x-Platform.PLATFORM_WIDTH/2, platform.position.y-Platform.PLATFORM_HEIGHT/2,Platform.PLATFORM_WIDTH*2,Platform.PLATFORM_HEIGHT*2,0));
 					platforms.remove(j--);

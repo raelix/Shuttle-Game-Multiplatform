@@ -45,6 +45,7 @@ public class FirstScreen implements Screen {
 	public FirstScreen (Game game) {
 		this.game = game;
 		this.testo=new LinkedList<Text>();
+		Assets.playSound(Assets.soundRocket);
 		guiCam = new OrthographicCamera(UI.SCREENWIDTH,UI.SCREENHEIGHT);
 		guiCam.position.set(UI.HALFSCREENWIDTH, UI.HALFSCREENHEIGHT, 0);
 		this.ruota=new Spring(UI.RUOTAPOSITIONX,UI.RUOTAPOSITIONY);
