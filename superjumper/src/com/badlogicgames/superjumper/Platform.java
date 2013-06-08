@@ -8,8 +8,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Platform extends DynamicGameObject {
-	public static final float PLATFORM_WIDTH = 1.5f;
-	public static final float PLATFORM_HEIGHT = 1.5f;
+	public static final float PLATFORM_WIDTH = 1.4f;
+	public static final float PLATFORM_HEIGHT = 1.4f;
 	public static final int PLATFORM_TYPE_STATIC = 0;
 	public static final int PLATFORM_TYPE_MOVING = 1;
 	public static final int PLATFORM_STATE_CIRCLE = 2;
@@ -54,8 +54,8 @@ public class Platform extends DynamicGameObject {
 		}
 	}
 	
-	public Platform (int type, float x, float y, DynamicGameObject dst) {
-		super(x, y, PLATFORM_WIDTH, PLATFORM_HEIGHT);
+	public Platform (int type, DynamicGameObject dst) {
+		super(dst.position.x, dst.position.y, PLATFORM_WIDTH, PLATFORM_HEIGHT);
 		this.type = type;
 		this.rendertype = (int)(rand.nextFloat() * NTYPE);
 		this.dstx=dst.position.x;
@@ -79,14 +79,14 @@ public class Platform extends DynamicGameObject {
 			velocity.y=-5;
 		}
 	else if (type == PLATFORM_STATE_CIRCLE){
-//		Gdx.app.debug("Platform", "rendertype= "+this.rendertype);
-		if(this.rendertype>2){
-		position.x = (float) (dstx + 1.7f*Math.sin(stateTime*3));
-		position.y = (float) (dsty + 1.7f*Math.cos(stateTime*3));
+		float k = position.y > World.WORLD_HEIGHT/2 ? 8 : 4;
+		if(this.rendertype>1.9f){
+		position.x = (float) (dstx + 1.7f*Math.sin(stateTime*k));
+		position.y = (float) (dsty + 1.7f*Math.cos(stateTime*k));
 		}
 		else {
-		position.x = (float) (dstx + 1.7f*Math.cos(stateTime*3));
-		position.y = (float) (dsty + 1.7f*Math.sin(stateTime*3));
+		position.x = (float) (dstx + 1.7f*Math.cos(stateTime*k));
+		position.y = (float) (dsty + 1.7f*Math.sin(stateTime*k));
 		}
 		bounds.x = position.x - PLATFORM_WIDTH / 2;
 		bounds.y = position.y - PLATFORM_HEIGHT / 2;

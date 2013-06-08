@@ -79,7 +79,6 @@ public class MultiWorld extends World {
 				for(int j=0;j<platforms.size();j++) {
 					Platform platform=platforms.get(j);
 					if (OverlapTester.overlapRectangles(platform.bounds, projectile.bounds)) {
-						bob.hitPlatform();
 						Gdx.input.vibrate(new long[] { 1, 20}, -1); 
 						score += 100;
 						projEnemy.remove(i--);

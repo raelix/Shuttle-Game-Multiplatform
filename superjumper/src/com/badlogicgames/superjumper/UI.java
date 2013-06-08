@@ -73,6 +73,6 @@ public interface UI {//WILL CONTROL TEXT RESIZE
 	public static final float BARSIZEY = SCREENHEIGHT*0.093f;
 	public static final float BARCONSTANT = SCREENHEIGHT*0.0062f;
 
-	public static final float SPRING_WIDTH = 2.5f;
-	public static final float SPRING_HEIGHT = 2.5f;
+	public static final float SPRING_WIDTH = 2.6f;
+	public static final float SPRING_HEIGHT = 2.6f;
 }

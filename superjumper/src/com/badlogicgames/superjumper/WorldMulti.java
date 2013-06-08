@@ -168,8 +168,7 @@ public class WorldMulti implements PROTOCOL_CONSTANTS {
 	}
 
 	private void updateBob (float deltaTime, float accelX) {
-		if (bob.state != Bob.BOB_STATE_HIT && bob.position.y <= 0.5f) bob.hitPlatform();
-		if (bob.state != Bob.BOB_STATE_HIT) bob.velocity.x = -accelX / 10 * Bob.BOB_MOVE_VELOCITY;
+	if (bob.state != Bob.BOB_STATE_HIT) bob.velocity.x = -accelX / 10 * Bob.BOB_MOVE_VELOCITY;
 		bob.update(deltaTime);
 		heightSoFar = Math.max(bob.position.y, heightSoFar);
 	}
@@ -431,7 +430,7 @@ public class WorldMulti implements PROTOCOL_CONSTANTS {
 			Platform platform = platforms.get(i);
 			if (bobMulti.position.y > platform.position.y) {
 				if ( OverlapTester.overlapRectangles(bobMulti.bounds, platform.bounds)) {
-					bobMulti.hitPlatform();
+
 					Turbo();
 					Gdx.input.vibrate(new long[] { 1, 20,10, 5}, -1); 
 					turbo=turbo+1;
@@ -453,7 +452,6 @@ public class WorldMulti implements PROTOCOL_CONSTANTS {
 			Platform platform = platforms.get(i);
 			if (bob.position.y > platform.position.y) {
 				if (OverlapTester.overlapRectangles(bob.bounds, platform.bounds)) {
-					bob.hitPlatform();
 					Turbo();
 					Gdx.input.vibrate(new long[] { 1, 20,10, 5}, -1); 
 					turbo=turbo+1;
@@ -521,7 +519,6 @@ public class WorldMulti implements PROTOCOL_CONSTANTS {
 			Spring spring = springs.get(i);
 			if (bobMulti.position.y > spring.position.y) {
 				if (OverlapTester.overlapRectangles(bobMulti.bounds, spring.bounds)) {
-					bobMulti.hitSpring();
 					listener.highJump();
 					break;
 				}
@@ -552,7 +549,6 @@ public class WorldMulti implements PROTOCOL_CONSTANTS {
 			Spring spring = springs.get(i);
 			if (bob.position.y > spring.position.y) {
 				if (OverlapTester.overlapRectangles(bob.bounds, spring.bounds)) {
-					bob.hitSpring();
 					listener.highJump();
 					break;
 				}

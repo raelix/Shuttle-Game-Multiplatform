@@ -40,7 +40,7 @@ public class Bob extends DynamicGameObject {
 		position.add(velocity.x * deltaTime, velocity.y * deltaTime);
 		bounds.x = position.x - bounds.width / 2;
 		bounds.y = position.y - bounds.height / 2;
-		
+		/*
 		if (velocity.y > 0 && state != BOB_STATE_HIT) {
 			if (state != BOB_STATE_JUMP) {
 				state = BOB_STATE_JUMP;
@@ -53,7 +53,7 @@ public class Bob extends DynamicGameObject {
 				state = BOB_STATE_FALL;
 				stateTime = 0;
 			}
-		}
+		}*/
 		if(CHARSCREENUSE==0){
 			if (position.x < 0) position.x = World.WORLD_WIDTH;
 			if (position.x > World.WORLD_WIDTH) position.x = 0;
@@ -65,7 +65,7 @@ public class Bob extends DynamicGameObject {
 		}
 		stateTime += deltaTime;
 	}
-
+/*
 	public void hitSquirrel () {
 		velocity.set(0, 0);
 		state = BOB_STATE_HIT;
@@ -83,4 +83,5 @@ public class Bob extends DynamicGameObject {
 		//state = BOB_STATE_JUMP;
 		stateTime = 0;
 	}
+	*/
 }

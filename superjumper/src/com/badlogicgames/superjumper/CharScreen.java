@@ -55,7 +55,7 @@ public class CharScreen implements Screen {
 	public  int choose=0;
 	public  int swipedeactive=0;
 	private	float stateTime=0;
-	public static float punteggio=0;
+	public static float punteggio=Settings.firstScore();
 	public static float centrox=320/2-40;
 	public static float centroy=480/2-60;
 	public static float finex=300;
@@ -171,7 +171,7 @@ public class CharScreen implements Screen {
 
 			if (OverlapTester.pointInRectangle(nextBounds, touchPoint.x, touchPoint.y) && state==0 && punteggio>20000 
 				|| (OverlapTester.pointInRectangle(nextBounds, touchPoint.x, touchPoint.y) && state==1)||
-				(OverlapTester.pointInRectangle(nextBounds, touchPoint.x, touchPoint.y) && state==2 && punteggio>40000 )) {
+				(OverlapTester.pointInRectangle(nextBounds, touchPoint.x, touchPoint.y) && state==2 && punteggio>70000 )) {
 				Assets.playSound(Assets.clickSound);
 				game.setScreen(new GameScreen(game));
 				return;
@@ -279,7 +279,7 @@ public class CharScreen implements Screen {
 			batcher.draw(Assets.locked,bobfem.position.x-45,bobfem.position.y-70 ,170,150);
 			Assets.fontsmall.draw(batcher, "need 20000 scores", guiCam.position.x-90,guiCam.position.y-150);
 		}
-		if(punteggio<40000 && state==2)
+		if(punteggio<70000 && state==2)
 		{
 			batcher.draw(Assets.lock,bobmil.position.x+26 ,bobmil.position.y+30 ,85,100);
 			batcher.draw(Assets.locked,bobmil.position.x-18,bobmil.position.y-70 ,170,150);

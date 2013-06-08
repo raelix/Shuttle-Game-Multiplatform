@@ -53,7 +53,7 @@ public class MultiplayerScreen implements Screen {
 		batcher = new SpriteBatch();
 		Button button = new Button(90 ,230 , UI.SCREENWIDTH/2,UI.SCREENHEIGHT ,Assets.resume);
 		buttons.add(button);
-		Button buttones = new Button(90 ,180 , UI.SCREENWIDTH/2,0,Assets.quit);
+		Button buttones = new Button(90 ,180 , 0,0,Assets.quit);
 		buttons.add(buttones);
 	}
 
