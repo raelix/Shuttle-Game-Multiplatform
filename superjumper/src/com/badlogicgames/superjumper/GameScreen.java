@@ -200,7 +200,7 @@ public class GameScreen implements Screen, CONSTANTS {
 							Gdx.app.debug("fling", "trascino su");
 							if(!world.freezeON){
 								world.decrementonos=true;
-								Assets.playSound(Assets.soundNos);
+								Assets.playSound(Assets.soundRocket);
 								world.texts.offer(new FloatingText("NOS!",2f));
 							}
 							world.freezeON = false;
