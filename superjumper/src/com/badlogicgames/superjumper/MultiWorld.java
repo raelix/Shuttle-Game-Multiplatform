@@ -31,6 +31,7 @@ public class MultiWorld extends World {
 
 	@Override
 	public void update(float deltaTime, float accelX) {
+		
 		super.update(deltaTime,accelX);
 		switch (this.state) {
 		case CONSTANTS.GAME_RUNNING:
@@ -122,8 +123,10 @@ public class MultiWorld extends World {
 //		bobMulti.position.add(((-accelX / 10) * Bob.BOB_MOVE_VELOCITY)* deltaTime, accelY * deltaTime);
 		bobMulti.position.x=accelX ;
 		bobMulti.position.y=accelY ;
-		Gdx.app.debug("updatebobmulti","deltatime="+deltaTime+"accX="+accelX+"accY="+accelY);
-		Gdx.app.debug("updatebobomulti", "bobMulti.position.y = " + bobMulti.position.y + " bob.position.y = " + bob.position.y);
+//		Gdx.app.debug("updatebobmulti","deltatime="+deltaTime+"accX="+accelX+"accY="+accelY);
+//		Gdx.app.debug("updatebobomulti", "bobMulti.position.y = " + bobMulti.position.y + " bob.position.y = " + bob.position.y);
 
 	}
+	
+	
 }

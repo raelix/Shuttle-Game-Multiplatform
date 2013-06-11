@@ -33,14 +33,30 @@ public class WorldRenderer {
 
 
 	public void render () {
+		batch.enableBlending();
+		cam.position.y = world.bob.position.y+4;
+		cam.update();
+		batch.setProjectionMatrix(cam.combined);
+		renderBackground();
+		batch.begin();
+		world.shakera.update(cam);
+		renderObjects();
+		batch.end();
+		batch.begin();
+		batch.setProjectionMatrix(screencam.combined);
+		renderUI();
+		batch.end();
+		batch.disableBlending();
 		switch (world.state){
-		case CONSTANTS.GAME_RUNNING:
+
+		/*case CONSTANTS.GAME_RUNNING :
 			batch.enableBlending();
 			cam.position.y = world.bob.position.y+4;
 			cam.update();
 			batch.setProjectionMatrix(cam.combined);
 			renderBackground();
 			batch.begin();
+			world.shakera.update(cam);
 			renderObjects();
 			batch.end();
 			batch.begin();
@@ -48,46 +64,58 @@ public class WorldRenderer {
 			renderUI();
 			batch.end();
 			batch.disableBlending();
-			break;
-
+			break;*/
+		
 		case CONSTANTS.GAME_PAUSED:
 			batch.begin();
 			batch.setProjectionMatrix(screencam.combined);
 			batch.draw(Assets.welcomepaused,0,0,UI.SCREENPOSITIONX,UI.SCREENPOSITIONY);
 			batch.enableBlending();
 			for (Button button : world.buttons) {
-				button.draw(batch);
-			}
+				button.draw(batch);}
 			batch.end();
 			break;
+			
 		case CONSTANTS.MAIN_MENU:
 			break;
 
 		case CONSTANTS.GAME_LEVEL_END:
 			batch.begin();
-			String topText = "your friends ...";
-			String bottomText = "... aren't here!";
+			batch.enableBlending();
+			String topText = "not enough planets destroy";
+			String bottomText = "... Tap to Continue!";
 			float topWidth = Assets.font.getBounds(topText).width;
 			float bottomWidth = Assets.font.getBounds(bottomText).width;
-			Assets.handfontsmall.draw(batch, topText, UI.SCREENWIDTH/2 - topWidth / 2, UI.SCREENHEIGHT - 40);
-			Assets.handfontsmall.draw(batch, bottomText, UI.SCREENWIDTH/2 - bottomWidth / 2, 40);
+			Assets.handfontsmall.draw(batch, topText, UI.SCREENWIDTH/2 - topWidth / 2, UI.SCREENHEIGHT - UI.SCREENHEIGHT/3);
+			Assets.handfontsmall.draw(batch, bottomText, UI.SCREENWIDTH/2 - bottomWidth / 2, UI.SCREENHEIGHT - UI.SCREENHEIGHT/2);
+			batch.disableBlending();
 			batch.end();
 			break;
 
 		case CONSTANTS.GAME_OVER:
 			batch.begin();
 			batch.enableBlending();
-			Assets.handfontsmall.scale(-0.3f);
+			Assets.handfontsmall.scale(1.1f);
 			new Text(UI.SCREENWIDTH/2 ,UI.SCREENHEIGHT*2/3,"G A M E  O V E R").draw(batch);
-			world.scoretext.draw(batch);
-			Assets.handfontsmall.scale(0.3f);
+			Assets.handfontsmall.scale(-1.1f);
+			batch.disableBlending();
 			batch.end();
 			break;
 
 		case CONSTANTS.GAME_READY:
+			
 			batch.begin();
-			new Text(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2,"R E A D Y ?").draw(batch);
+			batch.enableBlending();
+			batch.setProjectionMatrix(screencam.combined);
+			renderUI();
+			if(!world.semaforo.isEmpty()){
+				Assets.handfontsmall.scale(1.7f);
+				world.semaforo.getFirst().draw(batch);
+				Assets.handfontsmall.scale(-1.7f);
+				}
+			batch.disableBlending();
 			batch.end();
+			
 			break;
 		}
 	}
@@ -119,6 +147,7 @@ public class WorldRenderer {
 	}
 
 	public void renderObjects () {
+	
 		renderGalaxies ();
 		renderStars();
 		renderBob();

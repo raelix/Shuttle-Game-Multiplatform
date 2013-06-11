@@ -144,7 +144,6 @@ public class GameScreen implements Screen, CONSTANTS {
 					break;
 
 				case CONSTANTS.GAME_READY:
-					state = GAME_RUNNING;
 					break;
 				
 
@@ -185,7 +184,6 @@ public class GameScreen implements Screen, CONSTANTS {
 					} else {
 						if(velocityY > 20) {
 							Gdx.app.debug("fling", "trascino giu");
-
 							Assets.playSound(Assets.soundBulletime);
 							if(!world.decrementonos){
 								world.texts.offer(new FloatingText("BULLET TIME!",0.5f));
@@ -202,7 +200,7 @@ public class GameScreen implements Screen, CONSTANTS {
 								world.decrementonos=true;
 								Assets.playSound(Assets.soundRocket);
 								world.texts.offer(new FloatingText("NOS!",2f));
-							}
+								}
 							world.freezeON = false;
 							world.decremento=false;
 						}
@@ -216,13 +214,11 @@ public class GameScreen implements Screen, CONSTANTS {
 	}
 
 	public void update (float deltaTime) {
-		guiCam.update();
+		if (deltaTime > 0.1f) deltaTime = 0.1f;
 		switch (world.state) {
 
 		case GAME_READY:
-			if (Gdx.input.justTouched()) {
-
-			}
+			world.update(deltaTime, Gdx.input.getAccelerometerX());
 			break;
 
 		case GAME_RUNNING:
@@ -259,6 +255,7 @@ public class GameScreen implements Screen, CONSTANTS {
 		GLCommon gl = Gdx.gl;
 		gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		renderer.render();
+		guiCam.update();
 	}
 
 	@Override

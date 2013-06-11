@@ -5,7 +5,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.PauseableThread;
 
 public class World implements UI, CONSTANTS {
 	public interface WorldListener {
@@ -54,11 +56,14 @@ public class World implements UI, CONSTANTS {
 	public boolean supermissileButton = false;
 	public boolean bubbleButton = false;
 	public int supermissiles = 0;
-	public final LinkedList<Text> texts;
+	public Shake shakera=new Shake();
+	public LinkedList<Text> texts;
+	public LinkedList<Text> semaforo;
 	Boolean decremento=false;
 	Boolean decrementonos=false;
 	LevelOption level=new LevelOption();
 	LevelOption levelnos=new LevelOption();
+	Semaphore start;
 	LinkedList<Explosion> explosions = new LinkedList<Explosion>();
 	public Text scoretext = new Text(SCOREPOSITIONX,SCOREPOSITIONY,"SCORE: 0");
 	public Text ammotext = new Text(AMMOPOSITIONX,AMMOPOSITIONY,"0x");
@@ -81,12 +86,17 @@ public class World implements UI, CONSTANTS {
 		this.setGravity(0, 3);
 		this.heightSoFar = 0;
 		this.score = 0;
-		this.state = CONSTANTS.GAME_RUNNING;
+		this.state = CONSTANTS.GAME_READY;
 		this.enemies = new LinkedList<Enemy>();
 		this.texts = new LinkedList<Text>();
+		this.semaforo = new LinkedList<Text>();
 		this.texts.offer(scoretext);
 		this.texts.offer(ammotext);
 		this.texts.offer(lifetext);
+		this.semaforo.offer(new Text(SCREENWIDTH/2,SCREENHEIGHT/2+SCREENHEIGHT/3,"3"));
+		this.semaforo.offer(new Text(SCREENWIDTH/2,SCREENHEIGHT/2+SCREENHEIGHT/3,"2"));
+		this.semaforo.offer(new Text(SCREENWIDTH/2,SCREENHEIGHT/2+SCREENHEIGHT/3,"1"));
+		this.start = new Semaphore(semaforo);
 		this.buttons = new ArrayList<Button>();
 		this.springs.offer(new Spring(randgenerate.nextFloat() * WORLD_WIDTH, 18));
 		this.squirrels.offer(new Squirrel(randgenerate.nextFloat() * WORLD_WIDTH, 20 + randgenerate.nextFloat() * 10));
@@ -96,6 +106,18 @@ public class World implements UI, CONSTANTS {
 	protected void generateLevel () {
 		castle = new Castle(WORLD_WIDTH / 2, WORLD_HEIGHT - 10);
 	}
+	
+	public void generateSemaphore(float deltaTime){
+		if(!semaforo.isEmpty())
+		semaforo.getFirst().update(deltaTime);
+		if(semaforo.isEmpty()){
+			this.texts.offer(new FloatingText("GO!",0.6f));
+			Assets.playSound(Assets.soundShot);
+			this.state=CONSTANTS.GAME_RUNNING;
+		}
+		semaforo=start.updateCount(deltaTime);
+	}
+	
 
 	private void generateStars(){
 		//star generate
@@ -226,12 +248,12 @@ public class World implements UI, CONSTANTS {
 	public void TurboLess()	{
 		bob.velocity.y=12;
 	}
-	
+
 	public void PremiumLife()	{
 		if(premiumlife>=10){
-		this.texts.offer(new FloatingText("premium life +5", 0));
-		life=life+5;
-		premiumlife=0;
+			this.texts.offer(new FloatingText("premium life +5", 0));
+			life=life+5;
+			premiumlife=0;
 		}
 	}
 
@@ -255,7 +277,7 @@ public class World implements UI, CONSTANTS {
 
 	public void update (float deltaTime, float accelX) {
 		switch (this.state) {
-
+		
 		case CONSTANTS.GAME_RUNNING:
 			editPosition(deltaTime);
 			score += (int)bob.velocity.y/10;
@@ -293,6 +315,10 @@ public class World implements UI, CONSTANTS {
 
 		case CONSTANTS.GAME_OVER:
 
+			break;
+			
+		case CONSTANTS.GAME_READY:
+			generateSemaphore( deltaTime);
 			break;
 
 		case CONSTANTS.GAME_PAUSED:
@@ -489,6 +515,7 @@ public class World implements UI, CONSTANTS {
 		}
 	}
 
+
 	private void updateProjectilenemys(float deltaTime) {
 		for (int i = 0; i < projectenemy.size(); i++) {
 			Projectile projectenemys = projectenemy.get(i);
@@ -529,13 +556,14 @@ public class World implements UI, CONSTANTS {
 			Platform platform = platforms.get(i);
 			if (bob.position.y > platform.position.y) {
 				if ( OverlapTester.overlapRectangles(bob.bounds, platform.bounds)) {
-					Gdx.input.vibrate(new long[] { 1, 20,10, 5}, -1); 
 					if(bob.enablebubble == false){	
 						Slows();
 						LifeLess();
+						shakera.shakethis(1.5f);
 						score -= 300;
 						Assets.playSound(Assets.soundExplosion);
 					}
+					Gdx.input.vibrate(new long[] { 1, 10,5, 5}, -1); 
 					explosions.offer(new Explosion(platform.position.x-Platform.PLATFORM_WIDTH/2, platform.position.y-Platform.PLATFORM_HEIGHT/2,Platform.PLATFORM_WIDTH*2,Platform.PLATFORM_HEIGHT*2,0));
 					platforms.remove(i--);
 					Assets.playSound(Assets.soundExplosion);
@@ -689,7 +717,7 @@ public class World implements UI, CONSTANTS {
 			}
 		}
 	}
-	
+
 	private void checkProjectileWorldCollisions(){
 		int i = 0, j = 0;
 		for(i=0;i<projectiles.size();i++)

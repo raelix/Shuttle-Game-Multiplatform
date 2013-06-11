@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogicgames.superjumper.Assets;
 import com.badlogicgames.superjumper.DynamicGameObject;
 
@@ -13,6 +15,7 @@ public class Text extends DynamicGameObject {
 	public float stateTime;
 	public float duration;
 	public float dstX,dstY;
+	public Vector2 gravity = new Vector2();
 
 	public Text (float x, float y, String string) {
 		super(x, y, 1, 1);
@@ -59,8 +62,10 @@ public class Text extends DynamicGameObject {
 		velocity.x = (dstX - position.x)*8;
 		velocity.y = (dstY - position.y)*8;
 		position.add(velocity.x * deltaTime, velocity.y * deltaTime);
+		//velocity.add(gravity.x * deltaTime, gravity.y * deltaTime);
 		bounds.x = position.x - bounds.width / 2;
 		bounds.y = position.y - bounds.height / 2;
+		
 		this.update(deltaTime);
 	}
 	}
