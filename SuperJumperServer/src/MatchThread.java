@@ -251,7 +251,7 @@ public class MatchThread extends Thread implements PROTOCOL_CONSTANTS {
 				Pacco pkt = btsock2.readPkt();
 				//System.out.println("Recv2Thread: readPkt");
 				if (pkt != null){
-					System.out.println("Recv1Thread: readPkt() "+pkt.getType());
+					System.out.println("Recv2Thread: readPkt() "+pkt.getType());
 					switch(pkt.getType()){
 					case PROTOCOL_CONSTANTS.PACKET_WELCOME:
 						System.out.println("Recv2Thread: ricevuto pacco WELCOME");
