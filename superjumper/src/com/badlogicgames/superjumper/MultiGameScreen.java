@@ -67,7 +67,7 @@ public class MultiGameScreen extends GameScreen {
 					}  else {
 						world.ShotProjectile();
 						MultiWorld.buffer.putPaccoOutNOBLOCK(new PaccoProiettile(world.bob.position.x,world.bob.position.y));
-						Gdx.app.debug("MultiGameScreen", "world.bob.position.x= "+world.bob.position.x+" world.bob.position.y"+world.bob.position.y);
+						Gdx.app.debug("MultiGameScreenTap", "world.bob.position.x= "+world.bob.position.x+" world.bob.position.y"+world.bob.position.y);
 						
 
 					}
@@ -172,6 +172,7 @@ public class MultiGameScreen extends GameScreen {
 				}
 				return true;
 			}
-		});		
+		});
+		Gdx.input.setInputProcessor(gestureDetector);		
 	}
 }

@@ -143,13 +143,14 @@ public class MatchThread extends Thread implements PROTOCOL_CONSTANTS {
 			System.out.println("Recv1Thread()");
 		}
 
+
 		@Override
 		public void run () {
 			System.out.println("Recv1Thread: start()");
 			while(true){
 				Pacco pkt = btsock1.readPkt();
-				//System.out.println("Recv1Thread: readPkt()");
-				if (pkt != null) 
+				if (pkt != null) {
+					System.out.println("Recv1Thread: readPkt() "+pkt.getType());
 					switch(pkt.getType()){
 					case PROTOCOL_CONSTANTS.PACKET_WELCOME:
 						System.out.println("Recv1Thread: ricevuto pacco WELCOME");
@@ -165,7 +166,8 @@ public class MatchThread extends Thread implements PROTOCOL_CONSTANTS {
 					default:
 						System.out.println("Recv1Thread: ricevuto pacco " + pkt.getType());
 						break;
-					} else System.out.println("Recv1Thread: readPkt return nulls");
+					} 
+				} else System.out.println("Recv1Thread: readPkt return nulls");
 				if (pkt == null) {
 					System.out.println("Recv1Thread: finish");
 					latch.countDown();
@@ -248,7 +250,8 @@ public class MatchThread extends Thread implements PROTOCOL_CONSTANTS {
 			while(true){
 				Pacco pkt = btsock2.readPkt();
 				//System.out.println("Recv2Thread: readPkt");
-				if (pkt != null) 
+				if (pkt != null){
+					System.out.println("Recv1Thread: readPkt() "+pkt.getType());
 					switch(pkt.getType()){
 					case PROTOCOL_CONSTANTS.PACKET_WELCOME:
 						System.out.println("Recv2Thread: ricevuto pacco WELCOME");
@@ -264,7 +267,8 @@ public class MatchThread extends Thread implements PROTOCOL_CONSTANTS {
 					default:
 						System.out.println("Recv2Thread: ricevuto pacco " + pkt.getType());
 						break;
-					} else System.out.println("Recv2Thread: readPkt return nulls");
+					}
+				} else System.out.println("Recv2Thread: readPkt return nulls");
 				if (pkt == null) {
 					System.out.println("Recv2Thread: finish");
 					latch.countDown();

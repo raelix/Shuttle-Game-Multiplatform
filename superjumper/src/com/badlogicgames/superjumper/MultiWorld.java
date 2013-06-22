@@ -59,7 +59,7 @@ public class MultiWorld extends World {
 				case PROTOCOL_CONSTANTS.PACKET_END:
 					this.state = CONSTANTS.GAME_LEVEL_END;
 				case PROTOCOL_CONSTANTS.PACKET_PROJECTILE:
-					PaccoProiettile paccoproj = (PaccoProiettile) pkt;
+					PaccoProiettile paccoproj = new PaccoProiettile(pkt);
 					paccoproj.deserialize();
 					Gdx.app.debug("Update.Multiworld", "paccoproj.getX()= "+paccoproj.getX()+" paccoproj.getY()"+paccoproj.getY());
 					projEnemy.offer(new Projectile(paccoproj.getX(), paccoproj.getY(), Projectile.WIDTH, Projectile.HEIGHT));
@@ -86,13 +86,15 @@ public class MultiWorld extends World {
 						platforms.remove(j--);
 						break;
 					}
-					if (OverlapTester.overlapRectangles(bob.bounds, projectile.bounds)){
+					else if (OverlapTester.overlapRectangles(bob.bounds, projectile.bounds)){
 						projEnemy.remove(i--);
 						this.LifeLess();
+						break;
 					}
 				}
 				if (projectile.position.y > bobMulti.position.y+11){ 
 					projEnemy.remove(i--);
+					break;
 				}
 			}/*
 			if(OverlapTester.overlapRectangles(bob.bounds, bobMulti.bounds)){
@@ -117,6 +119,7 @@ public class MultiWorld extends World {
 			break;
 		case GAME_OVER:
 			if (this.flag) {
+				Gdx.app.debug("GameOver Case MultiWorld ","pacco end");
 				buffer.putPaccoOutNOBLOCK(new PaccoEnd());
 				this.state = CONSTANTS.GAME_OVER;
 				this.flag = false;
