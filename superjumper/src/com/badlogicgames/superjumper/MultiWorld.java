@@ -19,6 +19,7 @@ public class MultiWorld extends World {
 	public static String enemy = "";
 	public Bob bobMulti;
 	public LinkedList<Projectile> projEnemy;
+	private boolean flag = true;
 	/**
 	 * @param seed
 	 */
@@ -37,7 +38,7 @@ public class MultiWorld extends World {
 		case CONSTANTS.GAME_RUNNING:
 			Pacco pkt;
 			boolean flag = true;
-			//while ((pkt = buffer.takePaccoInNOBLOCK()) != null) {
+//			while ((pkt = buffer.takePaccoInNOBLOCK()) != null) {
 			if ((pkt = buffer.takePaccoInNOBLOCK()) != null) {
 				switch (pkt.getType()) {
 				case PROTOCOL_CONSTANTS.PACKET_TYPE_BOB_MULTI:
@@ -60,6 +61,7 @@ public class MultiWorld extends World {
 				case PROTOCOL_CONSTANTS.PACKET_PROJECTILE:
 					PaccoProiettile paccoproj = (PaccoProiettile) pkt;
 					paccoproj.deserialize();
+					Gdx.app.debug("Update.Multiworld", "paccoproj.getX()= "+paccoproj.getX()+" paccoproj.getY()"+paccoproj.getY());
 					projEnemy.offer(new Projectile(paccoproj.getX(), paccoproj.getY(), Projectile.WIDTH, Projectile.HEIGHT));
 				default:
 					System.out.println("PKT FUORI DAL PROTOCOLLO.");
@@ -69,10 +71,7 @@ public class MultiWorld extends World {
 			//if (flag) bobMulti.update(deltaTime);
 			//Gdx.app.debug("pkt component2", "precdelta= "+ deltaTime + "accelx= "+ accelX +" accely= " + this.bob.velocity.y);
 			buffer.putPaccoOutNOBLOCK(new PaccoUpdateBobMulti(deltaTime, bob.position.x, bob.position.y));
-			if (this.life == 0) {
-				buffer.putPaccoOutNOBLOCK(new PaccoEnd());
-				this.state = CONSTANTS.GAME_OVER;
-			}
+
 
 			for (int i = 0; i < projEnemy.size(); i++) {
 				Projectile projectile = projEnemy.get(i);
@@ -114,6 +113,13 @@ public class MultiWorld extends World {
 					else if (projectile.type==0) projectiles.remove(projectile);
 					break;
 				}
+			}
+			break;
+		case GAME_OVER:
+			if (this.flag) {
+				buffer.putPaccoOutNOBLOCK(new PaccoEnd());
+				this.state = CONSTANTS.GAME_OVER;
+				this.flag = false;
 			}
 			break;
 		}

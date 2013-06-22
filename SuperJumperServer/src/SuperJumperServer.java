@@ -28,6 +28,7 @@ public class SuperJumperServer implements PROTOCOL_CONSTANTS {
 			try {
 				while (true) {
 					sock1 = ssock.accept();
+					System.out.println("new client sock= "+sock1);
 					if (sock1 != null) System.out.println("prima accept ok");
 					System.out.println("first client");
 					System.out.flush();
