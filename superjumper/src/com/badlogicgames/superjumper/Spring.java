@@ -30,7 +30,7 @@ public class Spring extends DynamicGameObject {
 	private static final TextureRegion texture2 = Assets.mondolunaRegion;
 	private static final TextureRegion texture3 = Assets.mondorosRegion;
 	private static final TextureRegion texture4 = Assets.mondoterraRegion;
-	
+	private static final TextureRegion texture5 = Assets.starRotateRegion;
 
 	public Spring (float x, float y) {
 		super(x, y, UI.SPRING_WIDTH, UI.SPRING_HEIGHT);
@@ -50,19 +50,19 @@ public class Spring extends DynamicGameObject {
 		switch (this.rendertype) {
 		case 0:
 			//batch.draw(Assets.meteoragrigiaRegion, platform.position.x - 0.75f, platform.position.y - 0.75f, Platform.PLATFORM_WIDTH, Platform.PLATFORM_HEIGHT);
-			batch.draw(texture1,this.position.x - 0.75f,this.position.y,UI.SPRING_WIDTH/2,UI.SPRING_HEIGHT / 2, UI.SPRING_WIDTH ,UI.SPRING_HEIGHT , 1, 1, this.rotation);
+			batch.draw(texture5,this.position.x - 0.75f,this.position.y,UI.SPRING_WIDTH/2,UI.SPRING_HEIGHT / 2, UI.SPRING_WIDTH ,UI.SPRING_HEIGHT , 1, 1, this.rotation);
 			break;
 		case 1:
 			//batch.draw(Assets.meteorabluRegion, platform.position.x - 0.75f, platform.position.y - 0.75f, Platform.PLATFORM_WIDTH, Platform.PLATFORM_HEIGHT);
-			batch.draw(texture2,this.position.x - 0.75f,this.position.y,UI.SPRING_WIDTH/2,UI.SPRING_HEIGHT / 2, UI.SPRING_WIDTH ,UI.SPRING_HEIGHT , 1, 1, this.rotation*0.8f);
+			batch.draw(texture5,this.position.x - 0.75f,this.position.y,UI.SPRING_WIDTH/2,UI.SPRING_HEIGHT / 2, UI.SPRING_WIDTH ,UI.SPRING_HEIGHT , 1, 1, this.rotation*0.8f);
 			break;
 		case 2:
 			//batch.draw(Assets.meteorarosaRegion, platform.position.x - 0.75f, platform.position.y - 0.75f, Platform.PLATFORM_WIDTH, Platform.PLATFORM_HEIGHT);
-			batch.draw(texture3,this.position.x - 0.75f,this.position.y,UI.SPRING_WIDTH/2,UI.SPRING_HEIGHT / 2, UI.SPRING_WIDTH ,UI.SPRING_HEIGHT , 1, 1, this.rotation*1.5f);
+			batch.draw(texture5,this.position.x - 0.75f,this.position.y,UI.SPRING_WIDTH/2,UI.SPRING_HEIGHT / 2, UI.SPRING_WIDTH ,UI.SPRING_HEIGHT , 1, 1, this.rotation*1.5f);
 			break;
 		case 3:
 			//batch.draw(Assets.meteoragiallaRegion, platform.position.x - 0.75f, platform.position.y - 0.75f, Platform.PLATFORM_WIDTH, Platform.PLATFORM_HEIGHT);
-			batch.draw(texture4,this.position.x - 0.75f,this.position.y,UI.SPRING_WIDTH/2,UI.SPRING_HEIGHT/ 2, UI.SPRING_WIDTH,UI.SPRING_HEIGHT , 1, 1, this.rotation/2);
+			batch.draw(texture5,this.position.x - 0.75f,this.position.y,UI.SPRING_WIDTH/2,UI.SPRING_HEIGHT/ 2, UI.SPRING_WIDTH,UI.SPRING_HEIGHT , 1, 1, this.rotation/2);
 			break;
 		default:
 			//Gdx.app.debug("RENDERPLATFORMS", "platform.rendertype = " + this.rendertype);

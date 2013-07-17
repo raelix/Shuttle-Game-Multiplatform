@@ -16,6 +16,7 @@ public class Assets {
 	public static ParticleEffect particleEffect;
 	public static ParticleEffect particleClouds;
 	public static Texture mondofuc;
+	public static Texture starRotate;
 	public static Texture patterngreen;
 	public static Texture patternfucs;
 	public static Texture mondoluna;
@@ -96,6 +97,7 @@ public class Assets {
 	public static Texture welcomepaused;
 	public static Texture resume,quit,ospita,partecipa;
 	public static Texture swipetext,swipe,swipe1,swipe2;
+	public static TextureRegion starRotateRegion;
 	public static TextureRegion patterngreenRegion;
 	public static TextureRegion patternfucsRegion;
 	public static TextureRegion mondofucRegion;
@@ -201,6 +203,7 @@ public class Assets {
 		particleClouds.allowCompletion();
 		particleEffect.allowCompletion();
 		//fine particelle effetto fuoco
+		starRotate = loadTexture("data/star.png");
 		doubleportamissile= loadTexture("data/doubleportamissile.png");
 		doubleportamissilebn = loadTexture("data/doubleportamissilebn.png");
 		portamissilebn = loadTexture("data/portamissilebn.png");
@@ -292,6 +295,7 @@ public class Assets {
 		ready = new TextureRegion(items, 320, 224, 192, 32);		
 		spring = new TextureRegion(items, 128, 0, 32, 32);
 		castle = new TextureRegion(items, 128, 64, 64, 64);
+		starRotateRegion = new TextureRegion(starRotate,0,0,128,128);
 		patterngreenRegion=new TextureRegion(patterngreen, 0, 0, 256, 256);
 		patternfucsRegion=new TextureRegion(patternfucs, 0, 0, 256, 256);
 		mondofucRegion=new TextureRegion(mondofuc, 0, 0, 256, 256);

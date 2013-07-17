@@ -22,6 +22,10 @@ public class Platform extends DynamicGameObject {
 	private static final TextureRegion texture2 = Assets.meteorabluRegion;
 	private static final TextureRegion texture3 = Assets.meteorarosaRegion;
 	private static final TextureRegion texture4 = Assets.meteoragiallaRegion;
+	private static final TextureRegion texture5 = Assets.mondofucRegion;
+	private static final TextureRegion texture6 = Assets.mondolunaRegion;
+	private static final TextureRegion texture7 = Assets.mondorosRegion;
+	private static final TextureRegion texture8 = Assets.mondoterraRegion;
 	float dstx,dsty;
 	int type, rendertype;
 	float stateTime, rotation = 0;
@@ -79,7 +83,7 @@ public class Platform extends DynamicGameObject {
 			velocity.y=-5;
 		}
 	else if (type == PLATFORM_STATE_CIRCLE){
-		float k = position.y > World.WORLD_HEIGHT/2 ? 8 : 4;
+		float k = position.y > World.WORLD_HEIGHT/2 ? 3 : 1;
 		if(this.rendertype>1.9f){
 		position.x = (float) (dstx + 1.7f*Math.sin(stateTime*k));
 		position.y = (float) (dsty + 1.7f*Math.cos(stateTime*k));
@@ -101,6 +105,7 @@ public class Platform extends DynamicGameObject {
 	
 
 	public void draw (SpriteBatch batch) {
+		if	(this.type == PLATFORM_STATE_CIRCLE){
 		switch (this.rendertype) {
 		case 0:
 			//batch.draw(Assets.meteoragrigiaRegion, platform.position.x - 0.75f, platform.position.y - 0.75f, Platform.PLATFORM_WIDTH, Platform.PLATFORM_HEIGHT);
@@ -122,7 +127,28 @@ public class Platform extends DynamicGameObject {
 			//batch.draw(texture4,this.position.x - 0.75f,this.position.y,Platform.PLATFORM_WIDTH/2,Platform.PLATFORM_HEIGHT/2, Platform.PLATFORM_WIDTH, Platform.PLATFORM_HEIGHT, 1, 1);
 			//batch.draw(Assets.meteoragiallaRegion,this.position.x - 0.75f,this.position.y,Platform.PLATFORM_WIDTH/2,Platform.PLATFORM_HEIGHT/2, Platform.PLATFORM_WIDTH, Platform.PLATFORM_HEIGHT, 1, 1, this.rotation);
 			//Gdx.app.debug("RENDERPLATFORMS", "platform.rendertype = " + this.rendertype);
-		}
+		}}
+		else
+			switch (this.rendertype) {
+			case 0:
+				//batch.draw(Assets.meteoragrigiaRegion, platform.position.x - 0.75f, platform.position.y - 0.75f, Platform.PLATFORM_WIDTH, Platform.PLATFORM_HEIGHT);
+				batch.draw(texture5,this.position.x - 0.75f,this.position.y,UI.SPRING_WIDTH/2,UI.SPRING_HEIGHT / 2, UI.SPRING_WIDTH ,UI.SPRING_HEIGHT , 1, 1, this.rotation);
+				break;
+			case 1:
+				//batch.draw(Assets.meteorabluRegion, platform.position.x - 0.75f, platform.position.y - 0.75f, Platform.PLATFORM_WIDTH, Platform.PLATFORM_HEIGHT);
+				batch.draw(texture6,this.position.x - 0.75f,this.position.y,UI.SPRING_WIDTH/2,UI.SPRING_HEIGHT / 2, UI.SPRING_WIDTH ,UI.SPRING_HEIGHT , 1, 1, this.rotation*0.8f);
+				break;
+			case 2:
+				//batch.draw(Assets.meteorarosaRegion, platform.position.x - 0.75f, platform.position.y - 0.75f, Platform.PLATFORM_WIDTH, Platform.PLATFORM_HEIGHT);
+				batch.draw(texture7,this.position.x - 0.75f,this.position.y,UI.SPRING_WIDTH/2,UI.SPRING_HEIGHT / 2, UI.SPRING_WIDTH ,UI.SPRING_HEIGHT , 1, 1, this.rotation*1.5f);
+				break;
+			case 3:
+				//batch.draw(Assets.meteoragiallaRegion, platform.position.x - 0.75f, platform.position.y - 0.75f, Platform.PLATFORM_WIDTH, Platform.PLATFORM_HEIGHT);
+				batch.draw(texture8,this.position.x - 0.75f,this.position.y,UI.SPRING_WIDTH/2,UI.SPRING_HEIGHT/ 2, UI.SPRING_WIDTH,UI.SPRING_HEIGHT , 1, 1, this.rotation/2);
+				break;
+			default:
+				//Gdx.app.debug("RENDERPLATFORMS", "platform.rendertype = " + this.rendertype);
+			}
 	}
 	
 	/*public void draw (SpriteBatch batch) {

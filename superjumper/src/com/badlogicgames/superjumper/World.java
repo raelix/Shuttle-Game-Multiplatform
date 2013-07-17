@@ -564,7 +564,9 @@ public class World implements UI, CONSTANTS {
 						Assets.playSound(Assets.soundExplosion);
 					}
 					Gdx.input.vibrate(new long[] { 1, 10,5, 5}, -1); 
+					if(platform.type == Platform.PLATFORM_STATE_CIRCLE)
 					explosions.offer(new Explosion(platform.position.x-Platform.PLATFORM_WIDTH/2, platform.position.y-Platform.PLATFORM_HEIGHT/2,Platform.PLATFORM_WIDTH*2,Platform.PLATFORM_HEIGHT*2,0));
+					else explosions.offer(new Explosion(platform.position.x-0.75f, platform.position.y-0.75f ,UI.SPRING_WIDTH*2, UI.SPRING_HEIGHT*2, 0.25f));
 					platforms.remove(i--);
 					Assets.playSound(Assets.soundExplosion);
 					break;
@@ -641,11 +643,12 @@ public class World implements UI, CONSTANTS {
 		for (int i = 0; i < springs.size(); i++) {
 			Spring spring = springs.get(i);
 			if (OverlapTester.overlapRectangles(bob.bounds, spring.bounds)) {
-				Assets.playSound(Assets.soundExplosion1);
+//				Assets.playSound(Assets.soundExplosion1);
+				Assets.playSound(Assets.coinSound);
 				score += 300;
 				premiumlife++;
 //				Gdx.app.debug("premiumlife= ", "pl= "+premiumlife);
-				explosions.offer(new Explosion(spring.position.x-0.75f, spring.position.y-0.75f ,UI.SPRING_WIDTH*2, UI.SPRING_HEIGHT*2, 0.25f));
+//				explosions.offer(new Explosion(spring.position.x-0.75f, spring.position.y-0.75f ,UI.SPRING_WIDTH*2, UI.SPRING_HEIGHT*2, 0.25f));
 				springs.remove(i--);
 				break;
 			}
