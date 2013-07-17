@@ -358,7 +358,7 @@ public class World implements UI, CONSTANTS {
 	}
 
 	private void updateBob (float deltaTime, float accelX) {
-		if (bob.state != Bob.BOB_STATE_HIT) bob.velocity.x = -accelX / 2f * Bob.BOB_MOVE_VELOCITY;
+		if (bob.state != Bob.BOB_STATE_HIT) bob.velocity.x = -accelX / 5f * Bob.BOB_MOVE_VELOCITY;
 		if(bob.stateTime-bob.bubbletime>7f && bob.enablebubble){
 			bob.bubbletime=0;
 			bob.enablebubble = false;
