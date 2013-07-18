@@ -58,11 +58,13 @@ public class MultiWorld extends World {
 					break;
 				case PROTOCOL_CONSTANTS.PACKET_END:
 					this.state = CONSTANTS.GAME_LEVEL_END;
+					break;
 				case PROTOCOL_CONSTANTS.PACKET_PROJECTILE:
 					PaccoProiettile paccoproj = new PaccoProiettile(pkt);
 					paccoproj.deserialize();
 					Gdx.app.debug("Update.Multiworld", "paccoproj.getX()= "+paccoproj.getX()+" paccoproj.getY()"+paccoproj.getY());
 					projEnemy.offer(new Projectile(paccoproj.getX(), paccoproj.getY(), Projectile.WIDTH, Projectile.HEIGHT));
+					break;
 				default:
 					System.out.println("PKT FUORI DAL PROTOCOLLO.");
 					break;
