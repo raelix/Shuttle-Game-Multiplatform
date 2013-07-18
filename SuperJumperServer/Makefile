@@ -4,6 +4,7 @@ all:
 	gcj -I src -o bin/SuperJumperServer --main=SuperJumperServer src/*.class
 	chmod +x bin/SuperJumperServer
 	rm -f bin/*.class
+	rm -f src/*.class
 
 clean:
 	rm -f src/*.class
