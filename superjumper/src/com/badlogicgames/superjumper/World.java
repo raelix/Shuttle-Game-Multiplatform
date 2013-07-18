@@ -333,7 +333,7 @@ public class World implements UI, CONSTANTS {
 		ammotext.update(deltaTime, shot + "x");
 		lifetext.update(deltaTime, life + "x");
 		scoretext.update(deltaTime, "SCORE = " + score);
-		for (int i = 0; i < this.texts.size(); i++) {
+		for (int i = 0; i < this.texts.size() && i >= 0; i++) {
 			Text text = this.texts.get(i);
 			text.update(deltaTime);
 			if (text.duration != -1 && text.stateTime > text.duration)
@@ -454,7 +454,7 @@ public class World implements UI, CONSTANTS {
 		/*if (stars.size() > 1 && bob.position.y > stars.peek().position.y+5) {
 			stars.remove(0);
 		}*/
-		for (int i = 0; i < stars.size(); i++) {
+		for (int i = 0; i < stars.size() && i >= 0; i++) {
 			Star star=stars.get(i);
 			star.update(deltaTime);
 			if (star.position.y < bob.position.y-5){ 
@@ -463,7 +463,7 @@ public class World implements UI, CONSTANTS {
 	}
 
 	private void updateGalaxy(float deltaTime){
-		for (int i = 0; i < galaxies.size(); i++) {
+		for (int i = 0; i < galaxies.size() && i >= 0; i++) {
 			Galaxy galaxy = galaxies.get(i);
 			galaxy.update(deltaTime);
 			if (galaxy.position.y < bob.position.y-30){ 
@@ -474,7 +474,7 @@ public class World implements UI, CONSTANTS {
 	private void updatePlatforms (float deltaTime) {
 		if (platforms.size() > 1 && bob.position.y > platforms.get(0).position.y+5) 
 			platforms.remove(0);
-		for (int i = 0; i < platforms.size(); i++) {
+		for (int i = 0; i < platforms.size() && i >= 0; i++) {
 			Platform plat = platforms.get(i);
 
 			if (plat.type == Platform.PLATFORM_TYPE_MOVING && bob.position.y-plat.position.y>-9){
@@ -506,7 +506,7 @@ public class World implements UI, CONSTANTS {
 	}
 
 	private void updateProjectiles (float deltaTime) {
-		for (int i = 0; i < projectiles.size(); i++) {
+		for (int i = 0; i < projectiles.size() && i >= 0; i++) {
 			Projectile projectile = projectiles.get(i);
 			projectile.update(deltaTime);
 			if (projectile.position.y > bob.position.y+11){ 
@@ -517,7 +517,7 @@ public class World implements UI, CONSTANTS {
 
 
 	private void updateProjectilenemys(float deltaTime) {
-		for (int i = 0; i < projectenemy.size(); i++) {
+		for (int i = 0; i < projectenemy.size() && i >= 0; i++) {
 			Projectile projectenemys = projectenemy.get(i);
 			projectenemys.update(deltaTime);
 			if ( projectenemys.position.y < bob.position.y-5) 
@@ -540,7 +540,7 @@ public class World implements UI, CONSTANTS {
 	}
 
 	private void CheckRemoveEnemey() {
-		for (int i = 0; i < enemies.size(); i++){
+		for (int i = 0; i < enemies.size() && i >= 0; i++){
 			Enemy charlie = enemies.get(i);
 			if(charlie.life==0) {
 				explosions.offer(new Explosion(charlie.position.x, charlie.position.y,Enemy.ENEMY_WIDTH,Enemy.ENEMY_HEIGHT, 0));
@@ -552,7 +552,7 @@ public class World implements UI, CONSTANTS {
 
 
 	private void checkPlatformCollisions () {
-		for (int i = 0; i < platforms.size(); i++) {
+		for (int i = 0; i < platforms.size() && i >= 0; i++) {
 			Platform platform = platforms.get(i);
 			if (bob.position.y > platform.position.y) {
 				if ( OverlapTester.overlapRectangles(bob.bounds, platform.bounds)) {
@@ -577,7 +577,7 @@ public class World implements UI, CONSTANTS {
 
 	private void checkSquirrelCollisions () { 
 		float random = rand.nextFloat();
-		for (int i = 0; i < squirrels.size(); i++) {
+		for (int i = 0; i < squirrels.size() && i >= 0; i++) {
 			Squirrel squirrel = squirrels.get(i);
 			if (!squirrel.inuse && OverlapTester.overlapRectangles(squirrel.bounds, bob.bounds)) {
 				Gdx.input.vibrate(new long[] { 1, 10, 6, 10}, -1);
@@ -626,7 +626,7 @@ public class World implements UI, CONSTANTS {
 
 
 	private void checkItemCollisions () {
-		for (int i = 0; i < coins.size(); i++) {
+		for (int i = 0; i < coins.size() && i >= 0; i++) {
 			Coin coin = coins.get(i);
 			if (OverlapTester.overlapRectangles(bob.bounds, coin.bounds)) {
 				Gdx.input.vibrate(new long[] { 1, 50, 20, 50},-1); 
@@ -640,7 +640,7 @@ public class World implements UI, CONSTANTS {
 				break;
 			}
 		}
-		for (int i = 0; i < springs.size(); i++) {
+		for (int i = 0; i < springs.size() && i >= 0; i++) {
 			Spring spring = springs.get(i);
 			if (OverlapTester.overlapRectangles(bob.bounds, spring.bounds)) {
 //				Assets.playSound(Assets.soundExplosion1);
@@ -684,9 +684,9 @@ public class World implements UI, CONSTANTS {
 		 */
 		int i = 0, j = 0;
 		boolean flag = true;
-		for(i=0;i<projectiles.size() && flag;i++)	{
+		for(i=0;i<projectiles.size() && i >= 0 && flag;i++)	{
 			Projectile projectile=projectiles.get(i);
-			for(j=0;j<platforms.size();j++) {
+			for(j=0;j<platforms.size() && j >= 0;j++) {
 				Platform platform=platforms.get(j);
 				if (OverlapTester.overlapRectangles(platform.bounds, projectile.bounds)) {
 					Assets.playSound(Assets.soundExplosion1);
@@ -706,9 +706,9 @@ public class World implements UI, CONSTANTS {
 	private void checkProjectileEnemyCollisions(){
 		int i = 0, j = 0;
 		boolean flag = true;
-		for(i=0;i<projectenemy.size() && flag;i++)	{
+		for(i=0;i<projectenemy.size() && i >= 0 && flag;i++)	{
 			Projectile projectile=projectenemy.get(i);
-			for(j=0;j<platforms.size();j++) {
+			for(j=0;j<platforms.size() && j >= 0;j++) {
 				Platform platform=platforms.get(j);
 				if (OverlapTester.overlapRectangles(platform.bounds, projectile.bounds)) { 
 					projectenemy.remove(i--);

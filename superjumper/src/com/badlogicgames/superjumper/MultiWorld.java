@@ -74,11 +74,10 @@ public class MultiWorld extends World {
 			//Gdx.app.debug("pkt component2", "precdelta= "+ deltaTime + "accelx= "+ accelX +" accely= " + this.bob.velocity.y);
 			buffer.putPaccoOutNOBLOCK(new PaccoUpdateBobMulti(deltaTime, bob.position.x, bob.position.y));
 
-
-			for (int i = 0; i < projEnemy.size(); i++) {
+			for (int i = 0; i < projEnemy.size() && i >= 0; i++) {
 				Projectile projectile = projEnemy.get(i);
 				projectile.update(deltaTime);
-				for(int j=0;j<platforms.size();j++) {
+				for(int j=0;j<platforms.size() && j >= 0;j++) {
 					Platform platform=platforms.get(j);
 					if (OverlapTester.overlapRectangles(platform.bounds, projectile.bounds)) {
 						Gdx.input.vibrate(new long[] { 1, 20}, -1); 
@@ -105,14 +104,14 @@ public class MultiWorld extends World {
 				bob.gravity.x=-10;
 				bobMulti.gravity.x=10;
 			}*/
-			for(int i=0;i<projectiles.size();i++){
+			for(int i=0;i<projectiles.size() && i >= 0;i++){
 				Projectile projectile=projectiles.get(i);
 				if (OverlapTester.overlapRectangles(bobMulti.bounds, projectile.bounds)) {
 					Gdx.input.vibrate(new long[] { 1, 20, 40, 20}, -1); 
 					score += 100;
 					if((projectile.type==1||projectile.type==2)){
 						explosions.offer(new Explosion(bobMulti.position.x, bobMulti.position.y,Platform.PLATFORM_WIDTH,Platform.PLATFORM_HEIGHT,0));
-						projectiles.remove(projectile);
+						projectiles.remove(i--);
 					}
 					else if (projectile.type==0) projectiles.remove(projectile);
 					break;
