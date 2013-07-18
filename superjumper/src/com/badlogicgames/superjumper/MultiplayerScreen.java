@@ -22,7 +22,7 @@ import com.badlogic.gdx.math.Vector3;
 
 public class MultiplayerScreen implements Screen {
 	public static final int PORT = 10000;
-	public static final String IPTOCONNECT = "indiecode.no-ip.org";
+	public static final String IPTOCONNECT = "pocosgamo.tk";
 	Game game;
 	public final List<Button> buttons;
 	OrthographicCamera guiCam;
