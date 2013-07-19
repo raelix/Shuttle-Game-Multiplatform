@@ -52,7 +52,8 @@ public class MultiWorld extends World {
 					this.precdelta = pktbob.getDeltaTime();
 					this.precaccelx = pktbob.getAccelX();
 					this.precaccely = pktbob.getAccelY();
-					//Gdx.app.debug("pkt component", "precdelta= "+ this.precdelta + "accelx= "+ this.precaccelx +" accely= "+this.precaccely);
+					Gdx.app.debug("Position bob", " precdelta= "+ this.precdelta + "posx= "+ this.precaccelx +" posy= "+this.precaccely);
+					Gdx.app.debug("Position Enemy", "deltatime= "+ deltaTime + "posx= "+ bob.position.x +" posy= "+bob.position.y);
 					updateBobMulti(this.precdelta,this.precaccelx,this.precaccely);
 					flag = false;
 					break;
