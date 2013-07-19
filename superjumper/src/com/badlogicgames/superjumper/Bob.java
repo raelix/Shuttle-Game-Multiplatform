@@ -36,8 +36,8 @@ public class Bob extends DynamicGameObject {
 	}
 
 	public void update (float deltaTime) {
-		velocity.add(gravity.x * deltaTime, gravity.y * deltaTime);
-		position.add(velocity.x * deltaTime, velocity.y * deltaTime);
+//		velocity.add(gravity.x * deltaTime, gravity.y * deltaTime);
+	position.add(velocity.x * deltaTime, velocity.y * deltaTime);
 		bounds.x = position.x - bounds.width / 2;
 		bounds.y = position.y - bounds.height / 2;
 		/*
