@@ -45,7 +45,8 @@ public class MultiGameScreen extends GameScreen {
 
 				case CONSTANTS.GAME_RUNNING:
 					if (OverlapTester.pointInRectangle(pauseBounds, touchPoint.x, touchPoint.y)) {
-						pause();
+					/*	pause();*/
+						break;
 					}
 					if (world.supermissiles > 0 && OverlapTester.pointInRectangle(nosBounds, touchPoint.x, touchPoint.y)) {
 						//Gdx.app.debug("UPDATEGRAVITY", "sto cliccando su");

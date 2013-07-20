@@ -13,13 +13,15 @@ import com.badlogic.gdx.Gdx;
  *
  */
 public class MultiWorld extends World {
-
+	int position;
 	private float precdelta, precaccelx, precaccely;
 	protected static FullDuplexBuffer buffer = new FullDuplexBuffer();
 	public static String enemy = "";
 	public Bob bobMulti;
 	public LinkedList<Projectile> projEnemy;
 	private boolean flag = true;
+	public Text positionText = new Text(SCOREPOSITIONX*0.2f,SCOREPOSITIONY*0.92f,"P.");
+	
 	/**
 	 * @param seed
 	 */
@@ -28,6 +30,12 @@ public class MultiWorld extends World {
 		this.randgenerate = new Random(seed);
 		this.bobMulti = new Bob(UI.HALFSCREENWIDTH,0);
 		this.projEnemy = new LinkedList<Projectile>();
+		positionText.update(0,"P." + position);
+		this.texts.offer(positionText);
+		scoretext.update(0, "TIME = " + score);
+		this.texts.offer(ammotext);
+		this.texts.offer(lifetext);
+		
 	}
 
 	@Override
@@ -75,6 +83,8 @@ public class MultiWorld extends World {
 			//Gdx.app.debug("pkt component2", "precdelta= "+ deltaTime + "accelx= "+ accelX +" accely= " + this.bob.velocity.y);
 			buffer.putPaccoOutNOBLOCK(new PaccoUpdateBobMulti(deltaTime, bob.position.x, bob.position.y));
 
+			if(bob.position.y > bobMulti.position.y)position=1;
+			else position = 2;
 			for (int i = 0; i < projEnemy.size() && i >= 0; i++) {
 				Projectile projectile = projEnemy.get(i);
 				projectile.update(deltaTime);
@@ -94,7 +104,7 @@ public class MultiWorld extends World {
 						break;
 					}
 				}
-				if (projectile.position.y > bobMulti.position.y+11){ 
+				if (projectile.position.y > bobMulti.position.y+20){ 
 					projEnemy.remove(i--);
 					break;
 				}
@@ -139,5 +149,18 @@ public class MultiWorld extends World {
 
 	}
 	
+	@Override
+	public void updateTexts(float deltaTime) {
+		ammotext.update(deltaTime, shot + "x");
+		lifetext.update(deltaTime, life + "x");
+		positionText.update(deltaTime,"P."+position);
+		scoretext.update(deltaTime, "TIME = " + score);
+		for (int i = 0; i < this.texts.size() && i >= 0; i++) {
+			Text text = this.texts.get(i);
+			text.update(deltaTime);
+			if (text.duration != -1 && text.stateTime > text.duration)
+				texts.remove(i--);
+		}
+	}
 	
 }

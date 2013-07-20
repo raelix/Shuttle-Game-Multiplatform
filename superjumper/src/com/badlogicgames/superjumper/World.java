@@ -329,7 +329,7 @@ public class World implements UI, CONSTANTS {
 	}
 
 
-	private void updateTexts(float deltaTime) {
+	public void updateTexts(float deltaTime) {
 		ammotext.update(deltaTime, shot + "x");
 		lifetext.update(deltaTime, life + "x");
 		scoretext.update(deltaTime, "SCORE = " + score);
