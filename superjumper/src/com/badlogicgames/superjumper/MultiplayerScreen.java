@@ -29,7 +29,7 @@ public class MultiplayerScreen implements Screen {
 	SpriteBatch batcher;
 	Rectangle backBounds;
 	Rectangle ClientBounds;
-	Rectangle ServerBounds;
+//	Rectangle ServerBounds;
 	Vector3 touchPoint;
 	static int seed = 10000;
 	String[] highScores;
@@ -38,7 +38,7 @@ public class MultiplayerScreen implements Screen {
 	static String client = "PARTECIPA";
 	static String server = "OSPITA";
 	String message="";
-	public Text connecting = new Text(320/2,480/3,"In Connessione...");
+	public Text connecting = new Text(320/2,480/2.1f,"Waiting Match...");
 	boolean connect = false;
 	public MultiplayerScreen (Game game) {
 		this.game = game;
@@ -48,15 +48,15 @@ public class MultiplayerScreen implements Screen {
 		backBounds = new Rectangle(0, 0, 64, 64);
 		//ClientBounds = new Rectangle(200, 100, 300, 36);
 		//ServerBounds = new Rectangle(280, 180, 300, 36);
-		ClientBounds = new Rectangle(100, 210, 300, 20);
-		ServerBounds = new Rectangle(100, 260, 300, 20);
+		ClientBounds = new Rectangle(100, 235, 300, 20);
+//		ServerBounds = new Rectangle(100, 260, 300, 20);
 		touchPoint = new Vector3();
 		batcher = new SpriteBatch();
 		Assets.playSound(Assets.soundRocket);
-		Button button = new Button(90 ,230 , UI.SCREENWIDTH/2,UI.SCREENHEIGHT ,Assets.resume);
+		Button button = new Button(100,220 , UI.SCREENWIDTH/2,UI.SCREENHEIGHT ,Assets.resume);
 		buttons.add(button);
-		Button buttones = new Button(90 ,180 , 0,0,Assets.quit);
-		buttons.add(buttones);
+//		Button buttones = new Button(90 ,180 , 0,0,Assets.quit);
+//		buttons.add(buttones);
 	}
 
 	public void update (float deltaTime) {
@@ -97,7 +97,7 @@ public class MultiplayerScreen implements Screen {
 				return;
 			} 
 			
-			else if (OverlapTester.pointInRectangle(ServerBounds, touchPoint.x, touchPoint.y))  {
+			/*else if (OverlapTester.pointInRectangle(ServerBounds, touchPoint.x, touchPoint.y))  {
 
 				Assets.playSound(Assets.clickSound);
 				str = "ACCEPTING";
@@ -119,7 +119,7 @@ public class MultiplayerScreen implements Screen {
 				
 				str = "CONNECTED";
 				game.setScreen(new MultiGameScreen(game,seed));
-			}
+			}*/
 			else if((OverlapTester.pointInRectangle(ClientBounds, touchPoint.x, touchPoint.y))) {
 				System.out.println("connect = true");
 				connect = true;
@@ -146,8 +146,9 @@ public class MultiplayerScreen implements Screen {
 		int len = buttons.size();
 		for (int i = 0; i < len; i++) {
 			Button button = buttons.get(i);
-			Texture keyFrame =Assets.ospita;
-			if(i==1)keyFrame=Assets.partecipa;
+//			Texture keyFrame =Assets.ospita;
+//			if(i==1)
+			Texture	keyFrame=Assets.partecipa;
 			batcher.draw(keyFrame,button.position.x,button.position.y,145,145);
 		}
 		
