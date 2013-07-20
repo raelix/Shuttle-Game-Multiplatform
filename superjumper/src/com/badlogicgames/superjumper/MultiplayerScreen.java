@@ -38,7 +38,8 @@ public class MultiplayerScreen implements Screen {
 	static String client = "PARTECIPA";
 	static String server = "OSPITA";
 	String message="";
-
+	public Text connecting = new Text(320/2,480/3,"In Connessione...");
+	boolean connect = false;
 	public MultiplayerScreen (Game game) {
 		this.game = game;
 		this.buttons=new ArrayList<Button>();
@@ -59,27 +60,17 @@ public class MultiplayerScreen implements Screen {
 	}
 
 	public void update (float deltaTime) {
-		int len = buttons.size();
-		for (int i = 0; i < len; i++) {
-			Button button=buttons.get(i);
-			button.update(deltaTime);
-		}
-		if (Gdx.input.justTouched()) {
-			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
-
-			if (OverlapTester.pointInRectangle(backBounds, touchPoint.x, touchPoint.y)) {
-				Assets.playSound(Assets.clickSound);
-				game.setScreen(new MainMenuScreen(game));
-				return;
-			} else if (OverlapTester.pointInRectangle(ClientBounds, touchPoint.x, touchPoint.y)) {
+		 connecting.update(deltaTime);
+		 if (connect) {
 				Semaphore sem = new Semaphore(0,true);
+
 				Assets.playSound(Assets.clickSound);
 				str = "CONNECTING";
 				Gdx.app.debug("PHTEST", "BUFFER STATUS = " + MultiWorld.buffer.selfTest());
 				ConnectThread thr = new ConnectThread(IPTOCONNECT,PORT,MultiWorld.buffer,sem);
 				thr.start();
 				Gdx.app.debug("PHTEST", "started connect thread");
-				try {
+				 try {
 					sem.acquire();
 				} catch (InterruptedException e) {
 					str = "ERROR.";
@@ -90,7 +81,24 @@ public class MultiplayerScreen implements Screen {
 				Gdx.app.debug("PHTEST", "connected");
 				
 				game.setScreen(new MultiGameScreen(game,seed));
-			} else if (OverlapTester.pointInRectangle(ServerBounds, touchPoint.x, touchPoint.y)) {
+			} 
+		int len = buttons.size();
+		for (int i = 0; i < len; i++) {
+			Button button=buttons.get(i);
+			button.update(deltaTime);
+		}
+		if (Gdx.input.justTouched()) {
+			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
+			
+	
+			if (OverlapTester.pointInRectangle(backBounds, touchPoint.x, touchPoint.y)) {
+				Assets.playSound(Assets.clickSound);
+				game.setScreen(new MainMenuScreen(game));
+				return;
+			} 
+			
+			else if (OverlapTester.pointInRectangle(ServerBounds, touchPoint.x, touchPoint.y))  {
+
 				Assets.playSound(Assets.clickSound);
 				str = "ACCEPTING";
 				Semaphore sem = new Semaphore(0,true);
@@ -111,8 +119,11 @@ public class MultiplayerScreen implements Screen {
 				
 				str = "CONNECTED";
 				game.setScreen(new MultiGameScreen(game,seed));
-
 			}
+			else if((OverlapTester.pointInRectangle(ClientBounds, touchPoint.x, touchPoint.y))) {
+				System.out.println("connect = true");
+				connect = true;
+					}
 		}
 	}
 	public void draw (float deltaTime) {
@@ -139,7 +150,11 @@ public class MultiplayerScreen implements Screen {
 			if(i==1)keyFrame=Assets.partecipa;
 			batcher.draw(keyFrame,button.position.x,button.position.y,145,145);
 		}
-
+		
+		if(connect){
+			 connecting.draw(batcher);
+			 System.out.println("faccio draw");
+		}
 		batcher.end();
 	}
 
