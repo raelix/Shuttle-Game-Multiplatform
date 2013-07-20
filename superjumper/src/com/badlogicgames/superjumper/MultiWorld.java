@@ -31,14 +31,14 @@ public class MultiWorld extends World {
 		super();
 		buffer.clear();
 		this.randgenerate = new Random(seed);
-		this.bobMulti = new Bob(UI.HALFSCREENWIDTH,0);
+		this.bobMulti = new Bob(WORLD_WIDTH/2,0);
 		this.projEnemy = new LinkedList<Projectile>();
 		positionText.update(0,"P." + position);
 		this.texts.offer(positionText);
 		scoretext.update(0, "TIME = " + myTime);
 		this.texts.offer(ammotext);
 		this.texts.offer(lifetext);
-
+		
 	}
 
 	@Override
@@ -64,7 +64,8 @@ public class MultiWorld extends World {
 					this.precdelta = pktbob.getDeltaTime();
 					this.precaccelx = pktbob.getAccelX();
 					this.precaccely = pktbob.getAccelY();
-					Gdx.app.debug("Ricezione: Position Nemico", " precdelta= "+ this.precdelta + "posx= "+ this.precaccelx +" posy= "+this.precaccely);
+					Gdx.app.debug("Ricezione: Gravity Nemico", " precdelta= "+ this.precdelta + "accsx= "+ this.precaccelx +" accy= "+this.precaccely);
+					Gdx.app.debug("Ricezione: Position Nemico", " precdelta= "+ this.precdelta + "posx= "+ bobMulti.position.x +" posy= "+bobMulti.position.y);
 					Gdx.app.debug("Ricezione: Position Mio", "deltatime= "+ deltaTime + "posx= "+ bob.position.x +" posy= "+bob.position.y);
 					updateBobMulti(this.precdelta,this.precaccelx,this.precaccely);
 					flag = false;
@@ -89,7 +90,7 @@ public class MultiWorld extends World {
 				}
 			}
 			//if (flag) bobMulti.update(deltaTime);
-			Gdx.app.debug("Spedit pacchetto: ", "precdelta= "+ deltaTime + "gravityx= "+ accelX +" gravityy= " + this.bob.velocity.y);
+			Gdx.app.debug("Spedit pacchetto: ", "precdelta= "+ deltaTime + "gravityx= "+ bob.gravity.x +" gravityy= " + bob.gravity.y);
 			buffer.putPaccoOutNOBLOCK(new PaccoUpdateBobMulti(deltaTime, bob.gravity.x, bob.gravity.y));
 			System.out.println("position.x = "+bob.gravity.x);
 			myTime+=deltaTime;
@@ -155,6 +156,7 @@ public class MultiWorld extends World {
 //		bobMulti.position.x=accelX ;
 //		bobMulti.position.y=accelY ;
 		Gdx.app.debug("updatebobmultiNemico","deltatime="+deltaTime+"positionX="+ bobMulti.position.x+"positionY="+ bobMulti.position.y);
+		Gdx.app.debug("updatebobmultiNemicoGravity","deltatime="+deltaTime+"gravityX="+ bobMulti.gravity.x+"positionY="+ bobMulti.gravity.y);
 		 bobMulti.velocity.add(accelX * deltaTime, accelY * deltaTime);
 		 bobMulti.position.add(bobMulti.velocity.x * deltaTime, bobMulti.velocity.y * deltaTime);
 		 bobMulti.bounds.x = bobMulti.position.x - bobMulti.bounds.width / 2;
