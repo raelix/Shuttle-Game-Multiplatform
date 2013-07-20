@@ -91,7 +91,7 @@ public class MultiWorld extends World {
 			}
 			//if (flag) bobMulti.update(deltaTime);
 			Gdx.app.debug("Spedit pacchetto: ", "precdelta= "+ deltaTime + "gravityx= "+ bob.gravity.x +" gravityy= " + bob.gravity.y);
-			buffer.putPaccoOutNOBLOCK(new PaccoUpdateBobMulti(deltaTime, bob.gravity.x, bob.gravity.y));
+			buffer.putPaccoOutNOBLOCK(new PaccoUpdateBobMulti(deltaTime, bob.velocity.x, bob.velocity.y));
 			System.out.println("position.x = "+bob.gravity.x);
 			myTime+=deltaTime;
 			checkGameOver () ;

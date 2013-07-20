@@ -66,9 +66,11 @@ public class Bob extends DynamicGameObject {
 		stateTime += deltaTime;
 	}
 	
-public void update(float deltaTime,float gravityX, float gravityY){
-	this.gravity.x = gravityX;
-	this.gravity.y = gravityY;
+public void update(float deltaTime,float velocityX, float velocityY){
+	this.velocity.x = velocityX;
+	this.velocity.y = velocityY;
+	this.gravity.x = 0;
+	this.gravity.y = 0;
 	this.update(deltaTime);
 }
 	/*
