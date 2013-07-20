@@ -116,7 +116,7 @@ public class GameScreen implements Screen, CONSTANTS {
 						Settings.addScore(world.score);
 						Settings.save();
 					}
-					world.state = CONSTANTS.GAME_RUNNING;
+					Gdx.input.setInputProcessor(null);
 					game.setScreen(new MainMenuScreen(game));
 					break;
 

@@ -23,6 +23,7 @@ public class MultiWorld extends World {
 	private boolean flag = true;
 	public Text positionText = new Text(SCOREPOSITIONX*0.2f,SCOREPOSITIONY*0.92f,"P.");
 	
+
 	/**
 	 * @param seed
 	 */
@@ -36,19 +37,20 @@ public class MultiWorld extends World {
 		scoretext.update(0, "TIME = " + myTime);
 		this.texts.offer(ammotext);
 		this.texts.offer(lifetext);
-		
+
 	}
 
 	@Override
 	public void update(float deltaTime, float accelX) {
-		
+
 		super.update(deltaTime,accelX);
 		switch (this.state) {
 		case CONSTANTS.GAME_RUNNING:
 			Pacco pkt;
+		
 			boolean flag = true;
 			while ((pkt = buffer.takePaccoInNOBLOCK()) != null) {
-//			if ((pkt = buffer.takePaccoInNOBLOCK()) != null) {
+
 				switch (pkt.getType()) {
 				case PROTOCOL_CONSTANTS.PACKET_TYPE_BOB_MULTI:
 					PaccoUpdateBobMulti pktbob;
@@ -67,8 +69,10 @@ public class MultiWorld extends World {
 					flag = false;
 					break;
 				case PROTOCOL_CONSTANTS.PACKET_END:
+					System.out.println("HO RICEVUTO IL PACCO END E SPOSTO SU GAME OVER");
 					buffer.putPaccoOutNOBLOCK(new PaccoEnd());
-					this.state = CONSTANTS.GAME_LEVEL_END;
+					System.out.println("HO RICEVUTO IL PACCO END E SPOSTO SU GAME OVER");
+					state = CONSTANTS.GAME_OVER;
 					break;
 				case PROTOCOL_CONSTANTS.PACKET_PROJECTILE:
 					PaccoProiettile paccoproj = new PaccoProiettile(pkt);
@@ -87,6 +91,7 @@ public class MultiWorld extends World {
 			//Gdx.app.debug("pkt component2", "precdelta= "+ deltaTime + "accelx= "+ accelX +" accely= " + this.bob.velocity.y);
 			buffer.putPaccoOutNOBLOCK(new PaccoUpdateBobMulti(deltaTime, bob.position.x, bob.position.y));
 			myTime+=deltaTime;
+			checkGameOver () ;
 			if(bob.position.y > bobMulti.position.y)position=1;
 			else position = 2;
 			for (int i = 0; i < projEnemy.size() && i >= 0; i++) {
@@ -152,7 +157,7 @@ public class MultiWorld extends World {
 //		Gdx.app.debug("updatebobomulti", "bobMulti.position.y = " + bobMulti.position.y + " bob.position.y = " + bob.position.y);
 
 	}
-	
+
 	@Override
 	public void updateTexts(float deltaTime) {
 		ammotext.update(deltaTime, shot + "x");
@@ -166,5 +171,29 @@ public class MultiWorld extends World {
 				texts.remove(i--);
 		}
 	}
+
+	@Override
+	public void checkGameOver () {
+
+		if (life<=0){ 
+			Gdx.app.debug("CheckGameOver ","mando il pacco end");
+			buffer.putPaccoOutNOBLOCK(new PaccoEnd());
 	
+			this.state = CONSTANTS.GAME_OVER;}
+	}
+	
+	@Override
+	public void LifeLess(){
+		if (--life > 0) {
+			if (life == 1) this.texts.offer(new FloatingText("WARNING!", 0));
+		} else {
+			System.out.println("Sono dentro lifeLess override");
+			
+			buffer.putPaccoOutNOBLOCK(new PaccoEnd());
+			state = CONSTANTS.GAME_OVER;
+		
+		}
+	}
+
+
 }

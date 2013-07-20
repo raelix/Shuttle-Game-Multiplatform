@@ -314,7 +314,7 @@ public class World implements UI, CONSTANTS {
 			break;
 
 		case CONSTANTS.GAME_OVER:
-
+System.out.println("Stato Game Over in World");
 			break;
 			
 		case CONSTANTS.GAME_READY:
@@ -803,11 +803,8 @@ public class World implements UI, CONSTANTS {
 	}
 
 
-	private void checkGameOver () {
-		if (heightSoFar - 7.5f > bob.position.y) {
-			state = CONSTANTS.GAME_OVER;
-		}
-
+	public void checkGameOver () {
+	
 		if (life<=0){ state = CONSTANTS.GAME_OVER;}
 	}
 
