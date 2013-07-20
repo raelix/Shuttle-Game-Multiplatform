@@ -64,7 +64,6 @@ public class MultiWorld extends World {
 					this.precdelta = pktbob.getDeltaTime();
 					this.precaccelx = pktbob.getAccelX();
 					this.precaccely = pktbob.getAccelY();
-					Gdx.app.debug("Ricezione: Gravity Nemico", " precdelta= "+ this.precdelta + "accsx= "+ this.precaccelx +" accy= "+this.precaccely);
 					Gdx.app.debug("Ricezione: Position Nemico", " precdelta= "+ this.precdelta + "posx= "+ bobMulti.position.x +" posy= "+bobMulti.position.y);
 					Gdx.app.debug("Ricezione: Position Mio", "deltatime= "+ deltaTime + "posx= "+ bob.position.x +" posy= "+bob.position.y);
 					bobMulti.update(this.precdelta,this.precaccelx,this.precaccely);
@@ -89,9 +88,7 @@ public class MultiWorld extends World {
 					break;
 				}
 			}
-			//if (flag) bobMulti.update(deltaTime);
-			Gdx.app.debug("Spedit pacchetto: ", "precdelta= "+ deltaTime + "gravityx= "+ bob.gravity.x +" gravityy= " + bob.gravity.y);
-			buffer.putPaccoOutNOBLOCK(new PaccoUpdateBobMulti(deltaTime, bob.velocity.x, bob.velocity.y));
+			buffer.putPaccoOutNOBLOCK(new PaccoUpdateBobMulti(deltaTime, bob.position.x, bob.position.y));
 			System.out.println("position.x = "+bob.gravity.x);
 			myTime+=deltaTime;
 			checkGameOver () ;
