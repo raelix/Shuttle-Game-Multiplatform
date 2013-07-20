@@ -214,7 +214,7 @@ public class GameScreen implements Screen, CONSTANTS {
 	}
 
 	public void update (float deltaTime) {
-		if (deltaTime > 0.1f) deltaTime = 0.1f;
+//		if (deltaTime > 0.1f) deltaTime = 0.1f;
 		switch (world.state) {
 
 		case GAME_READY:

@@ -14,6 +14,7 @@ import com.badlogic.gdx.Gdx;
  */
 public class MultiWorld extends World {
 	int position;
+	float myTime = 0;
 	private float precdelta, precaccelx, precaccely;
 	protected static FullDuplexBuffer buffer = new FullDuplexBuffer();
 	public static String enemy = "";
@@ -32,7 +33,7 @@ public class MultiWorld extends World {
 		this.projEnemy = new LinkedList<Projectile>();
 		positionText.update(0,"P." + position);
 		this.texts.offer(positionText);
-		scoretext.update(0, "TIME = " + score);
+		scoretext.update(0, "TIME = " + myTime);
 		this.texts.offer(ammotext);
 		this.texts.offer(lifetext);
 		
@@ -46,8 +47,8 @@ public class MultiWorld extends World {
 		case CONSTANTS.GAME_RUNNING:
 			Pacco pkt;
 			boolean flag = true;
-//			while ((pkt = buffer.takePaccoInNOBLOCK()) != null) {
-			if ((pkt = buffer.takePaccoInNOBLOCK()) != null) {
+			while ((pkt = buffer.takePaccoInNOBLOCK()) != null) {
+//			if ((pkt = buffer.takePaccoInNOBLOCK()) != null) {
 				switch (pkt.getType()) {
 				case PROTOCOL_CONSTANTS.PACKET_TYPE_BOB_MULTI:
 					PaccoUpdateBobMulti pktbob;
@@ -72,7 +73,9 @@ public class MultiWorld extends World {
 					PaccoProiettile paccoproj = new PaccoProiettile(pkt);
 					paccoproj.deserialize();
 					Gdx.app.debug("Update.Multiworld", "paccoproj.getX()= "+paccoproj.getX()+" paccoproj.getY()"+paccoproj.getY());
-					projEnemy.offer(new Projectile(paccoproj.getX(), paccoproj.getY(), Projectile.WIDTH, Projectile.HEIGHT));
+					Projectile projectile = new Projectile(paccoproj.getX(), paccoproj.getY(), Projectile.WIDTH, Projectile.HEIGHT);
+					projectile.setVelocity(0,25);
+					projEnemy.offer(projectile);
 					break;
 				default:
 					System.out.println("PKT FUORI DAL PROTOCOLLO.");
@@ -82,7 +85,7 @@ public class MultiWorld extends World {
 			//if (flag) bobMulti.update(deltaTime);
 			//Gdx.app.debug("pkt component2", "precdelta= "+ deltaTime + "accelx= "+ accelX +" accely= " + this.bob.velocity.y);
 			buffer.putPaccoOutNOBLOCK(new PaccoUpdateBobMulti(deltaTime, bob.position.x, bob.position.y));
-
+			myTime+=deltaTime;
 			if(bob.position.y > bobMulti.position.y)position=1;
 			else position = 2;
 			for (int i = 0; i < projEnemy.size() && i >= 0; i++) {
@@ -104,7 +107,7 @@ public class MultiWorld extends World {
 						break;
 					}
 				}
-				if (projectile.position.y > bobMulti.position.y+20){ 
+				if (projectile.position.y > bobMulti.position.y+20 && i >= 0){ 
 					projEnemy.remove(i--);
 					break;
 				}
@@ -154,7 +157,7 @@ public class MultiWorld extends World {
 		ammotext.update(deltaTime, shot + "x");
 		lifetext.update(deltaTime, life + "x");
 		positionText.update(deltaTime,"P."+position);
-		scoretext.update(deltaTime, "TIME = " + score);
+		scoretext.update(deltaTime, "TIME = " + (int)myTime);
 		for (int i = 0; i < this.texts.size() && i >= 0; i++) {
 			Text text = this.texts.get(i);
 			text.update(deltaTime);
