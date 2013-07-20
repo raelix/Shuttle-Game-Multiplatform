@@ -65,7 +65,13 @@ public class Bob extends DynamicGameObject {
 		}
 		stateTime += deltaTime;
 	}
-/*
+	
+public void update(float deltaTime,float gravityX, float gravityY){
+	this.gravity.x = gravityX;
+	this.gravity.y = gravityY;
+	this.update(deltaTime);
+}
+	/*
 	public void hitSquirrel () {
 		velocity.set(0, 0);
 		state = BOB_STATE_HIT;

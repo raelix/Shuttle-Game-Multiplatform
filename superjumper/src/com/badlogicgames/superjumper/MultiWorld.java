@@ -67,7 +67,7 @@ public class MultiWorld extends World {
 					Gdx.app.debug("Ricezione: Gravity Nemico", " precdelta= "+ this.precdelta + "accsx= "+ this.precaccelx +" accy= "+this.precaccely);
 					Gdx.app.debug("Ricezione: Position Nemico", " precdelta= "+ this.precdelta + "posx= "+ bobMulti.position.x +" posy= "+bobMulti.position.y);
 					Gdx.app.debug("Ricezione: Position Mio", "deltatime= "+ deltaTime + "posx= "+ bob.position.x +" posy= "+bob.position.y);
-					updateBobMulti(this.precdelta,this.precaccelx,this.precaccely);
+					bobMulti.update(this.precdelta,this.precaccelx,this.precaccely);
 					flag = false;
 					break;
 				case PROTOCOL_CONSTANTS.PACKET_END:
@@ -91,7 +91,7 @@ public class MultiWorld extends World {
 			}
 			//if (flag) bobMulti.update(deltaTime);
 			Gdx.app.debug("Spedit pacchetto: ", "precdelta= "+ deltaTime + "gravityx= "+ bob.gravity.x +" gravityy= " + bob.gravity.y);
-			buffer.putPaccoOutNOBLOCK(new PaccoUpdateBobMulti(deltaTime, bob.gravity.x, bob.velocity.y));
+			buffer.putPaccoOutNOBLOCK(new PaccoUpdateBobMulti(deltaTime, bob.gravity.x, bob.gravity.y));
 			System.out.println("position.x = "+bob.gravity.x);
 			myTime+=deltaTime;
 			checkGameOver () ;
@@ -151,21 +151,19 @@ public class MultiWorld extends World {
 			break;
 		}
 	}
-
+/*
 	private void updateBobMulti (float deltaTime, float accelX, float accelY) {
 //		bobMulti.position.x=accelX ;
 //		bobMulti.position.y=accelY ;
 		Gdx.app.debug("updatebobmultiNemico","deltatime="+deltaTime+"positionX="+ bobMulti.position.x+"positionY="+ bobMulti.position.y);
 		Gdx.app.debug("updatebobmultiNemicoGravity","deltatime="+deltaTime+"gravityX="+ bobMulti.gravity.x+"positionY="+ bobMulti.gravity.y);
-		bobMulti.velocity.x = accelX*deltaTime; 
-//		bobMulti.velocity.add(accelX * deltaTime, accelY * deltaTime);
-		bobMulti.position.y = accelY * deltaTime; 
-//		bobMulti.position.add(bobMulti.velocity.x * deltaTime, bobMulti.velocity.y * deltaTime);
+		 bobMulti.velocity.add(accelX * deltaTime, accelY * deltaTime);
+		 bobMulti.position.add(bobMulti.velocity.x * deltaTime, bobMulti.velocity.y * deltaTime);
 		 bobMulti.bounds.x = bobMulti.position.x - bobMulti.bounds.width / 2;
 		 bobMulti.bounds.y = bobMulti.position.y - bobMulti.bounds.height / 2;
 			
 	}
-
+*/
 	@Override
 	public void updateTexts(float deltaTime) {
 		ammotext.update(deltaTime, shot + "x");
