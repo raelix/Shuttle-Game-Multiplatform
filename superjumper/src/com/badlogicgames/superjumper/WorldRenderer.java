@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class WorldRenderer {
-
+	public Text gameOver;
 	static final float FRUSTUM_WIDTH = 10;
 	static final float FRUSTUM_HEIGHT = 15;
 	private static float[] verts = new float[20];
@@ -96,7 +96,8 @@ public class WorldRenderer {
 			batch.begin();
 			batch.enableBlending();
 			Assets.handfontsmall.scale(1.1f);
-			new Text(UI.SCREENWIDTH/2 ,UI.SCREENHEIGHT*2/3,"G A M E  O V E R").draw(batch);
+			gameOver = new Text(UI.SCREENWIDTH/2 ,UI.SCREENHEIGHT*2/3,"G A M E  O V E R");
+			gameOver.draw(batch);
 			Assets.handfontsmall.scale(-1.1f);
 			batch.disableBlending();
 			batch.end();
