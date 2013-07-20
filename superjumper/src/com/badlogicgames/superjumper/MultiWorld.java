@@ -67,6 +67,7 @@ public class MultiWorld extends World {
 					flag = false;
 					break;
 				case PROTOCOL_CONSTANTS.PACKET_END:
+					buffer.putPaccoOutNOBLOCK(new PaccoEnd());
 					this.state = CONSTANTS.GAME_LEVEL_END;
 					break;
 				case PROTOCOL_CONSTANTS.PACKET_PROJECTILE:
