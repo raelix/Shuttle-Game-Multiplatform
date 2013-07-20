@@ -14,7 +14,6 @@ import com.badlogic.gdx.math.Vector2;
  *
  */
 public class MultiGameScreen extends GameScreen {
-
 	/**
 	 * @param game
 	 */
@@ -175,5 +174,15 @@ public class MultiGameScreen extends GameScreen {
 			}
 		});
 		Gdx.input.setInputProcessor(gestureDetector);		
+	}
+	@Override 
+	public void pause () {
+	MultiWorld.buffer.putPaccoOutNOBLOCK(new PaccoEnd());
+	game.setScreen(new MainMenuScreen(game));
+	}
+	@Override
+	public void dispose () {
+		Assets.load();
+	
 	}
 }

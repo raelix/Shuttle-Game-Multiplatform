@@ -272,6 +272,8 @@ public class GameScreen implements Screen, CONSTANTS {
 	public void show () {
 		Assets.RectBlack();
 		Assets.RectWhite();
+		Assets.load();
+		render(0);
 }
 
 	@Override
