@@ -35,7 +35,7 @@ public class MultiWorldRenderer extends WorldRenderer {
 			batch.enableBlending();
 			Assets.handfontsmall.scale(1.1f);
 			if(!world.win)gameOver.update(0,"LOSE (" + (int)world.myTime +" secondi)");
-			else gameOver.update(0,"WIN (" + world.myTime + " secondi)");
+			else gameOver.update(0,"WIN (" + (int)world.myTime + " secondi)");
 			gameOver.draw(batch);
 			System.out.println(gameOver.string);
 			Assets.handfontsmall.scale(-1.1f);
