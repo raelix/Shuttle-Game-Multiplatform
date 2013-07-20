@@ -29,6 +29,7 @@ public class MultiWorld extends World {
 	 */
 	public MultiWorld (int seed) {
 		super();
+		buffer.clear();
 		this.randgenerate = new Random(seed);
 		this.bobMulti = new Bob(UI.HALFSCREENWIDTH,0);
 		this.projEnemy = new LinkedList<Projectile>();
