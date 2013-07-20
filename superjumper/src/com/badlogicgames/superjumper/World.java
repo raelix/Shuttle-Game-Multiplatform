@@ -106,10 +106,10 @@ public class World implements UI, CONSTANTS {
 	protected void generateLevel () {
 		castle = new Castle(WORLD_WIDTH / 2, WORLD_HEIGHT - 10);
 	}
-	
+
 	public void generateSemaphore(float deltaTime){
 		if(!semaforo.isEmpty())
-		semaforo.getFirst().update(deltaTime);
+			semaforo.getFirst().update(deltaTime);
 		if(semaforo.isEmpty()){
 			this.texts.offer(new FloatingText("GO!",0.6f));
 			Assets.playSound(Assets.soundShot);
@@ -117,7 +117,7 @@ public class World implements UI, CONSTANTS {
 		}
 		semaforo=start.updateCount(deltaTime);
 	}
-	
+
 
 	private void generateStars(){
 		//star generate
@@ -277,7 +277,7 @@ public class World implements UI, CONSTANTS {
 
 	public void update (float deltaTime, float accelX) {
 		switch (this.state) {
-		
+
 		case CONSTANTS.GAME_RUNNING:
 			editPosition(deltaTime);
 			score += (int)bob.velocity.y/10;
@@ -314,9 +314,9 @@ public class World implements UI, CONSTANTS {
 			break;
 
 		case CONSTANTS.GAME_OVER:
-System.out.println("Stato Game Over in World");
+			System.out.println("Stato Game Over in World");
 			break;
-			
+
 		case CONSTANTS.GAME_READY:
 			generateSemaphore( deltaTime);
 			break;
@@ -565,7 +565,7 @@ System.out.println("Stato Game Over in World");
 					}
 					Gdx.input.vibrate(new long[] { 1, 10,5, 5}, -1); 
 					if(platform.type == Platform.PLATFORM_STATE_CIRCLE)
-					explosions.offer(new Explosion(platform.position.x-Platform.PLATFORM_WIDTH/2, platform.position.y-Platform.PLATFORM_HEIGHT/2,Platform.PLATFORM_WIDTH*2,Platform.PLATFORM_HEIGHT*2,0));
+						explosions.offer(new Explosion(platform.position.x-Platform.PLATFORM_WIDTH/2, platform.position.y-Platform.PLATFORM_HEIGHT/2,Platform.PLATFORM_WIDTH*2,Platform.PLATFORM_HEIGHT*2,0));
 					else explosions.offer(new Explosion(platform.position.x-0.75f, platform.position.y-0.75f ,UI.SPRING_WIDTH*2, UI.SPRING_HEIGHT*2, 0.25f));
 					platforms.remove(i--);
 					Assets.playSound(Assets.soundExplosion);
@@ -804,7 +804,7 @@ System.out.println("Stato Game Over in World");
 
 
 	public void checkGameOver () {
-	
+
 		if (life<=0){ state = CONSTANTS.GAME_OVER;}
 	}
 

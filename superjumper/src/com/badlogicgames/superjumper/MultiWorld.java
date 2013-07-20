@@ -90,7 +90,7 @@ public class MultiWorld extends World {
 			}
 			//if (flag) bobMulti.update(deltaTime);
 			//Gdx.app.debug("pkt component2", "precdelta= "+ deltaTime + "accelx= "+ accelX +" accely= " + this.bob.velocity.y);
-			buffer.putPaccoOutNOBLOCK(new PaccoUpdateBobMulti(deltaTime, bob.position.x, bob.position.y));
+			buffer.putPaccoOutNOBLOCK(new PaccoUpdateBobMulti(deltaTime, bob.gravity.x, bob.gravity.y));
 			myTime+=deltaTime;
 			checkGameOver () ;
 			if(bob.position.y > bobMulti.position.y)position=1;
@@ -151,12 +151,15 @@ public class MultiWorld extends World {
 	}
 
 	private void updateBobMulti (float deltaTime, float accelX, float accelY) {
-//		bobMulti.position.add(((-accelX / 10) * Bob.BOB_MOVE_VELOCITY)* deltaTime, accelY * deltaTime);
-		bobMulti.position.x=accelX ;
-		bobMulti.position.y=accelY ;
+//		bobMulti.position.x=accelX ;
+//		bobMulti.position.y=accelY ;
 //		Gdx.app.debug("updatebobmulti","deltatime="+deltaTime+"accX="+accelX+"accY="+accelY);
-//		Gdx.app.debug("updatebobomulti", "bobMulti.position.y = " + bobMulti.position.y + " bob.position.y = " + bob.position.y);
-
+		 bobMulti.velocity.x = -accelX / 5f * Bob.BOB_MOVE_VELOCITY;
+		 bobMulti.velocity.add(accelX * deltaTime, accelY * deltaTime);
+		 bobMulti.position.add(bobMulti.velocity.x * deltaTime, bobMulti.velocity.y * deltaTime);
+		 bobMulti.bounds.x = bobMulti.position.x - bobMulti.bounds.width / 2;
+		 bobMulti.bounds.y = bobMulti.position.y - bobMulti.bounds.height / 2;
+			
 	}
 
 	@Override

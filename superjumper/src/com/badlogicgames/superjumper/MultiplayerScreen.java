@@ -107,6 +107,8 @@ public class MultiplayerScreen implements Screen {
 					Gdx.app.debug("PHTEST", str);
 					return;
 				}
+				
+				
 				str = "CONNECTED";
 				game.setScreen(new MultiGameScreen(game,seed));
 
