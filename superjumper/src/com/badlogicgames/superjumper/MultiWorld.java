@@ -159,7 +159,7 @@ public class MultiWorld extends World {
 		Gdx.app.debug("updatebobmultiNemicoGravity","deltatime="+deltaTime+"gravityX="+ bobMulti.gravity.x+"positionY="+ bobMulti.gravity.y);
 		bobMulti.velocity.x = accelX*deltaTime; 
 //		bobMulti.velocity.add(accelX * deltaTime, accelY * deltaTime);
-		bob.position.y = accelY * deltaTime; 
+		bobMulti.position.y = accelY * deltaTime; 
 //		bobMulti.position.add(bobMulti.velocity.x * deltaTime, bobMulti.velocity.y * deltaTime);
 		 bobMulti.bounds.x = bobMulti.position.x - bobMulti.bounds.width / 2;
 		 bobMulti.bounds.y = bobMulti.position.y - bobMulti.bounds.height / 2;
