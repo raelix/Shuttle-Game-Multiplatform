@@ -29,6 +29,16 @@ public class MultiWorldRenderer extends WorldRenderer {
 	public void render () {
 		super.render();
 		switch (world.state){
+		case CONSTANTS.GAME_OVER:
+			batch.begin();
+			batch.enableBlending();
+			Assets.handfontsmall.scale(1.1f);
+			if(!world.win)new Text(UI.SCREENWIDTH/2 ,UI.SCREENHEIGHT*2/3,"Hai Perso (" + world.myTime + " secondi)").draw(batch);
+			else new Text(UI.SCREENWIDTH/2 ,UI.SCREENHEIGHT*2/3,"Hai Vinto (" + world.myTime + " secondi)").draw(batch);
+			Assets.handfontsmall.scale(-1.1f);
+			batch.disableBlending();
+			batch.end();
+			break;
 		case CONSTANTS.GAME_RUNNING:
 			batch.begin();
 			batch.enableBlending();

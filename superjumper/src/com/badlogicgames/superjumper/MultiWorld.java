@@ -22,6 +22,7 @@ public class MultiWorld extends World {
 	public LinkedList<Projectile> projEnemy;
 	private boolean flag = true;
 	public Text positionText = new Text(SCOREPOSITIONX*0.2f,SCOREPOSITIONY*0.92f,"P.");
+	public boolean win = false;
 	
 
 	/**
@@ -70,6 +71,7 @@ public class MultiWorld extends World {
 					flag = false;
 					break;
 				case PROTOCOL_CONSTANTS.PACKET_END:
+					this.win = true;
 					System.out.println("HO RICEVUTO IL PACCO END E SPOSTO SU GAME OVER");
 					buffer.putPaccoOutNOBLOCK(new PaccoEnd());
 					System.out.println("HO RICEVUTO IL PACCO END E SPOSTO SU GAME OVER");
@@ -191,7 +193,7 @@ public class MultiWorld extends World {
 			if (life == 1) this.texts.offer(new FloatingText("WARNING!", 0));
 		} else {
 			System.out.println("Sono dentro lifeLess override");
-			
+			this.win = false;
 			buffer.putPaccoOutNOBLOCK(new PaccoEnd());
 			state = CONSTANTS.GAME_OVER;
 		
