@@ -23,8 +23,8 @@ public class MultiWorld extends World {
 	private boolean flag = true;
 	public Text positionText = new Text(SCOREPOSITIONX*0.2f,SCOREPOSITIONY*0.92f,"P.");
 	public boolean win = false;
-	
-
+	float dst;
+	float dst1;
 	/**
 	 * @param seed
 	 */
@@ -94,6 +94,13 @@ public class MultiWorld extends World {
 			System.out.println("position.x = "+bob.gravity.x);
 			myTime+=deltaTime;
 			checkGameOver () ;
+			if(OverlapTester.overlapRectangles(bob.bounds, bobMulti.bounds)){
+				dst = bob.position.x - 3;	
+				dst1 = bob.position.x +3;
+				scontro();
+			}
+		
+
 			if(bob.position.y > bobMulti.position.y)position=1;
 			else position = 2;
 			for (int i = 0; i < projEnemy.size() && i >= 0; i++) {
@@ -198,7 +205,22 @@ public class MultiWorld extends World {
 			state = CONSTANTS.GAME_OVER;
 		
 		}
+		
 	}
-
-
+	
+	public void scontro(){
+		
+		if (bob.position.x < bobMulti.position.x){
+			bob.position.x = bob.position.x - 2;
+			Gdx.input.vibrate(new long[] { 25, 23, 23}, -1); 
+//			bob.velocity.x = (dst) - bob.position.x;
+			
+		}
+		
+		else if (bob.position.x > bobMulti.position.x){
+//			bob.velocity.x = (dst1) - bob.position.x;
+			Gdx.input.vibrate(new long[] { 25, 23, 23}, -1); 
+			bob.position.x = bob.position.x + 2;	
+		}
+	}
 }
