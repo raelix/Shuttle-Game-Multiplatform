@@ -6,6 +6,10 @@ all:
 	rm -f bin/*.class
 	rm -f src/*.class
 
+java:
+	make clean
+	javac src/*
+
 clean:
 	rm -f src/*.class
 	rm -f bin/*
