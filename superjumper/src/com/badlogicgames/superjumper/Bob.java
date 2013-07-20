@@ -66,12 +66,13 @@ public class Bob extends DynamicGameObject {
 		stateTime += deltaTime;
 	}
 	
-public void update(float deltaTime,float velocityX, float velocityY){
-	this.velocity.x = velocityX;
-	this.velocity.y = velocityY;
-	this.gravity.x = 0;
-	this.gravity.y = 0;
-	this.update(deltaTime);
+public void update(float deltaTime,float positionX, float positionY){
+	this.position.x = positionX;
+	this.position.y = positionY;
+	bounds.x = position.x - bounds.width / 2;
+	bounds.y = position.y - bounds.height / 2;
+	stateTime += deltaTime;
+
 }
 	/*
 	public void hitSquirrel () {
