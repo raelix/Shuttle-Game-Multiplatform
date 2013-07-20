@@ -64,8 +64,8 @@ public class MultiWorld extends World {
 					this.precdelta = pktbob.getDeltaTime();
 					this.precaccelx = pktbob.getAccelX();
 					this.precaccely = pktbob.getAccelY();
-					Gdx.app.debug("Position bob", " precdelta= "+ this.precdelta + "posx= "+ this.precaccelx +" posy= "+this.precaccely);
-					Gdx.app.debug("Position Enemy", "deltatime= "+ deltaTime + "posx= "+ bob.position.x +" posy= "+bob.position.y);
+					Gdx.app.debug("Ricezione: Position Nemico", " precdelta= "+ this.precdelta + "posx= "+ this.precaccelx +" posy= "+this.precaccely);
+					Gdx.app.debug("Ricezione: Position Mio", "deltatime= "+ deltaTime + "posx= "+ bob.position.x +" posy= "+bob.position.y);
 					updateBobMulti(this.precdelta,this.precaccelx,this.precaccely);
 					flag = false;
 					break;
@@ -89,8 +89,9 @@ public class MultiWorld extends World {
 				}
 			}
 			//if (flag) bobMulti.update(deltaTime);
-			//Gdx.app.debug("pkt component2", "precdelta= "+ deltaTime + "accelx= "+ accelX +" accely= " + this.bob.velocity.y);
+			Gdx.app.debug("Spedit pacchetto: ", "precdelta= "+ deltaTime + "gravityx= "+ accelX +" gravityy= " + this.bob.velocity.y);
 			buffer.putPaccoOutNOBLOCK(new PaccoUpdateBobMulti(deltaTime, bob.gravity.x, bob.gravity.y));
+			System.out.println("position.x = "+bob.gravity.x);
 			myTime+=deltaTime;
 			checkGameOver () ;
 			if(bob.position.y > bobMulti.position.y)position=1;
@@ -153,8 +154,7 @@ public class MultiWorld extends World {
 	private void updateBobMulti (float deltaTime, float accelX, float accelY) {
 //		bobMulti.position.x=accelX ;
 //		bobMulti.position.y=accelY ;
-//		Gdx.app.debug("updatebobmulti","deltatime="+deltaTime+"accX="+accelX+"accY="+accelY);
-		 bobMulti.velocity.x = -accelX / 5f * Bob.BOB_MOVE_VELOCITY;
+		Gdx.app.debug("updatebobmultiNemico","deltatime="+deltaTime+"positionX="+ bobMulti.position.x+"positionY="+ bobMulti.position.y);
 		 bobMulti.velocity.add(accelX * deltaTime, accelY * deltaTime);
 		 bobMulti.position.add(bobMulti.velocity.x * deltaTime, bobMulti.velocity.y * deltaTime);
 		 bobMulti.bounds.x = bobMulti.position.x - bobMulti.bounds.width / 2;
