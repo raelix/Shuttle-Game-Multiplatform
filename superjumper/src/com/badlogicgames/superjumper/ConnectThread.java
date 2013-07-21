@@ -16,6 +16,7 @@ public class ConnectThread extends Thread {
 	Boolean OK2Send = false;
 	FullDuplexBuffer buf;
 	Semaphore sem;
+	public boolean error;
 
 	public ConnectThread(String dest, int port, FullDuplexBuffer buf, Semaphore sem) {
 		super();
@@ -84,11 +85,14 @@ public class ConnectThread extends Thread {
 		} catch (UnknownHostException e) {
 			MultiplayerScreen.str = "UNKNOWN HOST EXCEPTION";
 			Gdx.app.debug("CONNECTTHREAD()", "ERROR UnknownHostException");
+			error = true;
 			sem.release();
 		} catch (IOException e) {
 			MultiplayerScreen.str = "IO EXCEPTION";
+			error = true;
 			Gdx.app.debug("CONNECTTHREAD()", "ERROR IOException");
 			sem.release();
+			
 		}
 
 	}
