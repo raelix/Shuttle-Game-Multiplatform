@@ -49,7 +49,7 @@ public class MultiplayerScreen implements Screen {
 		backBounds = new Rectangle(0, 0, 64, 64);
 		//ClientBounds = new Rectangle(200, 100, 300, 36);
 		//ServerBounds = new Rectangle(280, 180, 300, 36);
-		ClientBounds = new Rectangle(100, 235, 300, 20);
+		ClientBounds = new Rectangle(100, 225, 300, 50);
 //		ServerBounds = new Rectangle(100, 260, 300, 20);
 		touchPoint = new Vector3();
 		batcher = new SpriteBatch();
